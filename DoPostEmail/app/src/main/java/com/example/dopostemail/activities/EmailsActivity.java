@@ -107,6 +107,26 @@ public class EmailsActivity extends AppCompatActivity {
 
             }
         });
+
+        Button create_contact = (Button)findViewById(R.id.button_create_contact);
+        create_contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, CreateContactActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        Button contact = (Button)findViewById(R.id.button_contact);
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, ContactActivity.class);
+                startActivity(i);
+
+            }
+        });
     }
 
     @Override

@@ -57,4 +57,16 @@
         android:layout_width="126dp"
         android:layout_height="wrap_content"
         android:text="Contacts" />
+
+    <Button
+        android:id="@+id/button_contact"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:text="Contact" />
+
+    <Button
+        android:id="@+id/button_create_contact"
+        android:layout_width="124dp"
+        android:layout_height="wrap_content"
+        android:text="Create Contact" />
 </LinearLayout>

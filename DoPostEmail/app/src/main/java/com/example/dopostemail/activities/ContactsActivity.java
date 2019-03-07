@@ -9,6 +9,7 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setTitle("Contacts");
         setContentView(R.layout.activity_contacts);
     }
 

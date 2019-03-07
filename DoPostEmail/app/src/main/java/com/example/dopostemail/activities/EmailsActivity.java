@@ -3,6 +3,7 @@ package com.example.dopostemail.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +48,65 @@ public class EmailsActivity extends AppCompatActivity {
             }
         });
 
+        Button email = (Button)findViewById(R.id.button_email);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        Button folders = (Button)findViewById(R.id.button_folders);
+        folders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, FoldersActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        Button folder = (Button)findViewById(R.id.button_folder);
+        folder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, FolderActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        Button settings = (Button)findViewById(R.id.button_settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, SettingsActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        Button profile = (Button)findViewById(R.id.button_profile);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, ProfileActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        Button contacts = (Button)findViewById(R.id.button_contacts);
+        contacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, ContactsActivity.class);
+                startActivity(i);
+
+            }
+        });
     }
 
     @Override

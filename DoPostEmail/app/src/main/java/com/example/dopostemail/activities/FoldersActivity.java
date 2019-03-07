@@ -9,6 +9,7 @@ public class FoldersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Folders");
         setContentView(R.layout.activity_splash);
     }
 

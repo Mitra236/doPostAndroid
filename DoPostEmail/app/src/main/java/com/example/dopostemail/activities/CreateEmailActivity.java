@@ -10,6 +10,7 @@ public class CreateEmailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Create Email");
         setContentView(R.layout.activity_create_email);
     }
 

@@ -21,6 +21,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    public void btnStartEmailsActivity(View v){
+        Intent i = new Intent(LoginActivity.this, EmailsActivity.class);
+        startActivity(i);
+    }
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -29,9 +34,10 @@ public class LoginActivity extends AppCompatActivity {
         btnEmails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnStartEmailsActivity(v);
 
-                Intent i = new Intent(LoginActivity.this, EmailsActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(LoginActivity.this, EmailsActivity.class);
+//                startActivity(i);
             }
         });
 

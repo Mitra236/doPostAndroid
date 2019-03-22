@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="90dp"
             android:text="CANCEL"
             android:textSize="16dp"
             android:textColor="@color/colorWhite"

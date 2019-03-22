@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbar_create_contact"
+        layout="@layout/toolbar_create_contact">
+
+    </include>
+
     <EditText
         android:id="@+id/firstNameEdit"
         android:layout_width="fill_parent"

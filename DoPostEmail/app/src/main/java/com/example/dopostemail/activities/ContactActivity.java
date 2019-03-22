@@ -3,6 +3,7 @@ package com.example.dopostemail.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.example.dopostemail.R;
 
@@ -13,6 +14,11 @@ public class ContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle("Contact");
         setContentView(R.layout.activity_contact);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_contact);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override

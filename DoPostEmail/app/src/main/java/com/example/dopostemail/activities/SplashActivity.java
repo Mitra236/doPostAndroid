@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        delayHandler.postDelayed(delayedResume, 4000);
+        delayHandler.postDelayed(delayedResume, 2000);
     }
 
     @Override

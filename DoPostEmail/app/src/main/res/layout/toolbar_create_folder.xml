@@ -11,16 +11,28 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/button_logout2"
+            android:id="@+id/button_save_cf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:text="LOGOUT"
+            android:text="SAVE"
+            android:textSize="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="@android:color/transparent"/>
+        <Button
+            android:id="@+id/button_cancel_cf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="CANCEL"
             android:textSize="16dp"
             android:textColor="@color/colorWhite"
             android:background="@android:color/transparent"/>
 
     </RelativeLayout>
+
+
 
 </android.support.v7.widget.Toolbar>

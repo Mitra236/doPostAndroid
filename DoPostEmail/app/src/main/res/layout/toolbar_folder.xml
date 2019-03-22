@@ -11,12 +11,12 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/button_logout3"
+            android:id="@+id/button_edit_f"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:text="LOGOUT"
+            android:text="EDIT"
             android:textSize="16dp"
             android:textColor="@color/colorWhite"
             android:background="@android:color/transparent"/>

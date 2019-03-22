@@ -2,6 +2,7 @@ package com.example.dopostemail.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.example.dopostemail.R;
 
@@ -12,6 +13,11 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle("Profile");
         setContentView(R.layout.activity_profile);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_profile);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -19,7 +25,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    @Override
     protected void onResume(){
         super.onResume();
 

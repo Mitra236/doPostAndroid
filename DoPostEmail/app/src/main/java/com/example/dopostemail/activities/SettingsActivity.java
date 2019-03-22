@@ -1,16 +1,19 @@
 package com.example.dopostemail.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.preference.PreferenceActivity;
+
 
 import com.example.dopostemail.R;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends PreferenceActivity {
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Settings");
-        setContentView(R.layout.activity_splash);
+
+        addPreferencesFromResource(R.xml.preferences);
     }
 
     @Override

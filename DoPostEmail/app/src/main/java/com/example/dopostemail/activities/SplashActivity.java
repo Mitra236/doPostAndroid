@@ -3,11 +3,22 @@ package com.example.dopostemail.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.dopostemail.R;
 
 public class SplashActivity extends AppCompatActivity {
+
+    private Handler delayHandler = new Handler();
+
+    private Runnable delayedResume = new Runnable(){
+        @Override
+        public void run(){
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +34,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-//        startActivity(intent);
+        delayHandler.postDelayed(delayedResume, 4000);
     }
 
     @Override

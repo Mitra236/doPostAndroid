@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <string-array name="pref_refreshInterval_entries">
+        <item>1 min</item>
+        <item>5 min</item>
+        <item>10 min</item>
+        <item>1h</item>
+        <item>10h</item>
+    </string-array>
+    
+    <string-array name="pref_refreshInterval_values">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>60</item>
+        <item>600</item>
+    </string-array>
+</resources>

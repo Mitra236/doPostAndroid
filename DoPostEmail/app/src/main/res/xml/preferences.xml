@@ -7,6 +7,25 @@
         android:title="REFRESH INTERVAL"
         android:key="refresh_setting">
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_refresh"
+            android:title="@string/pref_refresh_title">
+
+        </CheckBoxPreference>
+
+        <ListPreference
+            android:key="@string/pref_refresh_list"
+            android:title="@string/pref_refreshList_title"
+            android:dialogTitle="@string/pref_refreshList"
+            android:dependency="@string/pref_refresh"
+            android:entries="@array/pref_refreshInterval_entries"
+            android:entryValues="@array/pref_refreshInterval_values"
+            android:summary="%s"
+            android:defaultValue="1">
+
+        </ListPreference>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

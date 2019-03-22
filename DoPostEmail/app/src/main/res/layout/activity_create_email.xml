@@ -1,15 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editFrom"
+        android:inputType="text"
+        android:hint="From"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/editTo"
         android:inputType="text"
-        android:importantForAutofill="no"/>
+        android:layout_below="@id/editFrom"
+        android:hint="To"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editSubject"
+        android:inputType="text"
+        android:hint="Subject"
+        android:layout_below="@id/editTo"
+        />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="350dp"
+        android:id="@+id/editMessage"
+        android:gravity="left"
+        android:layout_marginTop="10dp"
+        android:hint="Compose Message"
+        android:inputType="textMultiLine"
+        android:layout_below="@id/editSubject"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/editMessage"
+        android:id="@+id/button_send"
+        android:text="Send"/>
 
 
-</LinearLayout>
+</RelativeLayout>

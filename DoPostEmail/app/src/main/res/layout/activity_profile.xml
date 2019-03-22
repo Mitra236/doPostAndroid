@@ -13,10 +13,10 @@
         android:id="@+id/username"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Username"
-        android:layout_marginTop="10dp"
+        android:inputType="text"
         android:text="" />
 
     <EditText
@@ -24,9 +24,30 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="textPassword"
+        android:layout_below="@+id/username"
         android:hint="Password"
         android:layout_marginTop="10dp"
         android:text="" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smtp" android:id="@+id/textview_smtp"
+        android:layout_below="@+id/password"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:defaultValue="false"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:key="smtp"
+        android:title="Smtp"
+        android:layout_below="@id/password"
+        android:layout_toRightOf="@id/textview_smtp"
+        android:layout_toEndOf="@+id/textview_smtp"/>
+    
 </RelativeLayout>

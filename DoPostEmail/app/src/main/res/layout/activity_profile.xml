@@ -30,24 +30,35 @@
         android:layout_marginTop="10dp"
         android:text="" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Smtp" android:id="@+id/textview_smtp"
-        android:layout_below="@+id/password"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"/>
 
     <CheckBox
-        android:layout_width="wrap_content"
+        android:id="@+id/checkbox_smtp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:defaultValue="false"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
         android:key="smtp"
         android:title="Smtp"
         android:layout_below="@id/password"
-        android:layout_toRightOf="@id/textview_smtp"
-        android:layout_toEndOf="@+id/textview_smtp"/>
-    
+        android:text="Smtp"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroupProfile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkbox_smtp">
+        <RadioButton
+            android:id="@+id/radioButton_pop3"
+            android:text="Pop3"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/radioButton_imap"
+            android:text="Imap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
 </RelativeLayout>

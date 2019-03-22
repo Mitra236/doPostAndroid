@@ -3,15 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    >
+
+    <include
+        android:id="@+id/toolbar_create_emails"
+        layout="@layout/toolbar_create_email">
+
+    </include>
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editFrom"
         android:inputType="text"
-        android:hint="From"/>
+        android:hint="From"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
     <EditText
         android:layout_width="fill_parent"
@@ -19,7 +27,9 @@
         android:id="@+id/editTo"
         android:inputType="text"
         android:layout_below="@id/editFrom"
-        android:hint="To"/>
+        android:hint="To"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
     <EditText
         android:layout_width="fill_parent"
@@ -28,24 +38,24 @@
         android:inputType="text"
         android:hint="Subject"
         android:layout_below="@id/editTo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         />
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="350dp"
+        android:layout_height="fill_parent"
         android:id="@+id/editMessage"
         android:gravity="left"
         android:layout_marginTop="10dp"
         android:hint="Compose Message"
         android:inputType="textMultiLine"
-        android:layout_below="@id/editSubject"/>
+        android:layout_below="@id/editSubject"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@null"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/editMessage"
-        android:id="@+id/button_send"
-        android:text="Send"/>
+
 
 
 </RelativeLayout>

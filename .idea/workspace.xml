@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7260305-671f-4538-bda4-bc5c077530a6" name="Default Changelist" comment="" />
+    <list default="true" id="e7260305-671f-4538-bda4-bc5c077530a6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/DoPostEmail/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/DoPostEmail/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DoPostEmail/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DoPostEmail/.idea/vcs.xml" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,9 +43,18 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-75212325">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DoPostEmail/app/src/main/res/layout/activity_contact.xml">
           <provider selected="true" editor-type-id="text-editor" />
@@ -68,6 +81,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -85,12 +99,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/DoPostEmail" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -118,25 +131,25 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.32942432" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.3343419" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
-      <window_info anchor="right" id="Preview" visible="true" weight="0.32995737" />
-      <window_info anchor="right" id="Assistant" weight="0.3336887" />
+      <window_info anchor="bottom" id="Messages" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Palette&#9;" order="2" />
+      <window_info anchor="right" id="Preview" order="3" visible="true" weight="0.32980332" />
+      <window_info anchor="right" id="Assistant" order="4" weight="0.3336887" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">

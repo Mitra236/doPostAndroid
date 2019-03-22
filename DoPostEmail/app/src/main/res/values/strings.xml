@@ -7,4 +7,12 @@
     <string name="pref_refreshList">Refresh Intervals</string>
     <string name="pref_refresh_list">pref_refresh_list</string>
     <string name="pref_refreshList_title">Select Refresh Interval</string>
+
+    <string name="pref_date_sorting_list">Date sorting</string>
+    <string name="pref_date_sorting_title">Date sorting</string>
+    <string name="pref_sortingList">Date sorting</string>
+    <string name="pref_date_sorting">pref_date_sorting</string>
+
+    <color name="black">#000000</color>
+
 </resources>

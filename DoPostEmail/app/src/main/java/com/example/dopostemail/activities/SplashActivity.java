@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(intent);
+//        startActivity(intent);
     }
 
     @Override

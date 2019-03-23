@@ -5,4 +5,5 @@
     <color name="colorAccent">#533595</color>
     <color name="colorToolbar">#413db2</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorSidebar">#343398</color>
 </resources>

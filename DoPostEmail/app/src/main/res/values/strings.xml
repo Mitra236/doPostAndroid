@@ -16,6 +16,6 @@
     <color name="black">#1C1B1D</color>
 
     <string name="action_forward">Forward</string>
-    <string name="action_replay_to_all">Replay to all</string>
-    <string name="action_replay">Replay</string>
+    <string name="action_replay_to_all">Reply All</string>
+    <string name="action_replay">Reply</string>
 </resources>

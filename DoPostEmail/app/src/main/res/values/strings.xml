@@ -13,7 +13,7 @@
     <string name="pref_sortingList">Date sorting</string>
     <string name="pref_date_sorting">pref_date_sorting</string>
 
-    <color name="black">#000000</color>
+    <color name="black">#1C1B1D</color>
 
     <string name="action_forward">Forward</string>
     <string name="action_replay_to_all">Replay to all</string>

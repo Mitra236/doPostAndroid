@@ -2,13 +2,9 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#0C5CC4</color>
-    <color name="colorAccent">#7CE4B5</color>
+    <color name="colorAccent">#00BCD4</color>
     <color name="colorToolbar">#000000</color>
-    <color name="colorWhite">#2A4EDE</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#533595</color>
-    <color name="colorToolbar">#413db2</color>
-    <color name="colorWhite">#ffffff</color>
+    <color name="colorWhite">#347DFC</color>
     <color name="colorSidebar">#343398</color>
     <color name ="colorGray">#D3D3D3</color>
 </resources>

@@ -20,7 +20,9 @@
         android:hint="To"
         android:layout_marginTop="80dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        android:textSize="15dp"
+        android:backgroundTint="@color/colorGray"/>
 
     <EditText
         android:layout_width="fill_parent"
@@ -31,29 +33,32 @@
         android:layout_below="@id/editBCC"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        />
+        android:textSize="15dp"
+        android:backgroundTint="@color/colorGray"/>
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editCC"
         android:inputType="text"
-        android:hint="Cc"
+        android:hint="*Cc"
         android:layout_below="@id/editTo"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        />
+        android:textSize="15dp"
+        android:backgroundTint="@color/colorGray"/>
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editBCC"
         android:inputType="text"
-        android:hint="Bcc"
+        android:hint="*Bcc"
         android:layout_below="@id/editCC"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        />
+        android:textSize="15dp"
+        android:backgroundTint="@color/colorGray"/>
 
     <EditText
         android:layout_width="fill_parent"
@@ -66,7 +71,9 @@
         android:layout_below="@id/editSubject"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@null"/>
+        android:background="@null"
+        android:textSize="15dp"
+        android:backgroundTint="@color/colorGray"/>
 
 
 

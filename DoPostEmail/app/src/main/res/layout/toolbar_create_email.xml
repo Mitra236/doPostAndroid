@@ -17,9 +17,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:text="SEND"
-            android:textSize="16dp"
+            android:textSize="15dp"
             android:textColor="@color/colorWhite"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            />
 
         <Button
             android:id="@+id/button_cancel"
@@ -28,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="90dp"
             android:text="CANCEL"
-            android:textSize="16dp"
+            android:textSize="15dp"
             android:textColor="@color/colorWhite"
             android:background="@android:color/transparent"/>
     </RelativeLayout>

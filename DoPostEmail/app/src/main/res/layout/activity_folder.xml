@@ -9,4 +9,14 @@
 
     </include>
 
+    <TextView
+        android:id="@+id/folder_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:ems="10"
+        android:hint="Folder name"
+        android:layout_marginLeft="9dp"
+        android:text="" />
+
 </RelativeLayout>

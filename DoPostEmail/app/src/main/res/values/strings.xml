@@ -18,4 +18,6 @@
     <string name="action_forward">Forward</string>
     <string name="action_replay_to_all">Reply All</string>
     <string name="action_replay">Reply</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Open navigation drawer</string>
 </resources>

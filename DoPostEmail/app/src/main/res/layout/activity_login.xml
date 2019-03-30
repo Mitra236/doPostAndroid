@@ -26,18 +26,19 @@
         android:layout_below="@+id/usernameLogin"
         android:hint="Password"
         android:layout_marginTop="10dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="" />
 
     <Button
         android:id="@+id/button_login"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Login"
+        android:layout_width="135dp"
+        android:layout_height="35dp"
         android:layout_below="@id/passwordLogin"
-        android:onClick="btnStartEmailsActivity"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="124dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorAccent"
         android:gravity="center"
-        android:layout_centerHorizontal="true"/>
+        android:onClick="btnStartEmailsActivity"
+        android:text="Login"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="124dp" />
 </RelativeLayout>

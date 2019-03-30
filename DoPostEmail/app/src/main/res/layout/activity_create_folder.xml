@@ -17,6 +17,7 @@
         android:inputType="text"
         android:hint="Folder Name"
         android:layout_marginTop="80dp"
+        android:backgroundTint="@color/colorGray"
         android:text="" />
 
 </RelativeLayout>

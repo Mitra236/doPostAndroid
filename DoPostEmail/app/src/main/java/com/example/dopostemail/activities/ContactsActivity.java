@@ -24,7 +24,7 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         setTitle("Contacts");
         setContentView(R.layout.activity_contacts);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_basic);
+        Toolbar toolbar = findViewById(R.id.nav_toolbar_contacts);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);

@@ -29,7 +29,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar_profile);
+        Toolbar toolbar = findViewById(R.id.nav_toolbar_profile);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
@@ -44,14 +44,14 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item){
-//        Toast.makeText(this, "option selected", Toast.LENGTH_SHORT).show();
-//        if(toggle.onOptionsItemSelected(item)){
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Toast.makeText(this, "option selected", Toast.LENGTH_SHORT).show();
+        if(toggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

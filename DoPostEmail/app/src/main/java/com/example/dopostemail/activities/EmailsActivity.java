@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import com.example.dopostemail.R;
 
@@ -29,6 +30,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_emails);
         setSupportActionBar(toolbar);
+
 
         drawer = findViewById(R.id.drawer_layout);
 
@@ -67,6 +69,8 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
         return true;
     }
+
+
 
     @Override
     protected void onStart(){

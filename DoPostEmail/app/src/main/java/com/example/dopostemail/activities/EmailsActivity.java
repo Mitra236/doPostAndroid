@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import com.example.dopostemail.R;
@@ -36,6 +37,17 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
+
+        View headerView = navView.getHeaderView(0);
+        headerView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, ProfileActivity.class);
+                startActivity(i);
+
+            }
+        });
+
 
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_open);

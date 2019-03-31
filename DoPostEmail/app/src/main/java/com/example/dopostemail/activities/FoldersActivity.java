@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.dopostemail.R;
 
@@ -30,6 +31,16 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
         NavigationView navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
+
+        View headerView = navView.getHeaderView(0);
+        headerView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FoldersActivity.this, ProfileActivity.class);
+                startActivity(i);
+
+            }
+        });
 
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_open);

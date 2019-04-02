@@ -53,16 +53,6 @@
             android:textColor="@color/colorWhite" />
 
         <Button
-            android:id="@+id/button_folders"
-            android:layout_width="135dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorAccent"
-            android:text="Folders"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@color/colorWhite" />
-
-        <Button
             android:id="@+id/button_folder"
             android:layout_width="135dp"
             android:layout_height="35dp"
@@ -73,32 +63,12 @@
             android:textColor="@color/colorWhite" />
 
         <Button
-            android:id="@+id/button_settings"
-            android:layout_width="135dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorAccent"
-            android:text="Settings"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@color/colorWhite" />
-
-        <Button
             android:id="@+id/button_profile"
             android:layout_width="135dp"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorAccent"
             android:text="Profile"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@color/colorWhite" />
-
-        <Button
-            android:id="@+id/button_contacts"
-            android:layout_width="135dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorAccent"
-            android:text="Contacts"
             android:layout_gravity="center_vertical|center_horizontal"
             android:textColor="@color/colorWhite" />
 

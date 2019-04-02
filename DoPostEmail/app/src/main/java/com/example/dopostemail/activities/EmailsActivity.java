@@ -123,16 +123,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
-        Button folders = (Button)findViewById(R.id.button_folders);
-        folders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, FoldersActivity.class);
-                startActivity(i);
-
-            }
-        });
-
         Button folder = (Button)findViewById(R.id.button_folder);
         folder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,31 +133,11 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
-        Button settings = (Button)findViewById(R.id.button_settings);
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, SettingsActivity.class);
-                startActivity(i);
-
-            }
-        });
-
         Button profile = (Button)findViewById(R.id.button_profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(EmailsActivity.this, ProfileActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button contacts = (Button)findViewById(R.id.button_contacts);
-        contacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, ContactsActivity.class);
                 startActivity(i);
 
             }

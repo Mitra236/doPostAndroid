@@ -42,36 +42,31 @@
             android:layout_marginTop="10dp"
             android:text="" />
 
-
-        <CheckBox
-            android:id="@+id/checkbox_smtp"
+        <TextView
+            android:id="@+id/text_view_smpt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:defaultValue="false"
+            android:ems="10"
+            android:layout_below="@+id/password"
+            android:hint="smpt"
+            android:layout_marginLeft="9dp"
             android:layout_marginTop="10dp"
-            android:key="smtp"
-            android:title="Smtp"
-            android:layout_below="@id/password"
-            android:text="Smtp"/>
+            android:text="" />
 
-        <RadioGroup
-            android:id="@+id/radioGroupProfile"
+        <TextView
+            android:id="@+id/text_view_pop3-smtp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/checkbox_smtp">
-            <RadioButton
-                android:id="@+id/radioButton_pop3"
-                android:text="Pop3"
-                android:checked="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:ems="10"
+            android:layout_below="@+id/text_view_smpt"
+            android:hint="pop3/smtp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="10dp"
+            android:text="" />
+<!--smpt, pop3/imap-->
 
-            <RadioButton
-                android:id="@+id/radioButton_imap"
-                android:text="Imap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RadioGroup>
+
+
 
     </RelativeLayout>
 

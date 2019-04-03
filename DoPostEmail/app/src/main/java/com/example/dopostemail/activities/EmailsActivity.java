@@ -101,6 +101,37 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onResume(){
         super.onResume();
+
+        Button folder = (Button)findViewById(R.id.button_folder);
+        folder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, FolderActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        Button contact = (Button)findViewById(R.id.button_contact);
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, ContactActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        Button email = (Button)findViewById(R.id.button_email);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 
 

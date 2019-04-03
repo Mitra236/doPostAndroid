@@ -41,7 +41,8 @@
             android:background="@color/colorToolbar"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="@color/colorWhite" />
 
         <FrameLayout
             android:id="@+id/fragment_container"

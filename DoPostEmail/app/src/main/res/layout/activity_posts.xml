@@ -66,11 +66,8 @@
 
             <android.support.v7.widget.SearchView
                 android:id="@+id/search"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:nextFocusUp="@id/search"
-                android:nextFocusLeft="@id/search"
-                app:queryBackground="@android:color/transparent"
+                android:layout_height="wrap_content"
                 android:layoutDirection="rtl"
 
                 />

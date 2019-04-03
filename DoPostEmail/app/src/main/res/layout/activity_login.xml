@@ -39,6 +39,7 @@
         android:gravity="center"
         android:onClick="btnStartEmailsActivity"
         android:text="Login"
+        android:textColor="@color/colorWhite"
         tools:layout_editor_absoluteX="46dp"
         tools:layout_editor_absoluteY="124dp" />
 </RelativeLayout>

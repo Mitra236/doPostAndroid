@@ -4,6 +4,7 @@ package com.example.dopostemail.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -54,6 +55,16 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailsActivity.this, CreateEmailActivity.class);
+                startActivity(i);
+
+            }
+        });
+
     }
 
     @Override
@@ -82,8 +93,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
-
-
     @Override
     protected void onStart(){
         super.onStart();
@@ -92,76 +101,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onResume(){
         super.onResume();
-
-        Button create_email = (Button)findViewById(R.id.button_create_email);
-        create_email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, CreateEmailActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button create_folder = (Button)findViewById(R.id.button_create_folder);
-        create_folder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, CreateFolderActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button email = (Button)findViewById(R.id.button_email);
-        email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button folder = (Button)findViewById(R.id.button_folder);
-        folder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, FolderActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button profile = (Button)findViewById(R.id.button_profile);
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, ProfileActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button create_contact = (Button)findViewById(R.id.button_create_contact);
-        create_contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, CreateContactActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button contact = (Button)findViewById(R.id.button_contact);
-        contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, ContactActivity.class);
-                startActivity(i);
-
-            }
-        });
     }
 
 

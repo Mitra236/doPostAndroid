@@ -19,6 +19,8 @@ public class EmailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        Utils.darkenStatusBar(this, R.color.colorToolbar);
     }
 
     @Override

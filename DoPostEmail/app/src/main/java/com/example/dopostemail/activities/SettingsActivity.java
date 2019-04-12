@@ -14,6 +14,8 @@ public class SettingsActivity extends PreferenceActivity {
         setTitle("Settings");
 
         addPreferencesFromResource(R.xml.preferences);
+
+        Utils.darkenStatusBar(this, R.color.colorToolbar);
     }
 
     @Override

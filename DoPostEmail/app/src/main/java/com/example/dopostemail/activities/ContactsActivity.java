@@ -30,6 +30,8 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         Toolbar toolbar = findViewById(R.id.nav_toolbar_contacts);
         setSupportActionBar(toolbar);
 
+        Utils.darkenStatusBar(this, R.color.colorToolbar);
+
         drawer = findViewById(R.id.drawer_layout);
 
         NavigationView navView = findViewById(R.id.nav_view);

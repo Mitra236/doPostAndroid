@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorToolbar</item>
         <item name="colorPrimaryDark">@color/colorSidebar</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/colorGray</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
     </style>
 
     <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="@android:style/TextAppearance">

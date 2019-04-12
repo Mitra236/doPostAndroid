@@ -33,6 +33,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         Toolbar toolbar = findViewById(R.id.nav_toolbar_emails);
         setSupportActionBar(toolbar);
 
+        Utils.darkenStatusBar(this, R.color.colorToolbar);
 
         drawer = findViewById(R.id.drawer_layout);
 

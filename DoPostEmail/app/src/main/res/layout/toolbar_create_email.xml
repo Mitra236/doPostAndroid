@@ -6,32 +6,5 @@
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/button_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:text="SEND"
-            android:textSize="15dp"
-            android:textColor="@color/colorWhite"
-            android:background="@android:color/transparent"
-            />
-
-        <Button
-            android:id="@+id/button_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="90dp"
-            android:text="CANCEL"
-            android:textSize="15dp"
-            android:textColor="@color/colorWhite"
-            android:background="@android:color/transparent"/>
-    </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

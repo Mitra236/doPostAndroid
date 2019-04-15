@@ -13,12 +13,12 @@ public class Message {
     private LocalDateTime dateTime;
     private String subject;
     private String content;
-    private Tag tag;
+    private ArrayList<Tag> tag;
     private ArrayList<Attachment> attachments;
     private Folder folder;
     private Account account;
 
-    public Message(int id, Contact from, Contact to, ArrayList<Contact> cc, ArrayList<Contact> bcc, LocalDateTime dateTime, String subject, String content, Tag tag,
+    public Message(int id, Contact from, Contact to, ArrayList<Contact> cc, ArrayList<Contact> bcc, LocalDateTime dateTime, String subject, String content, ArrayList<Tag> tag,
                    ArrayList<Attachment> attachments, Folder folder, Account account) {
         this.id = id;
         this.from = from;
@@ -39,11 +39,11 @@ public class Message {
     public Message() {
     }
 
-    public Tag getTag() {
+    public ArrayList<Tag> getTag() {
         return tag;
     }
 
-    public void setTag(Tag tag) {
+    public void setTag(ArrayList<Tag> tag) {
         this.tag = tag;
     }
 

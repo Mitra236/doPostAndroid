@@ -8,6 +8,7 @@ public class Contact {
     private String display;
     private String email;
     private String format;
+    private Photo photo;
 
     public Contact(int id, String firstName, String lastName, String display, String email, String format) {
         this.id = id;
@@ -16,6 +17,15 @@ public class Contact {
         this.display = display;
         this.email = email;
         this.format = format;
+        this.photo = photo;
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
     }
 
     public Contact() {

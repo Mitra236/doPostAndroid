@@ -4,10 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.EditText;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.model.Contact;
 
 public class ContactActivity extends AppCompatActivity {
+
+    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", "asd");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -21,6 +26,22 @@ public class ContactActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
+
+        EditText tbFirstName = findViewById(R.id.firstNameEdit);
+        tbFirstName.setText(conTemp.getFirstName());
+
+        EditText tbLastName = findViewById(R.id.lastNameEdit);
+        tbLastName.setText(conTemp.getLastName());
+
+        EditText tbUsername = findViewById(R.id.usernameEdit);
+        tbUsername.setText(conTemp.getDisplay());
+
+        EditText tbEmail = findViewById(R.id.emailEdit);
+        tbEmail.setText(conTemp.getEmail());
+
+        EditText tbFormat = findViewById(R.id.formatEdit);
+        tbFormat.setText(conTemp.getFormat());
+
     }
 
     @Override

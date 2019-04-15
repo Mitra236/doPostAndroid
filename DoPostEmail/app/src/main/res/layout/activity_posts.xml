@@ -106,7 +106,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layoutDirection="rtl"
-
+                android:backgroundTint="@color/colorWhite"
+                app:queryBackground="@android:color/transparent"
+                app:queryHint="@string/action_search"
+                app:searchHintIcon="@null"
                 />
         </android.support.v7.widget.Toolbar>
 

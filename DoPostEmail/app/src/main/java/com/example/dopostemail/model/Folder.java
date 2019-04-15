@@ -16,6 +16,11 @@ public class Folder {
         this.rule = rule;
     }
 
+    public Folder(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Folder(){
 
     }

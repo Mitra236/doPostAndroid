@@ -6,6 +6,7 @@ public class Attachment {
     private String[] data;
     private String type;
     private String name;
+    private Message message;
 
     public Attachment(int id, String[] data, String type, String name) {
         this.id = id;

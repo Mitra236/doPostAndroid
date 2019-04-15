@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
@@ -109,7 +111,13 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     protected void onResume(){
         super.onResume();
-
+        Button logout = (Button)findViewById(R.id.button_logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProfileActivity.this, "Edit", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

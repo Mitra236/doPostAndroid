@@ -111,13 +111,19 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     protected void onResume(){
         super.onResume();
-        Button logout = (Button)findViewById(R.id.button_logout);
+
+//        Toast.makeText(ProfileActivity.this, "Nesto", Toast.LENGTH_SHORT).show();
+
+        Button logout = (Button)findViewById(R.id.button_logout_nav);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ProfileActivity.this, "Edit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+
     }
 
     @Override

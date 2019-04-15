@@ -1,5 +1,6 @@
 package com.example.dopostemail.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +11,7 @@ public class Message {
     private Contact to;
     private ArrayList<Contact> cc;
     private ArrayList<Contact> bcc;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private String subject;
     private String content;
     private ArrayList<Tag> tag;
@@ -18,7 +19,7 @@ public class Message {
     private Folder folder;
     private Account account;
 
-    public Message(int id, Contact from, Contact to, ArrayList<Contact> cc, ArrayList<Contact> bcc, LocalDateTime dateTime, String subject, String content, ArrayList<Tag> tag,
+    public Message(int id, Contact from, Contact to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag,
                    ArrayList<Attachment> attachments, Folder folder, Account account) {
         this.id = id;
         this.from = from;
@@ -34,7 +35,13 @@ public class Message {
         this.account = account;
     }
 
-
+    public Message(int id, String subject, Contact from, String content, String dateTime){
+        this.id = id;
+        this.subject = subject;
+        this.from = from;
+        this.content = content;
+        this.dateTime = dateTime;
+    }
 
     public Message() {
     }
@@ -111,11 +118,11 @@ public class Message {
         this.bcc = bcc;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 

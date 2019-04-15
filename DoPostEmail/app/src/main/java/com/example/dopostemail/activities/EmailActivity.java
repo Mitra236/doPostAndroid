@@ -4,12 +4,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Message;
+
 
 public class EmailActivity extends AppCompatActivity {
+    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", "asd");
+   Message messageTemp = new Message(1, "Subject: Message content", conTemp, "This is some message", "Date: 2019-01-29 13:24");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +30,19 @@ public class EmailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
+
+        TextView subject = findViewById(R.id.textSubject);
+        subject.setText(messageTemp.getSubject());
+
+        TextView dateTime = findViewById(R.id.textDate);
+        dateTime.setText(messageTemp.getDateTime());
+
+        TextView from = findViewById(R.id.textFrom);
+        from.setText(messageTemp.getFrom().getFirstName());
+
+        TextView message = findViewById(R.id.textMessage);
+        message.setText(messageTemp.getContent());
+
     }
 
     @Override

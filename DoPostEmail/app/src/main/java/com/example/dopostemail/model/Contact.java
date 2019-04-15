@@ -10,7 +10,7 @@ public class Contact {
     private String format;
     private Photo photo;
 
-    public Contact(int id, String firstName, String lastName, String display, String email, String format) {
+    public Contact(int id, String firstName, String lastName, String display, String email, String format, Photo photo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

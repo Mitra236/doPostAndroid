@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -139,8 +140,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
         switch(menuItem.getItemId()){
             case R.id.nav_emails:
-                Intent i = new Intent(EmailsActivity.this, EmailsActivity.class);
-                startActivity(i);
+                drawer.closeDrawer(Gravity.START, true);
                 break;
             case R.id.nav_contacts:
                 Intent j = new Intent(EmailsActivity.this, ContactsActivity.class);

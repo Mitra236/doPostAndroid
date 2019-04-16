@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,8 +77,7 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
                 startActivity(i);
                 break;
             case R.id.nav_contacts:
-                Intent j = new Intent(ContactsActivity.this, ContactsActivity.class);
-                startActivity(j);
+                drawer.closeDrawer(Gravity.START, true);
                 break;
             case R.id.nav_folders:
                 Intent k = new Intent(ContactsActivity.this, FoldersActivity.class);

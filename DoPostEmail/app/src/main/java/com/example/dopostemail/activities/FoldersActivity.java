@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,8 +77,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
                 startActivity(j);
                 break;
             case R.id.nav_folders:
-                Intent k = new Intent(FoldersActivity.this, FoldersActivity.class);
-                startActivity(k);
+                drawer.closeDrawer(Gravity.START, true);
                 break;
             case R.id.nav_settings:
                 Intent l = new Intent(FoldersActivity.this, SettingsActivity.class);

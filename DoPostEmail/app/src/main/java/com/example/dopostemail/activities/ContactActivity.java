@@ -11,10 +11,11 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Format;
 
 public class ContactActivity extends AppCompatActivity {
 
-    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", "asd");
+    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
 
 
     @Override
@@ -43,7 +44,7 @@ public class ContactActivity extends AppCompatActivity {
         tbEmail.setText(conTemp.getEmail());
 
         EditText tbFormat = findViewById(R.id.formatEdit);
-        tbFormat.setText(conTemp.getFormat());
+        tbFormat.setText(conTemp.getFormat().toString());
 
     }
 

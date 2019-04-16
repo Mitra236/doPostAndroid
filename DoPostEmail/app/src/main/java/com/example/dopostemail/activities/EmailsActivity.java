@@ -120,7 +120,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.fab);
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab_emails);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -91,7 +91,7 @@
                 android:background="@color/colorAccent">
 
                 <Button
-                    android:id="@+id/button_logout"
+                    android:id="@+id/button_logout_nav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

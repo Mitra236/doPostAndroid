@@ -7,10 +7,10 @@ public class Contact {
     private String lastName;
     private String display;
     private String email;
-    private String format;
+    private Format format;
     private Photo photo;
 
-    public Contact(int id, String firstName, String lastName, String display, String email, String format, Photo photo) {
+    public Contact(int id, String firstName, String lastName, String display, String email, Format format, Photo photo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,7 +20,7 @@ public class Contact {
         this.photo = photo;
     }
 
-    public Contact(int id, String firstName, String lastName, String display, String email, String format) {
+    public Contact(int id, String firstName, String lastName, String display, String email, Format format) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -80,11 +80,11 @@ public class Contact {
         this.email = email;
     }
 
-    public String getFormat() {
+    public Format getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(Format format) {
         this.format = format;
     }
 }

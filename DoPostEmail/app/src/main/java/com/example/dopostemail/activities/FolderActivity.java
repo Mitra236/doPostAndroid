@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
@@ -28,7 +29,7 @@ public class FolderActivity extends AppCompatActivity {
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
-        EditText tbName = findViewById(R.id.folder_name);
+        TextView tbName = findViewById(R.id.folder_name);
         tbName.setText(folderTemp.getName());
     }
 

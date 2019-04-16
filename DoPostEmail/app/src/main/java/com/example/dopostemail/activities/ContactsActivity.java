@@ -58,9 +58,8 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(ContactsActivity.this, CreateEmailActivity.class);
-//                startActivity(i);
-                Toast.makeText(ContactsActivity.this, "FAB", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(ContactsActivity.this, CreateContactActivity.class);
+                startActivity(i);
             }
         });
     }

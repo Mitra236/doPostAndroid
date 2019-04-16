@@ -55,9 +55,8 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i = new Intent(FoldersActivity.this, CreateEmailActivity.class);
-//                startActivity(i);
-                Toast.makeText(FoldersActivity.this, "FAB", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(FoldersActivity.this, CreateFolderActivity.class);
+                startActivity(i);
 
             }
         });

@@ -1,5 +1,7 @@
 package com.example.dopostemail.model;
 
+import java.util.ArrayList;
+
 public class Contact {
 
     private int id;
@@ -9,6 +11,10 @@ public class Contact {
     private String email;
     private Format format;
     private Photo photo;
+    private ArrayList<Message> from;
+    private ArrayList<Message> to;
+    private ArrayList<Message> cc;
+    private ArrayList<Message> bcc;
 
     public Contact(int id, String firstName, String lastName, String display, String email, Format format, Photo photo) {
         this.id = id;
@@ -86,5 +92,37 @@ public class Contact {
 
     public void setFormat(Format format) {
         this.format = format;
+    }
+
+    public ArrayList<Message> getFrom() {
+        return from;
+    }
+
+    public ArrayList<Message> getTo() {
+        return to;
+    }
+
+    public ArrayList<Message> getCc() {
+        return cc;
+    }
+
+    public ArrayList<Message> getBcc() {
+        return bcc;
+    }
+
+    public void setFrom(ArrayList<Message> from) {
+        this.from = from;
+    }
+
+    public void setTo(ArrayList<Message> to) {
+        this.to = to;
+    }
+
+    public void setCc(ArrayList<Message> cc) {
+        this.cc = cc;
+    }
+
+    public void setBcc(ArrayList<Message> bcc) {
+        this.bcc = bcc;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 public class Message {
     private int id;
     private Contact from;
-    private Contact to;
+    private ArrayList<Contact> to;
     private ArrayList<Contact> cc;
     private ArrayList<Contact> bcc;
     private String dateTime;
@@ -19,7 +19,7 @@ public class Message {
     private Folder folder;
     private Account account;
 
-    public Message(int id, Contact from, Contact to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag,
+    public Message(int id, Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag,
                    ArrayList<Attachment> attachments, Folder folder, Account account) {
         this.id = id;
         this.from = from;
@@ -94,11 +94,11 @@ public class Message {
         this.from = from;
     }
 
-    public Contact getTo() {
+    public ArrayList<Contact> getTo() {
         return to;
     }
 
-    public void setTo(Contact to) {
+    public void setTo(ArrayList<Contact> to) {
         this.to = to;
     }
 

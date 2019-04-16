@@ -1,13 +1,17 @@
 package com.example.dopostemail.model;
 
+import java.util.ArrayList;
+
 public class Tag {
 
     private int id;
     private String name;
+    private ArrayList<Message> messages;
 
-    public Tag(int id, String name) {
+    public Tag(int id, String name, ArrayList<Message> messages) {
         this.id = id;
         this.name = name;
+        this.messages = messages;
     }
 
     public Tag() {
@@ -27,5 +31,13 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.dopostemail.model;
 
+import java.util.ArrayList;
+
 public class Account {
 
     private int id;
@@ -7,15 +9,15 @@ public class Account {
     private String pop3_imap;
     private String username;
     private String password;
-    private Message message;
+    private ArrayList<Message> messages;
 
-    public Account(int id, String smtp, String pop3_imap, String username, String password, Message message) {
+    public Account(int id, String smtp, String pop3_imap, String username, String password, ArrayList<Message> message) {
         this.id = id;
         this.smtp = smtp;
         this.pop3_imap = pop3_imap;
         this.username = username;
         this.password = password;
-        this.message = message;
+        this.messages = message;
     }
 
     public Account() {
@@ -61,11 +63,11 @@ public class Account {
         this.password = password;
     }
 
-    public Message getMessage() {
-        return message;
+    public ArrayList<Message> getMessage() {
+        return messages;
     }
 
-    public void setMessage(Message message) {
-        this.message = message;
+    public void setMessage(ArrayList<Message> message) {
+        this.messages = message;
     }
 }

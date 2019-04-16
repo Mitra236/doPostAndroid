@@ -14,6 +14,12 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
@@ -21,6 +27,35 @@ import com.example.dopostemail.R;
 public class FoldersActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
+
+    ListView mListView;
+
+    int[] images  = {R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon,
+            R.drawable.foldericon};
+
+    String[] names = {"Folder 1",
+            "Folder 2",
+            "Folder 3",
+            "Folder 4",
+            "Folder 5",
+            "Folder 6",
+            "Folder 7",
+            "Folder 8",
+            "Folder 9",
+            "Folder 10",
+            "Folder 11",
+            "Folder 12"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +64,22 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_folders);
         setSupportActionBar(toolbar);
+
+        mListView = findViewById(R.id.list_view);
+
+        CustomAdapter customAdapter = new CustomAdapter();
+        mListView.setAdapter(customAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
+                startActivity(i);
+
+
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
@@ -114,5 +165,39 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onDestroy(){
         super.onDestroy();
+    }
+
+    class CustomAdapter extends BaseAdapter {
+
+
+
+        @Override
+        public int getCount() {
+            return images.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+
+            View view = getLayoutInflater().inflate(R.layout.activity_listview, null);
+
+            ImageView mImageView = view.findViewById(R.id.icon);
+            TextView mTitle = view.findViewById(R.id.title);
+
+            mImageView.setImageResource(images[position]);
+            mTitle.setText(names[position]);
+            return view;
+        }
     }
 }

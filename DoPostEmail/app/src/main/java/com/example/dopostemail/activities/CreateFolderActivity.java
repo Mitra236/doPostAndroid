@@ -39,7 +39,7 @@ public class CreateFolderActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CreateFolderActivity.this, "Save", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateFolderActivity.this, "Saved", Toast.LENGTH_SHORT).show();
             }
         });
 

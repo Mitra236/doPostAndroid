@@ -13,42 +13,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
         android:orientation="vertical"
         >
 
-        <Button
-            android:id="@+id/button_folder"
-            android:layout_width="135dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="90dp"
-            android:background="@color/colorToolbar"
-            android:text="Folder"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@color/colorWhite" />
-
-        <Button
-            android:id="@+id/button_email"
-            android:layout_width="135dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorToolbar"
-            android:text="Email"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@color/colorWhite" />
-
-        <Button
-            android:id="@+id/button_contact"
-            android:layout_width="135dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorToolbar"
-            android:text="Contact"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@color/colorWhite" />
-
-
-
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
 
     </LinearLayout>
@@ -59,6 +31,8 @@
     <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

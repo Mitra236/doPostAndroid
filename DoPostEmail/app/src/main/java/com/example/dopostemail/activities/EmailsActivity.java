@@ -1,6 +1,7 @@
 package com.example.dopostemail.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,11 +11,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.dopostemail.R;
 
@@ -24,6 +31,47 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
 
+    ListView mListView;
+
+    int[] images  = {R.drawable.lettera,
+            R.drawable.letterj,
+            R.drawable.lettere,
+            R.drawable.letterm,
+            R.drawable.letters,
+            R.drawable.lettera,
+            R.drawable.letterp,
+            R.drawable.lettere,
+            R.drawable.letterd,
+            R.drawable.letterb,
+            R.drawable.letterb,
+            R.drawable.letterm};
+
+    String[] names = {"Alexander",
+                    "John",
+                    "Emily",
+                    "Mickey",
+                    "Stephen",
+                    "Anna",
+                    "Phillip",
+                    "Eva",
+                    "Dean",
+                    "Batman",
+                    "Bessy",
+                    "Minnie Mouse"};
+
+    String[] dates = {"13 March",
+                    "17 March",
+                    "12 February",
+                    "18 January",
+                    "1 April",
+                    "28 March",
+                    "23 February",
+                    "16 January",
+                    "5 April",
+                    "1 May",
+                    "3 June",
+                    "30 April"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +80,22 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_emails);
         setSupportActionBar(toolbar);
+
+        mListView = findViewById(R.id.list_view);
+
+        CustomAdapter customAdapter = new CustomAdapter();
+        mListView.setAdapter(customAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                    startActivity(i);
+
+
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
@@ -65,6 +129,8 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
             }
         });
+
+
 
     }
 
@@ -103,35 +169,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     protected void onResume(){
         super.onResume();
 
-        Button folder = (Button)findViewById(R.id.button_folder);
-        folder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, FolderActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button contact = (Button)findViewById(R.id.button_contact);
-        contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, ContactActivity.class);
-                startActivity(i);
-
-            }
-        });
-
-        Button email = (Button)findViewById(R.id.button_email);
-        email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
-                startActivity(i);
-
-            }
-        });
 
     }
 
@@ -150,5 +187,41 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onDestroy(){
         super.onDestroy();
+    }
+
+    class CustomAdapter extends BaseAdapter {
+
+
+
+        @Override
+        public int getCount() {
+            return images.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+
+            View view = getLayoutInflater().inflate(R.layout.activity_listview, null);
+
+            ImageView mImageView = view.findViewById(R.id.icon);
+            TextView mTitle = view.findViewById(R.id.title);
+            TextView mSubTitle = view.findViewById(R.id.subTitle);
+
+            mImageView.setImageResource(images[position]);
+            mTitle.setText(names[position]);
+            mSubTitle.setText(dates[position]);
+            return view;
+        }
     }
 }

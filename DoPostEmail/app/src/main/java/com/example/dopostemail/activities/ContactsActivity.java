@@ -17,13 +17,62 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.model.Contact;
 
 public class ContactsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
+
+    ListView mListView;
+
+    int[] images  = {R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon,
+            R.drawable.contacts_icon};
+
+    String[] names = {"Alexander",
+            "John",
+            "Emily",
+            "Oliver",
+            "Thomas",
+            "Charlie",
+            "Phillip",
+            "Amelia",
+            "Margaret",
+            "Batman",
+            "Bessy",
+            "Minnie Mouse"};
+
+    String[] emails = {"alex@gmail.com",
+            "john@gmail.com",
+            "emma12@gmail.com",
+            "oli998@gmail.com",
+            "thomas123@gmail.com",
+            "charlie111@gmail.com",
+            "phillip123@gmail.com",
+            "amelia.s@gmail.com",
+            "margaretwhite@gmail.com",
+            "batman11@gmail.com",
+            "bessy77@gmail.com",
+            "minniemouse@gmail.com"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -32,6 +81,22 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_contacts);
         setSupportActionBar(toolbar);
+
+        mListView = findViewById(R.id.list_view);
+
+        CustomAdapter customAdapter = new CustomAdapter();
+        mListView.setAdapter(customAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
+                startActivity(i);
+
+
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
@@ -117,6 +182,42 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onDestroy(){
         super.onDestroy();
+    }
+
+    class CustomAdapter extends BaseAdapter {
+
+
+
+        @Override
+        public int getCount() {
+            return images.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+
+            View view = getLayoutInflater().inflate(R.layout.activity_listview, null);
+
+            ImageView mImageView = view.findViewById(R.id.icon);
+            TextView mTitle = view.findViewById(R.id.title);
+            TextView mSubTitle = view.findViewById(R.id.subTitle);
+
+            mImageView.setImageResource(images[position]);
+            mTitle.setText(names[position]);
+            mSubTitle.setText(emails[position]);
+            return view;
+        }
     }
 
 }

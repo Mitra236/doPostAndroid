@@ -90,21 +90,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_new:
-                Intent intent = new Intent(FoldersActivity.this, CreateFolderActivity.class);
-                startActivity(intent);
-        }
-        return true;
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_folders, menu);
-        return true;
-    }
 
     @Override
     protected void onStart(){

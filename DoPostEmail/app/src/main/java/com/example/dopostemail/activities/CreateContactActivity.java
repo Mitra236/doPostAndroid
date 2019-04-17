@@ -1,5 +1,6 @@
 package com.example.dopostemail.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,8 +20,13 @@ public class CreateContactActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_create_contact);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CreateContactActivity.this, ContactsActivity.class);
+                startActivity(i);
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
     }

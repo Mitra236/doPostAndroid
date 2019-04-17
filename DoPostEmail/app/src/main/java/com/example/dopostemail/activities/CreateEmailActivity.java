@@ -1,11 +1,14 @@
 package com.example.dopostemail.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
@@ -20,8 +23,13 @@ public class CreateEmailActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_create_emails);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+                startActivity(i);
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
     }

@@ -1,9 +1,11 @@
 package com.example.dopostemail.activities;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +17,7 @@ import com.example.dopostemail.model.Message;
 
 
 public class EmailActivity extends AppCompatActivity {
-    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
+    Contact conTemp = new Contact(1, "From: Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
    Message messageTemp = new Message(1, "Subject: Message content", conTemp, "This is some message", "Date: 2019-01-29 13:24");
 
     @Override
@@ -27,8 +29,15 @@ public class EmailActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_email);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EmailActivity.this, EmailsActivity.class);
+                startActivity(i);
+            }
+        });
+
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
@@ -56,6 +65,7 @@ public class EmailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+
             case R.id.action_replay:
                 Toast.makeText(getApplicationContext(), "Replied", Toast.LENGTH_SHORT).show();
                 return true;
@@ -66,7 +76,7 @@ public class EmailActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Replied to all", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_attach:
-                Toast.makeText(getApplicationContext(), "Files Attached", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Attachment saved", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_forward:
                 Toast.makeText(getApplicationContext(), "Forwarded", Toast.LENGTH_SHORT).show();

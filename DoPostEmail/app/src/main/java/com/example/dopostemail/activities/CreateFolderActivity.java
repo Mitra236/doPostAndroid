@@ -20,8 +20,13 @@ public class CreateFolderActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_create_folder);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CreateFolderActivity.this, FoldersActivity.class);
+                startActivity(i);
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
     }

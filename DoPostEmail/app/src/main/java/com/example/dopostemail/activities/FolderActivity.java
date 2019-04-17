@@ -1,5 +1,6 @@
 package com.example.dopostemail.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,8 +25,13 @@ public class FolderActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_folder);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
+                startActivity(i);
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 

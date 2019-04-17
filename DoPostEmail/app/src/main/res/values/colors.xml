@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<color name="colorPrimary">#AFAFAF</color>
-<color name="colorPrimaryDark">#AFAFAF</color>
-<color name="colorAccent">#50A6DB</color>
-<color name="colorToolbar">#50A6DB</color>
-<color name="colorWhite">#FFFFFF</color>
-<color name="colorSidebar">#FFFFFF</color>
-<color name ="colorGray">#AFAFAF</color>
+    <color name="colorPrimary">#AFAFAF</color>
+    <color name="colorPrimaryDark">#AFAFAF</color>
+    <color name="colorAccent">#50A6DB</color>
+    <color name="colorToolbar">#50A6DB</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorSidebar">#FFFFFF</color>
+    <color name ="colorGray">#AFAFAF</color>
     <color name="colorStatusBar">#4895C5</color>
+    <color name="colorListText">#808080</color>
 </resources>

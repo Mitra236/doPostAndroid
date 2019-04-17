@@ -26,8 +26,13 @@ public class ContactActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_contact);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
+                startActivity(i);
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
@@ -66,14 +71,7 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-        Button back = (Button)findViewById(R.id.button_back_c);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ContactActivity.this, "Back", Toast.LENGTH_SHORT).show();
 
-            }
-        });
 
 
     }

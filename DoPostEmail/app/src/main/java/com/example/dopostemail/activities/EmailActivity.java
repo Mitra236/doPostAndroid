@@ -17,8 +17,8 @@ import com.example.dopostemail.model.Message;
 
 
 public class EmailActivity extends AppCompatActivity {
-    Contact conTemp = new Contact(1, "From: Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
-   Message messageTemp = new Message(1, "Subject: Message content", conTemp, "This is some message", "Date: 2019-01-29 13:24");
+//    Contact conTemp = new Contact(1, "From: Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
+//   Message messageTemp = new Message(1, "Subject: Message content", conTemp, "This is some message", "Date: 2019-01-29 13:24");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +42,17 @@ public class EmailActivity extends AppCompatActivity {
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
         TextView subject = findViewById(R.id.textSubject);
-        subject.setText(messageTemp.getSubject());
-
         TextView dateTime = findViewById(R.id.textDate);
-        dateTime.setText(messageTemp.getDateTime());
-
         TextView from = findViewById(R.id.textFrom);
-        from.setText(messageTemp.getFrom().getFirstName());
-
         TextView message = findViewById(R.id.textMessage);
-        message.setText(messageTemp.getContent());
+
+        Bundle bundle = getIntent().getExtras();
+        Message m = (Message)bundle.getSerializable("messages");
+
+        subject.setText("Subject: " + m.getSubject());
+        dateTime.setText("Date: " + m.getDateTime());
+        from.setText("From: " + m.getFrom().getFirstName());
+        message.setText(m.getContent());
 
     }
 

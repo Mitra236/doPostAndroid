@@ -1,8 +1,9 @@
 package com.example.dopostemail.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Contact {
+public class Contact implements Serializable {
 
     private int id;
     private String firstName;

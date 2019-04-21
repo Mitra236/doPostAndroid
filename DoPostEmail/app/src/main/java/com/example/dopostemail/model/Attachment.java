@@ -1,18 +1,21 @@
 package com.example.dopostemail.model;
 
-public class Attachment {
+import java.io.Serializable;
+
+public class Attachment implements Serializable {
 
     private int id;
-    private String[] data;
+    private String data;
     private String type;
     private String name;
     private Message message;
 
-    public Attachment(int id, String[] data, String type, String name) {
+    public Attachment(int id, String data, String type, String name, Message message) {
         this.id = id;
         this.data = data;
         this.type = type;
         this.name = name;
+        this.message = message;
     }
 
     public Attachment() {
@@ -26,11 +29,11 @@ public class Attachment {
         this.id = id;
     }
 
-    public String[] getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(String[] data) {
+    public void setData(String data) {
         this.data = data;
     }
 

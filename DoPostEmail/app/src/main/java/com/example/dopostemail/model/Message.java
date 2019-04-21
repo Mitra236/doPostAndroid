@@ -1,11 +1,14 @@
 package com.example.dopostemail.model;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable {
     private int id;
     private Contact from;
     private ArrayList<Contact> to;
@@ -35,13 +38,7 @@ public class Message {
         this.account = account;
     }
 
-    public Message(int id, String subject, Contact from, String content, String dateTime){
-        this.id = id;
-        this.subject = subject;
-        this.from = from;
-        this.content = content;
-        this.dateTime = dateTime;
-    }
+
 
     public Message() {
     }

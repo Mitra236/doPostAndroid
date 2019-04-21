@@ -1,6 +1,8 @@
 package com.example.dopostemail.model;
 
-public class Rule {
+import java.io.Serializable;
+
+public class Rule implements Serializable {
 
     private int id;
     private Condition condition;

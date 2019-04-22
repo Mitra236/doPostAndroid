@@ -13,8 +13,9 @@
         android:id="@+id/textSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="100dp"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_marginTop="80dp"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -22,15 +23,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="190dp"
         android:layout_marginLeft="10dp"/>
 
     <TextView
         android:id="@+id/textFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="160dp"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_marginTop="130dp"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -38,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="190dp"
+        android:layout_marginTop="160dp"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -65,13 +67,29 @@
         android:layout_marginTop="280dp"
         android:layout_marginLeft="10dp"/>
 
+    <TextView
+        android:id="@+id/textAttachment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="310dp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/textFolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="340dp"
+        android:layout_marginLeft="10dp"/>
+
 
     <View
         android:id="@+id/SplitLine_hor1"
         android:layout_width="match_parent"
         android:layout_height= "1dp"
         android:background="@color/colorGray"
-        android:layout_marginTop="310dp"
+        android:layout_marginTop="370dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
 
@@ -81,16 +99,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="380dp"
         android:layout_marginLeft="10dp"/>
 
-    <TextView
-        android:id="@+id/textAttachment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:layout_marginTop="350dp"
-        android:layout_marginLeft="10dp"/>
 
 
 </RelativeLayout>

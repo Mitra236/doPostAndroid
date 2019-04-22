@@ -18,6 +18,8 @@ import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Tag;
 
+import org.w3c.dom.Text;
+
 
 public class EmailActivity extends AppCompatActivity {
 
@@ -52,31 +54,41 @@ public class EmailActivity extends AppCompatActivity {
         TextView to = findViewById(R.id.textTo);
         TextView cc = findViewById(R.id.textCC);
         TextView bcc = findViewById(R.id.textBcc);
+        TextView folder = findViewById(R.id.textFolder);
 
         Bundle bundle = getIntent().getExtras();
-        Message m = (Message)bundle.getSerializable("messages");
+        Message m = (Message) bundle.getSerializable("messages");
 
-        subject.setText("Subject: " + m.getSubject());
+        subject.setText(m.getSubject());
 
         StringBuilder builder3 = new StringBuilder();
         builder3.append("To: ");
-        for(Contact me: m.getTo()) {
+        for (Contact me : m.getTo()) {
             to.setText(builder3.append(me.getFirstName() + " "));
         }
 
         StringBuilder builder4 = new StringBuilder();
         builder4.append("Cc: ");
-        for(Contact me: m.getCc()) {
-
+        if (!m.getCc().isEmpty()) {
+            for (Contact me : m.getCc()) {
                 cc.setText(builder4.append(me.getFirstName() + ", "));
+            }
 
+        }
+            else{
+                 cc.setText(builder4);
         }
 
         StringBuilder builder5 = new StringBuilder();
         builder5.append("Bcc: ");
-        for(Contact me: m.getBcc()) {
+        if(!m.getBcc().isEmpty()) {
+            for(Contact me: m.getBcc()) {
+
                 bcc.setText(builder5.append(me.getFirstName() + ", "));
 
+            }
+        }else{
+            bcc.setText(builder5);
         }
 
         StringBuilder builder = new StringBuilder();
@@ -87,13 +99,15 @@ public class EmailActivity extends AppCompatActivity {
 
         StringBuilder builder2 = new StringBuilder();
         builder2.append("Attachments: ");
-        for(Attachment a: m.getAttachments()){
-            attachment.setText(builder2.append(a.getName() + ", "));
-        }
+        int count;
+        count = m.getAttachments().size();
+        attachment.setText(builder2.append(count));
+
 
         dateTime.setText("Date: " + m.getDateTime());
         from.setText("From: " + m.getFrom().getFirstName());
         message.setText(m.getContent());
+        folder.setText("Folder: " + m.getFolder().getName());
 
     }
 

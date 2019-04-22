@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,14 +12,15 @@ import android.widget.Toast;
 
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.model.Attachment;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.Tag;
 
 
 public class EmailActivity extends AppCompatActivity {
-//    Contact conTemp = new Contact(1, "From: Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
-//   Message messageTemp = new Message(1, "Subject: Message content", conTemp, "This is some message", "Date: 2019-01-29 13:24");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,50 @@ public class EmailActivity extends AppCompatActivity {
         TextView dateTime = findViewById(R.id.textDate);
         TextView from = findViewById(R.id.textFrom);
         TextView message = findViewById(R.id.textMessage);
+        TextView tag = findViewById(R.id.textTag);
+        TextView attachment = findViewById(R.id.textAttachment);
+        TextView to = findViewById(R.id.textTo);
+        TextView cc = findViewById(R.id.textCC);
+        TextView bcc = findViewById(R.id.textBcc);
 
         Bundle bundle = getIntent().getExtras();
         Message m = (Message)bundle.getSerializable("messages");
 
         subject.setText("Subject: " + m.getSubject());
+
+        StringBuilder builder3 = new StringBuilder();
+        builder3.append("To: ");
+        for(Contact me: m.getTo()) {
+            to.setText(builder3.append(me.getFirstName() + " "));
+        }
+
+        StringBuilder builder4 = new StringBuilder();
+        builder4.append("Cc: ");
+        for(Contact me: m.getCc()) {
+
+                cc.setText(builder4.append(me.getFirstName() + ", "));
+
+        }
+
+        StringBuilder builder5 = new StringBuilder();
+        builder5.append("Bcc: ");
+        for(Contact me: m.getBcc()) {
+                bcc.setText(builder5.append(me.getFirstName() + ", "));
+
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("Tags: ");
+        for(Tag me: m.getTag()) {
+            tag.setText(builder.append(me.getName() + ", "));
+        }
+
+        StringBuilder builder2 = new StringBuilder();
+        builder2.append("Attachments: ");
+        for(Attachment a: m.getAttachments()){
+            attachment.setText(builder2.append(a.getName() + ", "));
+        }
+
         dateTime.setText("Date: " + m.getDateTime());
         from.setText("From: " + m.getFrom().getFirstName());
         message.setText(m.getContent());

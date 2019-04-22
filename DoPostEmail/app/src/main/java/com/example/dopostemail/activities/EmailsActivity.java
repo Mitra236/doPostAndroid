@@ -69,7 +69,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     public Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
     public Contact conTemp2 = new Contact(2, "Aleksandar", "Aleksic", "Acoo", "aco123@gmail.com", Format.HTML);
     public Contact conTemp3 = new Contact(3, "Maja", "Maric", "Maki", "maki123@gmail.com", Format.HTML);
-    public Contact conTemp4 = new Contact(4, "Stefan", "Stevic", "Stefi", "stefi123@gmail.com", Format.HTML);
+    public Contact conTemp4 = new Contact(4, "me", "Stevic", "Stefi", "stefi123@gmail.com", Format.HTML);
     public Contact conTemp5 = new Contact(5, "Emily", "Emmy", "Emily", "emily123@gmail.com", Format.HTML);
 
     public Tag tagTemp = new Tag(1, "First Tag", m);
@@ -83,9 +83,9 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     private Rule rule2 = new Rule(2, Condition.FROM, Operation.DELETE);
     private Rule rule3 = new Rule(3, Condition.SUBJECT, Operation.COPY);
 
-    public Folder folder = new Folder(1, "Drafts", null, rule3);
-    public Folder folder2 = new Folder(2, "Promotions", null, rule);
-    public Folder folder3 = new Folder(3, "Trash", null, rule2);
+    public Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(), rule3);
+    public Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), rule);
+    public Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), rule2);
     public Folder folder4 = new Folder(4, "Electronics", folders, rule2);
     public Folder folder5 = new Folder(5, "Recent promotions", folders, rule2);
 
@@ -94,8 +94,8 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     public Account account3 = new Account(3, "smtp", "pop3", "aco", "aco", m3);
 
     public Message messageTemp = new Message(1, conTemp, to, cc, bcc,  "2019-02-13 09:50", "Matematika 1" , "This is some message", tags, attachments, folder, account );
-    public Message messageTemp2 = new Message(2, conTemp2, to2, null, bcc2, "2019-01-29 13:24",  "Osnove programiranja", "Just a dumb message",tags2, attachments2, folder2, account2 );
-    public Message messageTemp3 = new Message(3,  conTemp3, to3, cc2, null,"2019-03-19 22:22", "Sistemski softver", "Another dumb message", tags3, attachments3, folder3, account3);
+    public Message messageTemp2 = new Message(2, conTemp2, to2, new ArrayList<Contact>(), bcc2, "2019-01-29 13:24",  "Osnove programiranja", "Just a dumb message",tags2, attachments2, folder2, account2 );
+    public Message messageTemp3 = new Message(3,  conTemp3, to3, cc2, new ArrayList<Contact>(),"2019-03-19 22:22", "Sistemski softver", "Another dumb message", tags3, attachments3, folder3, account3);
 
     public Attachment attachment = new Attachment(1, "some data", "type1", "attachment1", messageTemp );
     public Attachment attachment2 = new Attachment(2, "some data", "type2", "attachment2", messageTemp2 );
@@ -125,11 +125,10 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         tags3.add(tagTemp3);
         tags3.add(tagTemp5);
 
-        to.add(conTemp);
         to.add(conTemp4);
-        to2.add(conTemp2);
+        to2.add(conTemp4);
         to2.add(conTemp5);
-        to3.add(conTemp3);
+        to3.add(conTemp4);
         cc.add(conTemp3);
         cc.add(conTemp5);
         bcc.add(conTemp5);

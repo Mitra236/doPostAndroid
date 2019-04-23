@@ -89,13 +89,12 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     public Folder folder4 = new Folder(4, "Electronics", folders, rule2);
     public Folder folder5 = new Folder(5, "Recent promotions", folders, rule2);
 
-    public Account account = new Account(1, "smtp", "pop3", "maja", "123", m);
-    public Account account2 = new Account(2, "smtp", "pop3", "pera", "pera", m2);
-    public Account account3 = new Account(3, "smtp", "pop3", "aco", "aco", m3);
+    public Account account = new Account(1, "smtp", "pop3", "myemail@gmail.com", "123", m);
+
 
     public Message messageTemp = new Message(1, conTemp, to, cc, bcc,  "2019-02-13 09:50", "Matematika 1" , "This is some message", tags, attachments, folder, account );
-    public Message messageTemp2 = new Message(2, conTemp2, to2, new ArrayList<Contact>(), bcc2, "2019-01-29 13:24",  "Osnove programiranja", "Just a dumb message",tags2, attachments2, folder2, account2 );
-    public Message messageTemp3 = new Message(3,  conTemp3, to3, cc2, new ArrayList<Contact>(),"2019-03-19 22:22", "Sistemski softver", "Another dumb message", tags3, attachments3, folder3, account3);
+    public Message messageTemp2 = new Message(2, conTemp2, to2, new ArrayList<Contact>(), bcc2, "2019-01-29 13:24",  "Osnove programiranja", "Just a dumb message",tags2, attachments2, folder2, account);
+    public Message messageTemp3 = new Message(3,  conTemp3, to3, cc2, new ArrayList<Contact>(),"2019-03-19 22:22", "Sistemski softver", "Another dumb message", tags3, attachments3, folder3, account);
 
     public Attachment attachment = new Attachment(1, "some data", "type1", "attachment1", messageTemp );
     public Attachment attachment2 = new Attachment(2, "some data", "type2", "attachment2", messageTemp2 );

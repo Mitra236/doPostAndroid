@@ -23,38 +23,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.adapter.ContactsAdapter;
+import com.example.dopostemail.adapter.CustomAdapter;
+import com.example.dopostemail.adapter.FoldersAdapter;
+import com.example.dopostemail.model.Condition;
+import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Folder;
+import com.example.dopostemail.model.Operation;
+import com.example.dopostemail.model.Rule;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FoldersActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
 
-    ListView mListView;
+    private ListView mListView;
+    private FoldersAdapter adapter;
+    private List<Folder> folders;
 
-    int[] images  = {R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon,
-            R.drawable.foldericon};
 
-    String[] names = {"Folder 1",
-            "Folder 2",
-            "Folder 3",
-            "Folder 4",
-            "Folder 5",
-            "Folder 6",
-            "Folder 7",
-            "Folder 8",
-            "Folder 9",
-            "Folder 10",
-            "Folder 11",
-            "Folder 12"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +57,37 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
         mListView = findViewById(R.id.list_view);
 
-        CustomAdapter customAdapter = new CustomAdapter();
-        mListView.setAdapter(customAdapter);
+        Rule rule = new Rule(1, Condition.TO, Operation.MOVE);
+        Rule rule2 = new Rule(2, Condition.FROM, Operation.DELETE);
+        Rule rule3 = new Rule(3, Condition.SUBJECT, Operation.COPY);
+
+        Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(), rule3);
+        Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), rule);
+        Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), rule2);
+        Folder folder4 = new Folder(4, "Electronics", new ArrayList<Folder>(), rule2);
+        Folder folder5 = new Folder(5, "Recent promotions", new ArrayList<Folder>(), rule2);
+
+        folders = new ArrayList<>();
+        folders.add(folder);
+        folders.add(folder2);
+        folders.add(folder3);
+        folders.add(folder4);
+        folders.add(folder5);
+
+        adapter = new FoldersAdapter(getApplicationContext(), folders);
+        mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Folder f = folders.get(position);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("folders", f);
+
                 Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
+                i.putExtras(bundle);
                 startActivity(i);
 
 
@@ -167,37 +180,6 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         super.onDestroy();
     }
 
-    class CustomAdapter extends BaseAdapter {
 
 
-
-        @Override
-        public int getCount() {
-            return images.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-
-            View view = getLayoutInflater().inflate(R.layout.activity_listview, null);
-
-            ImageView mImageView = view.findViewById(R.id.icon);
-            TextView mTitle = view.findViewById(R.id.title);
-
-            mImageView.setImageResource(images[position]);
-            mTitle.setText(names[position]);
-            return view;
-        }
-    }
 }

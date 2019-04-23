@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.adapter.ContactsAdapter;
 import com.example.dopostemail.adapter.CustomAdapter;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Format;
@@ -40,7 +41,7 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
     private ActionBarDrawerToggle toggle;
 
     ListView mListView;
-    private com.example.dopostemail.adapter.CustomAdapter adapter;
+    private ContactsAdapter adapter;
     private List<Contact> contacts;
 
 
@@ -106,8 +107,8 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         contacts.add(contact2);
         contacts.add(contact3);
 
-        CustomAdapter customAdapter = new CustomAdapter();
-        mListView.setAdapter(customAdapter);
+        adapter = new ContactsAdapter(getApplicationContext(), contacts);
+        mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -214,40 +215,40 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         super.onDestroy();
     }
 
-    class CustomAdapter extends BaseAdapter {
-
-
-
-        @Override
-        public int getCount() {
-            return images.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-
-            View view = getLayoutInflater().inflate(R.layout.activity_listview, null);
-
-            ImageView mImageView = view.findViewById(R.id.icon);
-            TextView mTitle = view.findViewById(R.id.title);
-            TextView mSubTitle = view.findViewById(R.id.subTitle);
-
-            mImageView.setImageResource(images[position]);
-            mTitle.setText(names[position]);
-            mSubTitle.setText(emails[position]);
-            return view;
-        }
-    }
+//    class CustomAdapter extends BaseAdapter {
+//
+//
+//
+//        @Override
+//        public int getCount() {
+//            return images.length;
+//        }
+//
+//        @Override
+//        public Object getItem(int position) {
+//            return null;
+//        }
+//
+//        @Override
+//        public long getItemId(int position) {
+//            return 0;
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//
+//
+//            View view = getLayoutInflater().inflate(R.layout.activity_listview, null);
+//
+//            ImageView mImageView = view.findViewById(R.id.icon);
+//            TextView mTitle = view.findViewById(R.id.title);
+//            TextView mSubTitle = view.findViewById(R.id.subTitle);
+//
+//            mImageView.setImageResource(images[position]);
+//            mTitle.setText(names[position]);
+//            mSubTitle.setText(emails[position]);
+//            return view;
+//        }
+//    }
 
 }

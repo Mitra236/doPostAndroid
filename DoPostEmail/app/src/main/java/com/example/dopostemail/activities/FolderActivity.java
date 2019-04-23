@@ -15,7 +15,6 @@ import com.example.dopostemail.model.Folder;
 
 public class FolderActivity extends AppCompatActivity {
 
-    Folder folderTemp = new Folder(1, "Folder 1");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,13 @@ public class FolderActivity extends AppCompatActivity {
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
         TextView tbName = findViewById(R.id.folder_name);
-        tbName.setText(folderTemp.getName());
+
+        Bundle bundle = getIntent().getExtras();
+        Folder f = (Folder)bundle.getSerializable("folders");
+
+        tbName.setText("Folder name: " + f.getName());
+
+
     }
 
     @Override

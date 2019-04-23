@@ -266,5 +266,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         super.onDestroy();
     }
 
-
+    public ArrayList<Folder> getFolders() {
+        return folders;
+    }
 }

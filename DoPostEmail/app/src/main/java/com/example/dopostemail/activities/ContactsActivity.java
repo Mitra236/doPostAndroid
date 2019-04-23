@@ -114,10 +114,10 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Contact c = contacts.get(position);
+                Contact con = contacts.get(position);
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("contacts", c);
+                bundle.putSerializable("contacts", con);
 
                 Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
                 i.putExtras(bundle);

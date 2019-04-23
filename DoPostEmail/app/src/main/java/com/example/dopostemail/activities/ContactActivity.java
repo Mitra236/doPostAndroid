@@ -12,10 +12,11 @@ import android.widget.Toast;
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Format;
+import com.example.dopostemail.model.Message;
 
 public class ContactActivity extends AppCompatActivity {
 
-    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
+//    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
 
 
     @Override
@@ -36,20 +37,28 @@ public class ContactActivity extends AppCompatActivity {
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
+        Bundle bundle = getIntent().getExtras();
+        Contact c = (Contact) bundle.getSerializable("contacts");
+
         EditText tbFirstName = findViewById(R.id.firstNameEdit);
-        tbFirstName.setText(conTemp.getFirstName());
+        tbFirstName.setText(c.getFirstName());
 
         EditText tbLastName = findViewById(R.id.lastNameEdit);
-        tbLastName.setText(conTemp.getLastName());
+        tbLastName.setText(c.getLastName());
 
         EditText tbUsername = findViewById(R.id.usernameEdit);
-        tbUsername.setText(conTemp.getDisplay());
+        tbUsername.setText(c.getDisplay());
 
         EditText tbEmail = findViewById(R.id.emailEdit);
-        tbEmail.setText(conTemp.getEmail());
+        tbEmail.setText(c.getEmail());
 
         EditText tbFormat = findViewById(R.id.formatEdit);
-        tbFormat.setText(conTemp.getFormat().toString());
+        tbFormat.setText(c.getFormat().toString());
+
+
+
+
+
 
     }
 

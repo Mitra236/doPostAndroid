@@ -26,52 +26,64 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.adapter.CustomAdapter;
 import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Format;
+import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.Photo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
 
     ListView mListView;
+    private com.example.dopostemail.adapter.CustomAdapter adapter;
+    private List<Contact> contacts;
 
-    int[] images  = {R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon,
-            R.drawable.contacts_icon};
 
-    String[] names = {"Alexander",
-            "John",
-            "Emily",
-            "Oliver",
-            "Thomas",
-            "Charlie",
-            "Phillip",
-            "Amelia",
-            "Margaret",
-            "Batman",
-            "Bessy",
-            "Minnie Mouse"};
 
-    String[] emails = {"alex@gmail.com",
-            "john@gmail.com",
-            "emma12@gmail.com",
-            "oli998@gmail.com",
-            "thomas123@gmail.com",
-            "charlie111@gmail.com",
-            "phillip123@gmail.com",
-            "amelia.s@gmail.com",
-            "margaretwhite@gmail.com",
-            "batman11@gmail.com",
-            "bessy77@gmail.com",
-            "minniemouse@gmail.com"};
+
+//    int[] images  = {R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon,
+//            R.drawable.contacts_icon};
+
+//    String[] names = {"Alexander",
+//            "John",
+//            "Emily",
+//            "Oliver",
+//            "Thomas",
+//            "Charlie",
+//            "Phillip",
+//            "Amelia",
+//            "Margaret",
+//            "Batman",
+//            "Bessy",
+//            "Minnie Mouse"};
+
+//    String[] emails = {"alex@gmail.com",
+//            "john@gmail.com",
+//            "emma12@gmail.com",
+//            "oli998@gmail.com",
+//            "thomas123@gmail.com",
+//            "charlie111@gmail.com",
+//            "phillip123@gmail.com",
+//            "amelia.s@gmail.com",
+//            "margaretwhite@gmail.com",
+//            "batman11@gmail.com",
+//            "bessy77@gmail.com",
+//            "minniemouse@gmail.com"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -84,6 +96,16 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 
         mListView = findViewById(R.id.list_view);
 
+//        Photo photo1 = new Photo(1, R.drawable.pikachu);
+        Contact contact1 = new Contact(1, "Pera", "Rub", "pexpex", "pex123@gmail.com", Format.HTML);
+        Contact contact2 = new Contact(2, "Srdjan", "Nikolic", "nik12", "nik@gmail.com", Format.PLAIN);
+        Contact contact3 = new Contact(3, "Milos", "Weis", "lolwut", "lolwut@gmail.com", Format.HTML);
+
+        contacts = new ArrayList<>();
+        contacts.add(contact1);
+        contacts.add(contact2);
+        contacts.add(contact3);
+
         CustomAdapter customAdapter = new CustomAdapter();
         mListView.setAdapter(customAdapter);
 
@@ -91,12 +113,20 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Contact c = contacts.get(position);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("contacts", c);
+
                 Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
+                i.putExtras(bundle);
                 startActivity(i);
 
 
             }
         });
+
+
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 

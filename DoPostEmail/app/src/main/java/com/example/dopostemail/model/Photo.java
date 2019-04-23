@@ -14,6 +14,11 @@ public class Photo {
         this.contact = contact;
     }
 
+    public Photo(int id, String path) {
+        this.id = id;
+        this.path = path;
+    }
+
     public int getId() {
         return id;
     }

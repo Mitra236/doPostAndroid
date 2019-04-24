@@ -17,7 +17,7 @@ public class Contact implements Serializable {
     private ArrayList<Message> cc;
     private ArrayList<Message> bcc;
 
-    public Contact(int id, String firstName, String lastName, String display, String email, Format format, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
+    public Contact(int id, String firstName, String lastName, String display, String email, Format format, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc, Photo photo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,6 +28,7 @@ public class Contact implements Serializable {
         this.to = to;
         this.cc = cc;
         this.bcc = bcc;
+        this.photo = photo;
     }
 
     public Contact(int id, String firstName, String lastName, String display, String email, Format format, Photo photo) {

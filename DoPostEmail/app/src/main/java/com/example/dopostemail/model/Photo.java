@@ -2,19 +2,19 @@ package com.example.dopostemail.model;
 
 public class Photo {
     private int id;
-    private String path;
+    private int path;
     private Contact contact;
 
     public Photo() {
     }
 
-    public Photo(int id, String path, Contact contact) {
+    public Photo(int id, int path, Contact contact) {
         this.id = id;
         this.path = path;
         this.contact = contact;
     }
 
-    public Photo(int id, String path) {
+    public Photo(int id, int path) {
         this.id = id;
         this.path = path;
     }
@@ -27,11 +27,11 @@ public class Photo {
         this.id = id;
     }
 
-    public String getPath() {
+    public int getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(int path) {
         this.path = path;
     }
 

@@ -1,49 +1,66 @@
 package com.example.dopostemail.adapter;
 
 import android.content.Context;
+
+import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.dopostemail.R;
+
+import com.example.dopostemail.activities.FolderActivity;
 import com.example.dopostemail.model.Folder;
+import java.util.ArrayList;
 
-import java.util.List;
+public class FoldersAdapter extends ArrayAdapter<Folder> {
 
-public class FoldersAdapter extends BaseAdapter {
+    private Context context;
+    private int resource;
+    private ArrayList<Folder> folders;
 
-    private Context mContext;
-    private List<Folder> folderList;
-
-    public FoldersAdapter(Context mContext, List<Folder> folderList) {
-        this.mContext = mContext;
-        this.folderList = folderList;
-    }
-
-    public int getCount() {
-        return folderList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return folderList.get(position);
+    public FoldersAdapter(Context context, int resource, ArrayList<Folder> folders) {
+        super(context, resource, folders);
+        this.context = context;
+        this.resource = resource;
+        this.folders = folders;
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public View getView(final int position, View convertView,ViewGroup parent) {
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        View view = View.inflate(mContext, R.layout.activity_listview, null);
+//        TextView fTitle = view.findViewById(R.id.title);
+        View view = View.inflate(context, R.layout.activity_listview, null);
 
         TextView fTitle = view.findViewById(R.id.title);
-        fTitle.setText(folderList.get(position).getName());
+        fTitle.setText(folders.get(position).getName());
 
-        view.setTag(folderList.get(position).getId());
+        view.setTag(folders.get(position).getId());
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent e = new Intent(context.getApplicationContext(), FolderActivity.class);
+                e.putExtra("folder", position);
+                context.startActivity(e);
+            }
+        });
+
         return view;
+
+//        TextView txtNaslov = convertView.findViewById(R.id.folder_name);
+//        txtNaslov.setText(f.getName());
+
+//        convertView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent e = new Intent(context.getApplicationContext(), FolderActivity.class);
+//                e.putExtra("folder", position);
+//                context.startActivity(e);
+//            }
+//        });
+
     }
 }

@@ -44,6 +44,11 @@ public class Message implements Serializable {
         this.account = account;
     }
 
+    public Message(Contact from, String subject) {
+        this.from = from;
+        this.subject = subject;
+
+    }
 
 
     public Message() {

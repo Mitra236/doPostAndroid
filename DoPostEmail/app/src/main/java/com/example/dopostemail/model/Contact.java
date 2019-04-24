@@ -65,6 +65,10 @@ public class Contact implements Serializable {
         this.format = format;
     }
 
+    public Contact(String firstName){
+        this.firstName = firstName;
+    }
+
     public Photo getPhoto() {
         return photo;
     }

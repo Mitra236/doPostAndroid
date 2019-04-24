@@ -2,7 +2,6 @@ package com.example.dopostemail.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,33 +10,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dopostemail.R;
-import com.example.dopostemail.adapter.ContactsAdapter;
-import com.example.dopostemail.adapter.CustomAdapter;
 import com.example.dopostemail.adapter.FoldersAdapter;
-import com.example.dopostemail.model.Condition;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Dummy;
 import com.example.dopostemail.model.Folder;
-import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
-import com.example.dopostemail.model.Operation;
-import com.example.dopostemail.model.Rule;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FoldersActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -89,17 +73,13 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
         folder2.getFolders().addAll(folders)*/
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("folders", f);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("folders", f);
 
         ListView mListView = findViewById(R.id.list_view);
         ArrayList<Folder> folders = new Dummy().getFolders();
         FoldersAdapter fa = new FoldersAdapter(this, R.layout.activity_listview,folders);
         mListView.setAdapter(fa);
-
-
-            }
-        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
@@ -156,11 +136,8 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
                 break;
         }
 
-
         return true;
     }
-
-
 
     @Override
     protected void onStart(){
@@ -186,7 +163,4 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
     protected void onDestroy(){
         super.onDestroy();
     }
-
-
-
 }

@@ -27,15 +27,16 @@ public class FolderActivity extends AppCompatActivity {
         setTitle("Contact");
         setContentView(R.layout.activity_folder);
 
-        Toolbar toolbar = findViewById(R.id.nav_toolbar_folders);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
-                startActivity(i);
-            }
-        });
+//        Toolbar toolbar = findViewById(R.id.nav_toolbar_folders);
+//        setSupportActionBar(toolbar);
+//
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 

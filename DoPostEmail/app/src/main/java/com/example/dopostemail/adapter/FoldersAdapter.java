@@ -28,17 +28,11 @@ public class FoldersAdapter extends ArrayAdapter<Folder> {
         this.folders = folders;
     }
 
-    public int getCount() {
-        return folderList.size();
-    }
-
     @Override
-    public View getView(final int position,View convertView,ViewGroup parent) {
+    public View getView(final int position, View convertView,ViewGroup parent) {
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+//        TextView fTitle = view.findViewById(R.id.title);
+        View view = View.inflate(context, R.layout.activity_listview, null);
 
         TextView fTitle = view.findViewById(R.id.title);
         fTitle.setText(folders.get(position).getName());
@@ -54,7 +48,6 @@ public class FoldersAdapter extends ArrayAdapter<Folder> {
             }
         });
 
-        view.setTag(folderList.get(position).getId());
         return view;
 
 //        TextView txtNaslov = convertView.findViewById(R.id.folder_name);
@@ -69,7 +62,5 @@ public class FoldersAdapter extends ArrayAdapter<Folder> {
 //            }
 //        });
 
-
     }
 }
-

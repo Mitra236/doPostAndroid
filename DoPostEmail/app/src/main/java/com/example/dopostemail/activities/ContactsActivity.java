@@ -47,44 +47,6 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 
 
 
-//    int[] images  = {R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon};
-
-//    String[] names = {"Alexander",
-//            "John",
-//            "Emily",
-//            "Oliver",
-//            "Thomas",
-//            "Charlie",
-//            "Phillip",
-//            "Amelia",
-//            "Margaret",
-//            "Batman",
-//            "Bessy",
-//            "Minnie Mouse"};
-
-//    String[] emails = {"alex@gmail.com",
-//            "john@gmail.com",
-//            "emma12@gmail.com",
-//            "oli998@gmail.com",
-//            "thomas123@gmail.com",
-//            "charlie111@gmail.com",
-//            "phillip123@gmail.com",
-//            "amelia.s@gmail.com",
-//            "margaretwhite@gmail.com",
-//            "batman11@gmail.com",
-//            "bessy77@gmail.com",
-//            "minniemouse@gmail.com"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -97,15 +59,57 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 
         mListView = findViewById(R.id.list_view);
 
-//        Photo photo1 = new Photo(1, R.drawable.pikachu);
-        Contact contact1 = new Contact(1, "Pera", "Rub", "pexpex", "pex123@gmail.com", Format.HTML);
-        Contact contact2 = new Contact(2, "Srdjan", "Nikolic", "nik12", "nik@gmail.com", Format.PLAIN);
-        Contact contact3 = new Contact(3, "Milos", "Weis", "lolwut", "lolwut@gmail.com", Format.HTML);
+        Photo photo1 = new Photo(1, R.drawable.pikachu);
+        Photo photo2 = new Photo(1, R.drawable.contacts_icon);
+
+//        Message message1 = new Message(1, "Matematika 1", "This is some message");
+//        Message message2 = new Message(1, "Osnovne programiranja", "This is another message");
+//        Message message3 = new Message(1, "Sistemski softver", "This is (you guessed it) some message");
+
+        EmailsActivity em = new EmailsActivity();
+
+        Message message1 = em.messageTemp;
+        Message message2 = em.messageTemp2;
+        Message message3 = em.messageTemp3;
+
+        ArrayList<Message> to1 = new ArrayList<>();
+        ArrayList<Message> from1 = new ArrayList<>();
+        ArrayList<Message> cc1 = new ArrayList<>();
+        ArrayList<Message> bcc1 = new ArrayList<>();
+        ArrayList<Message> to2 = new ArrayList<>();
+        ArrayList<Message> from2 = new ArrayList<>();
+        ArrayList<Message> cc2 = new ArrayList<>();
+        ArrayList<Message> bcc2 = new ArrayList<>();
+
+        to1.add(message1);
+        to2.add(message2);
+        from1.add(message2);
+        from2.add(message1);
+        cc1.add(message1);
+        cc1.add(message2);
+        bcc1.add(message2);
+        bcc1.add(message1);
+        cc2.add(message3);
+        cc2.add(message2);
+        bcc2.add(message1);
+        bcc2.add(message2);
+        bcc2.add(message3);
+
+        Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN, photo1, to1, from1, cc1, bcc1);
+        Contact conTemp2 = new Contact(2, "Aleksandar", "Aleksic", "Acoo", "aco123@gmail.com", Format.HTML, photo2, to1, from2, cc1, bcc2);
+        Contact conTemp3 = new Contact(3, "Maja", "Maric", "Maki", "maki123@gmail.com", Format.HTML, photo2, to2, from1, cc2, bcc1);
+        Contact conTemp4 = new Contact(4, "me", "Stevic", "Stefi", "stefi123@gmail.com", Format.HTML, photo2, to1, from1, cc2, bcc2);
+        Contact conTemp5 = new Contact(5, "Emily", "Emmy", "Emily", "emily123@gmail.com", Format.HTML, photo2, to2, from2, cc1, bcc2);
+
+
+
 
         contacts = new ArrayList<>();
-        contacts.add(contact1);
-        contacts.add(contact2);
-        contacts.add(contact3);
+        contacts.add(conTemp);
+        contacts.add(conTemp2);
+        contacts.add(conTemp3);
+        contacts.add(conTemp4);
+        contacts.add(conTemp5);
 
         adapter = new ContactsAdapter(getApplicationContext(), contacts);
         mListView.setAdapter(adapter);

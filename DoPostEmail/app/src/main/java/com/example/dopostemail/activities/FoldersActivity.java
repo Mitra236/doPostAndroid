@@ -89,6 +89,8 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
         folder2.getFolders().addAll(folders)*/
 
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("folders", f);
 
         ListView mListView = findViewById(R.id.list_view);
         ArrayList<Folder> folders = new Dummy().getFolders();
@@ -96,6 +98,8 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         mListView.setAdapter(fa);
 
 
+            }
+        });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 

@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
@@ -15,8 +17,6 @@ import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
 
 public class ContactActivity extends AppCompatActivity {
-
-//    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
 
 
     @Override
@@ -40,6 +40,9 @@ public class ContactActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Contact c = (Contact) bundle.getSerializable("contacts");
 
+        ImageView img = findViewById(R.id.contact_icon);
+        img.setImageResource(c.getPhoto().getPath());
+
         EditText tbFirstName = findViewById(R.id.firstNameEdit);
         tbFirstName.setText(c.getFirstName());
 
@@ -55,11 +58,33 @@ public class ContactActivity extends AppCompatActivity {
         EditText tbFormat = findViewById(R.id.formatEdit);
         tbFormat.setText(c.getFormat().toString());
 
+        TextView twTo = findViewById(R.id.con_to);
+        TextView twFrom = findViewById(R.id.con_from);
+        TextView twCc = findViewById(R.id.con_cc);
+        TextView twBcc = findViewById(R.id.con_bcc);
 
+        StringBuilder builder1 = new StringBuilder();
+        builder1.append("To: ");
+        for (Message me : c.getTo()) {
+            twTo.setText(builder1.append(me.getSubject()  + ", "));
+        }
 
+        StringBuilder builder2 = new StringBuilder();
+        builder2.append("From: ");
+        for (Message me : c.getFrom()) {
+            twFrom.setText(builder2.append(me.getSubject()  + ", "));
+        }
 
-
-
+        StringBuilder builder3 = new StringBuilder();
+        builder3.append("Cc: ");
+        for (Message me : c.getCc()) {
+            twCc.setText(builder3.append(me.getSubject() + ", "));
+        }
+        StringBuilder builder4 = new StringBuilder();
+        builder4.append("Bcc: ");
+        for (Message me : c.getBcc()) {
+            twBcc.setText(builder4.append(me.getSubject() + ", "));
+        }
     }
 
     @Override

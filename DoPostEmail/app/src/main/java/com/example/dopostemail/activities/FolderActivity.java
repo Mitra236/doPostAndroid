@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class FolderActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +29,15 @@ public class FolderActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_folders);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
+                startActivity(i);
+            }
+        });
 
+        Utils.darkenStatusBar(this, R.color.colorToolbar);
 
         Intent i = getIntent();
         Bundle b = i.getExtras();

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Attachment;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Format;
@@ -55,6 +56,7 @@ public class EmailActivity extends AppCompatActivity {
         TextView cc = findViewById(R.id.textCC);
         TextView bcc = findViewById(R.id.textBcc);
         TextView folder = findViewById(R.id.textFolder);
+        TextView account = findViewById(R.id.textAccount);
 
         Bundle bundle = getIntent().getExtras();
         Message m = (Message) bundle.getSerializable("messages");
@@ -64,7 +66,7 @@ public class EmailActivity extends AppCompatActivity {
         StringBuilder builder3 = new StringBuilder();
         builder3.append("To: ");
         for (Contact me : m.getTo()) {
-            to.setText(builder3.append(me.getFirstName() + " "));
+            to.setText(builder3.append(me.getFirstName()  + ", "));
         }
 
         StringBuilder builder4 = new StringBuilder();
@@ -108,6 +110,7 @@ public class EmailActivity extends AppCompatActivity {
         from.setText("From: " + m.getFrom().getFirstName());
         message.setText(m.getContent());
         folder.setText("Folder: " + m.getFolder().getName());
+        account.setText(m.getAccount().getUsername());
 
     }
 

@@ -35,11 +35,24 @@
         android:id="@+id/subTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text=""
+        android:layout_toRightOf="@+id/icon"
         android:layout_below="@+id/title"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/icon"
         android:text=""
         android:textColor="@color/colorListText" />
+
+    <TextView android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="right"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@id/icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

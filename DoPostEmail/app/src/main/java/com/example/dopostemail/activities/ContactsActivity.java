@@ -100,11 +100,15 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         Photo photo1 = new Photo(1, R.drawable.pikachu);
         Photo photo2 = new Photo(1, R.drawable.contacts_icon);
 
-        Message message1 = new Message(1, "Matematika 1", "This is some message");
-        Message message2 = new Message(1, "Osnovne programiranja", "This is another message");
-        Message message3 = new Message(1, "Sistemski softver", "This is (you guessed it) some message");
+//        Message message1 = new Message(1, "Matematika 1", "This is some message");
+//        Message message2 = new Message(1, "Osnovne programiranja", "This is another message");
+//        Message message3 = new Message(1, "Sistemski softver", "This is (you guessed it) some message");
 
+        EmailsActivity em = new EmailsActivity();
 
+        Message message1 = em.messageTemp;
+        Message message2 = em.messageTemp2;
+        Message message3 = em.messageTemp3;
 
         ArrayList<Message> to1 = new ArrayList<>();
         ArrayList<Message> from1 = new ArrayList<>();

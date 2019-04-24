@@ -28,7 +28,10 @@ import com.example.dopostemail.adapter.CustomAdapter;
 import com.example.dopostemail.adapter.FoldersAdapter;
 import com.example.dopostemail.model.Condition;
 import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Dummy;
 import com.example.dopostemail.model.Folder;
+import com.example.dopostemail.model.Format;
+import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Operation;
 import com.example.dopostemail.model.Rule;
 
@@ -42,9 +45,10 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
     private ListView mListView;
     private FoldersAdapter adapter;
-    private List<Folder> folders;
-
-
+    private ArrayList<Folder> folders = new ArrayList<>();
+    private ArrayList<Message> messages = new ArrayList<>();
+    private ArrayList<Contact> contact1 = new ArrayList<>();
+    private ArrayList<Folder> folderss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,42 +61,41 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
         mListView = findViewById(R.id.list_view);
 
-        Rule rule = new Rule(1, Condition.TO, Operation.MOVE);
+        /*Rule rule = new Rule(1, Condition.TO, Operation.MOVE);
         Rule rule2 = new Rule(2, Condition.FROM, Operation.DELETE);
         Rule rule3 = new Rule(3, Condition.SUBJECT, Operation.COPY);
 
-        Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(), rule3);
-        Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), rule);
-        Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), rule2);
-        Folder folder4 = new Folder(4, "Electronics", new ArrayList<Folder>(), rule2);
-        Folder folder5 = new Folder(5, "Recent promotions", new ArrayList<Folder>(), rule2);
+        Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(), messages, rule3);
+        Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), messages, rule);
+        Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), messages, rule2);
+        Folder folder4 = new Folder(4, "Electronics", folders, messages, rule2);
+        Folder folder5 = new Folder(5, "Recent promotions", folders, messages, rule2);
 
-        folders = new ArrayList<>();
-        folders.add(folder);
-        folders.add(folder2);
-        folders.add(folder3);
+        Contact con1 = new Contact("John");
+        Message mess1 = new Message(con1, "You passed!Congrats!");
+
+        messages.add(mess1);
+
         folders.add(folder4);
         folders.add(folder5);
 
-        adapter = new FoldersAdapter(getApplicationContext(), folders);
-        mListView.setAdapter(adapter);
+        folderss = new ArrayList<>();
+        folderss.add(folder);
+        folderss.add(folder2);
+        folderss.add(folder3);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        folders.add(folder4);
+        folders.add(folder5);
 
-                Folder f = folders.get(position);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("folders", f);
-
-                Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
-                i.putExtras(bundle);
-                startActivity(i);
+        folder2.getFolders().addAll(folders)*/
 
 
-            }
-        });
+        ListView mListView = findViewById(R.id.list_view);
+        ArrayList<Folder> folders = new Dummy().getFolders();
+        FoldersAdapter fa = new FoldersAdapter(this, R.layout.activity_listview,folders);
+        mListView.setAdapter(fa);
+
+
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 

@@ -83,11 +83,11 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     private Rule rule2 = new Rule(2, Condition.FROM, Operation.DELETE);
     private Rule rule3 = new Rule(3, Condition.SUBJECT, Operation.COPY);
 
-    public Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(), rule3);
-    public Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), rule);
-    public Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), rule2);
-    public Folder folder4 = new Folder(4, "Electronics", folders, rule2);
-    public Folder folder5 = new Folder(5, "Recent promotions", folders, rule2);
+    public Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(),new ArrayList<Message>(),rule3);
+    public Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), new ArrayList<Message>(),rule);
+    public Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), new ArrayList<Message>(),rule2);
+    public Folder folder4 = new Folder(4, "Electronics", folders, new ArrayList<Message>(),rule2);
+    public Folder folder5 = new Folder(5, "Recent promotions", folders, new ArrayList<Message>(),rule2);
 
     public Account account = new Account(1, "smtp", "pop3", "maja", "123", m);
     public Account account2 = new Account(2, "smtp", "pop3", "pera", "pera", m2);

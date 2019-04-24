@@ -6,41 +6,45 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.adapter.CustomAdapter;
+import com.example.dopostemail.model.Dummy;
 import com.example.dopostemail.model.Folder;
+import com.example.dopostemail.model.Message;
+
+import java.util.ArrayList;
 
 public class FolderActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Folder");
+        setTitle("Contact");
         setContentView(R.layout.activity_folder);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_folder);
+        Toolbar toolbar = findViewById(R.id.nav_toolbar_folders);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
-                startActivity(i);
-            }
-        });
 
-        Utils.darkenStatusBar(this, R.color.colorToolbar);
 
-        TextView tbName = findViewById(R.id.folder_name);
+        Intent i = getIntent();
+        Bundle b = i.getExtras();
+        int position = b != null ? (int) b.get("folder"): -1;
 
-        Bundle bundle = getIntent().getExtras();
-        Folder f = (Folder)bundle.getSerializable("folders");
+        Dummy d = new Dummy();
+        Folder folder = position != -1 ? d.getFolders().get(position): new Folder();
 
-        tbName.setText("Folder name: " + f.getName());
+        TextView nazivFoldera = findViewById(R.id.folder_name);
+        nazivFoldera.setText(folder.getName());
 
+//        ListView mList = findViewById(R.id.list_view);
+        ListView mList = findViewById(R.id.listFolderMessages);
+        ArrayList<Message> messages = folder.getMessages();
+        CustomAdapter ela = new CustomAdapter(getApplicationContext(),messages);
+        mList.setAdapter(ela);
 
     }
 

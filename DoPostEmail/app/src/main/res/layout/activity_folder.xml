@@ -19,4 +19,12 @@
         android:layout_marginLeft="9dp"
         android:text="" />
 
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:id="@+id/listFolderMessages">
+
+    </ListView>
+
 </RelativeLayout>

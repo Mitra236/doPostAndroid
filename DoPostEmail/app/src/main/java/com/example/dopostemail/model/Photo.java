@@ -10,6 +10,15 @@ public class Photo implements Serializable {
     public Photo() {
     }
 
+<<<<<<< HEAD
+=======
+    public Photo(int id, int path, Contact contact) {
+        this.id = id;
+        this.path = path;
+        this.contact = contact;
+    }
+
+>>>>>>> 59a578e113e253a1134a47046c21aefe00625307
     public Photo(int id, int path) {
         this.id = id;
         this.path = path;

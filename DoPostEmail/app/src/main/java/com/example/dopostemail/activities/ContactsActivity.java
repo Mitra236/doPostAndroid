@@ -47,44 +47,6 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 
 
 
-//    int[] images  = {R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon,
-//            R.drawable.contacts_icon};
-
-//    String[] names = {"Alexander",
-//            "John",
-//            "Emily",
-//            "Oliver",
-//            "Thomas",
-//            "Charlie",
-//            "Phillip",
-//            "Amelia",
-//            "Margaret",
-//            "Batman",
-//            "Bessy",
-//            "Minnie Mouse"};
-
-//    String[] emails = {"alex@gmail.com",
-//            "john@gmail.com",
-//            "emma12@gmail.com",
-//            "oli998@gmail.com",
-//            "thomas123@gmail.com",
-//            "charlie111@gmail.com",
-//            "phillip123@gmail.com",
-//            "amelia.s@gmail.com",
-//            "margaretwhite@gmail.com",
-//            "batman11@gmail.com",
-//            "bessy77@gmail.com",
-//            "minniemouse@gmail.com"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -133,12 +95,12 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         bcc2.add(message2);
         bcc2.add(message3);
 
-
         Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN, photo1, to1, from1, cc1, bcc1);
         Contact conTemp2 = new Contact(2, "Aleksandar", "Aleksic", "Acoo", "aco123@gmail.com", Format.HTML, photo2, to1, from2, cc1, bcc2);
         Contact conTemp3 = new Contact(3, "Maja", "Maric", "Maki", "maki123@gmail.com", Format.HTML, photo2, to2, from1, cc2, bcc1);
         Contact conTemp4 = new Contact(4, "me", "Stevic", "Stefi", "stefi123@gmail.com", Format.HTML, photo2, to1, from1, cc2, bcc2);
         Contact conTemp5 = new Contact(5, "Emily", "Emmy", "Emily", "emily123@gmail.com", Format.HTML, photo2, to2, from2, cc1, bcc2);
+
 
 
 

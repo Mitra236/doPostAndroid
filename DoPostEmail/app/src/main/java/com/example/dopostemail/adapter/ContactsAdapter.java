@@ -51,13 +51,6 @@ public class ContactsAdapter extends BaseAdapter {
         mTitle.setText(contactList.get(position).getDisplay());
         mSubTitle.setText(contactList.get(position).getEmail());
         img.setImageResource(contactList.get(position).getPhoto().getPath());
-<<<<<<< HEAD
-
-=======
->>>>>>> 59a578e113e253a1134a47046c21aefe00625307
-
-//        mTitle.setText(contactList.get(position).getFrom().getDisplay());
-//        mSubTitle.setText(contactList.get(position).getDateTime());
 
         view.setTag(contactList.get(position).getId());
         return view;

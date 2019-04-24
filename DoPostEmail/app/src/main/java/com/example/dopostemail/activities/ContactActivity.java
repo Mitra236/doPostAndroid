@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,9 @@ public class ContactActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         Contact c = (Contact) bundle.getSerializable("contacts");
+
+        ImageView img = findViewById(R.id.contact_icon);
+        img.setImageResource(c.getPhoto().getPath());
 
         EditText tbFirstName = findViewById(R.id.firstNameEdit);
         tbFirstName.setText(c.getFirstName());

@@ -9,14 +9,27 @@
 
     </include>
 
+    <ImageView
+        android:id="@+id/contact_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/contacts_icon"
+        />
+
     <EditText
         android:id="@+id/firstNameEdit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/contact_icon"
         android:ems="10"
         android:inputType="text"
         android:hint="First Name"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="8dp"
         android:text="" />
 
     <EditText
@@ -27,7 +40,7 @@
         android:inputType="text"
         android:hint="Last Name"
         android:layout_below="@id/firstNameEdit"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:text="" />
 
     <EditText
@@ -38,7 +51,7 @@
         android:inputType="text"
         android:hint="Username"
         android:layout_below="@id/lastNameEdit"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:text="" />
 
     <EditText
@@ -49,7 +62,7 @@
         android:inputType="text"
         android:hint="Email"
         android:layout_below="@id/usernameEdit"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:text="" />
 
     <EditText
@@ -60,7 +73,7 @@
         android:inputType="text"
         android:hint="Format"
         android:layout_below="@id/emailEdit"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:text="" />
 
     <TextView
@@ -70,7 +83,7 @@
         android:layout_below="@id/formatEdit"
         android:textSize="10dp"
         android:textStyle="bold"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"/>
     <TextView
         android:id="@+id/con_to"
@@ -79,7 +92,7 @@
         android:layout_below="@id/con_from"
         android:textSize="10dp"
         android:textStyle="bold"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"/>
     <TextView
         android:id="@+id/con_cc"
@@ -88,7 +101,7 @@
         android:layout_below="@id/con_to"
         android:textSize="10dp"
         android:textStyle="bold"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"/>
     <TextView
         android:id="@+id/con_bcc"
@@ -97,7 +110,7 @@
         android:layout_below="@id/con_cc"
         android:textSize="10dp"
         android:textStyle="bold"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"/>
 
 </RelativeLayout>

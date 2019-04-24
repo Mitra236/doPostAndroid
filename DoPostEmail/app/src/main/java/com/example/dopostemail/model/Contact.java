@@ -17,7 +17,7 @@ public class Contact implements Serializable {
     private ArrayList<Message> cc;
     private ArrayList<Message> bcc;
 
-<<<<<<< HEAD
+
     public Contact(int id, String firstName, String lastName, String display, String email, Format format, Photo photo, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
         this.id = id;
         this.firstName = firstName;
@@ -32,22 +32,19 @@ public class Contact implements Serializable {
         this.bcc = bcc;
     }
 
-    public Contact(int id, String firstName, String lastName, String display, String email, Format format, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
-=======
-    public Contact(int id, String firstName, String lastName, String display, String email, Format format, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc, Photo photo) {
->>>>>>> 59a578e113e253a1134a47046c21aefe00625307
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.display = display;
-        this.email = email;
-        this.format = format;
-        this.from = from;
-        this.to = to;
-        this.cc = cc;
-        this.bcc = bcc;
-        this.photo = photo;
-    }
+//    public Contact(int id, String firstName, String lastName, String display, String email, Format format, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
+//        this.id = id;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.display = display;
+//        this.email = email;
+//        this.format = format;
+//        this.from = from;
+//        this.to = to;
+//        this.cc = cc;
+//        this.bcc = bcc;
+//        this.photo = photo;
+//    }
 
     public Contact(int id, String firstName, String lastName, String display, String email, Format format, Photo photo) {
         this.id = id;

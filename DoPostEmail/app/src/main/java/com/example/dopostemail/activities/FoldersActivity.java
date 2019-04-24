@@ -66,7 +66,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), rule2);
         Folder folder4 = new Folder(4, "Electronics", new ArrayList<Folder>(), rule2);
         Folder folder5 = new Folder(5, "Recent promotions", new ArrayList<Folder>(), rule2);
-
+u
         folders = new ArrayList<>();
         folders.add(folder);
         folders.add(folder2);

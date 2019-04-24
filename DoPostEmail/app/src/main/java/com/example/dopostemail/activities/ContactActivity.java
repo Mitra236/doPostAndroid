@@ -17,8 +17,6 @@ import com.example.dopostemail.model.Message;
 
 public class ContactActivity extends AppCompatActivity {
 
-//    Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

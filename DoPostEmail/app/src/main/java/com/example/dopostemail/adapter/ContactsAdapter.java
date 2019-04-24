@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dopostemail.R;
@@ -45,9 +46,12 @@ public class ContactsAdapter extends BaseAdapter {
 
         TextView mTitle = view.findViewById(R.id.title);
         TextView mSubTitle = view.findViewById(R.id.subTitle);
+        ImageView img = view.findViewById(R.id.icon);
 
         mTitle.setText(contactList.get(position).getDisplay());
         mSubTitle.setText(contactList.get(position).getEmail());
+        img.setImageResource(contactList.get(position).getPhoto().getPath());
+
 
 //        mTitle.setText(contactList.get(position).getFrom().getDisplay());
 //        mSubTitle.setText(contactList.get(position).getDateTime());

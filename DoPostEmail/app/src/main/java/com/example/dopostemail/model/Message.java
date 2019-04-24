@@ -22,6 +22,12 @@ public class Message implements Serializable {
     private Folder folder;
     private Account account;
 
+    public Message(int id, String subject, String content) {
+        this.id = id;
+        this.subject = subject;
+        this.content = content;
+    }
+
     public Message(int id, Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag,
                    ArrayList<Attachment> attachments, Folder folder, Account account) {
         this.id = id;

@@ -9,6 +9,28 @@
 
     </include>
 
+    <ListView
+        android:id="@+id/list_view_subfolders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="100dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"
+        android:text="Messages"
+        android:paddingTop="90dp"
+        android:layout_marginLeft="4dp"
+        android:layout_below="@id/list_view_subfolders"/>
+
+    <ListView
+        android:id="@+id/list_view_emails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_below="@id/text"/>
+
     <TextView
         android:id="@+id/folder_name"
         android:layout_width="fill_parent"

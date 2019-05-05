@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\Emilija\Desktop\ANDROID projekat\serverZaAndroid\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+171149526.index
+2886792548.index
+194164369.index
+2368037655.index
+2357293112.index
+1218277024.index

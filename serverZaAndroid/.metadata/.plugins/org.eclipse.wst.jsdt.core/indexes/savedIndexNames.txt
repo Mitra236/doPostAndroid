@@ -1,7 +1,0 @@
-INDEX VERSION 1.4+F:\Programming\PMS doPost\dopost\serverZaAndroid\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-27185660.index
-2426241154.index
-3041699908.index
-171149526.index
-3623302041.index
-2789902611.index

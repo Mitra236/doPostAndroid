@@ -8,5 +8,14 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/mysql-connector-java-5.1.22-bin.jar"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/openejb-client-4.5.0.jar"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/openjpa-2.2.1.jar"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/openjpa-all-2.2.1.jar"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/serp-1.13.1.jar"/>
+	<classpathentry kind="lib" path="F:/Programming/testa sda w/Vezbe06/runtime-libs/xbean-asm-shaded-3.11.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

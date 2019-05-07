@@ -1,19 +1,11 @@
 INDEX VERSION 1.131+F:\Programming\PMS doPost\dopost\serverZaAndroid\.metadata\.plugins\org.eclipse.jdt.core
-2779479086.index
-1697729.index
 984225034.index
-385189888.index
-1113573833.index
 2773834657.index
 326805980.index
 171149526.index
 3523662158.index
-4113618756.index
 1455593261.index
 728296283.index
-2155708506.index
-3003299540.index
-1729391221.index
 1518219961.index
 14682029.index
 3886402465.index

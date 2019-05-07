@@ -2,21 +2,55 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name = "contact")
 public class Contact {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "contact_id", unique = true, nullable = false)
 	private int id;
+	
+	@Column(name = "contact_firstname", unique = false, nullable = false)
     private String firstName;
+	
+	@Column(name = "contact_lastname", unique = false, nullable = false)
     private String lastName;
+	
+	@Column(name = "contact_display", unique = false, nullable = false)
     private String display;
+	
+	@Column(name = "contact_email", unique = false, nullable = false)
     private String email;
+	
+	@Column(name = "contact_format", unique = false, nullable = false)
     private Format format;
+	
+	@Column(name = "contact_photo", unique = false, nullable = false)
     private Photo photo;
+	
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "contact")
     private ArrayList<Message> from;
+	
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "contact")
     private ArrayList<Message> to;
+	
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "contact")
     private ArrayList<Message> cc;
+	
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "contact")
     private ArrayList<Message> bcc;
 
 

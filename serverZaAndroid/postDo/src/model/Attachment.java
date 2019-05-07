@@ -1,14 +1,33 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name = "attachment")
 public class Attachment {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "attachment_id", unique = true, nullable = false)
 	private int id;
+	
+	@Column(name = "attachment_data", unique = false, nullable = false)
     private String data;
+	
+	@Column(name = "attachment_type", unique = false, nullable = false)
     private String type;
+	
+	@Column(name = "attachment_name", unique = false, nullable = false)
     private String name;
+	
+	@Column(name = "attachment_message", unique = false, nullable = false)
     private Message message;
 
     public Attachment(int id, String data, String type, String name, Message message) {

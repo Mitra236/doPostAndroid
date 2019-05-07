@@ -2,16 +2,40 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name = "account")
 public class Account {
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "acc_id", unique = true, nullable = false)
 	private int id;
+	
+	@Column(name = "acc_smtp", unique = false, nullable = false)
     private String smtp;
+	
+	@Column(name = "acc_pop3_imap", unique = false, nullable = false)
     private String pop3_imap;
+    
+	@Column(name = "acc_username", unique = false, nullable = false)
     private String username;
+    
+	@Column(name = "acc_password", unique = false, nullable = false)
     private String password;
+    
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "account")
     private ArrayList<Message> messages;
 
     public Account(int id, String smtp, String pop3_imap, String username, String password, ArrayList<Message> message) {

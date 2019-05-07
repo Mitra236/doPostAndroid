@@ -2,22 +2,58 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name = "message")
 public class Message {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "message_id", unique = true, nullable = false)
 	private int id;
+	
+	@Column(name = "message_from", unique = false, nullable = false)
     private Contact from;
+	
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "message")
     private ArrayList<Contact> to;
+    
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "message")
     private ArrayList<Contact> cc;
+    
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "message")
     private ArrayList<Contact> bcc;
+    
+    @Column(name = "message_dateTime", unique = false, nullable = false)
     private String dateTime;
+    
+    @Column(name = "message_subject", unique = false, nullable = false)
     private String subject;
+    
+    @Column(name = "message_content", unique = false, nullable = false)
     private String content;
+    
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "message")
     private ArrayList<Tag> tag;
+    
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "message")
     private ArrayList<Attachment> attachments;
+    
+    @Column(name = "message_folder", unique = false, nullable = false)
     private Folder folder;
+    
+    @Column(name = "message_account", unique = false, nullable = false)
     private Account account;
 
     public Message(int id, String subject, String content) {

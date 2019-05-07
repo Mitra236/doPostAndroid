@@ -2,15 +2,37 @@ package model;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name = "folder")
 public class Folder {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "folder_id", unique = true, nullable = false)
 	private int id;
+	
+	@Column(name = "folder_name", unique = false, nullable = false)
     private String name;
+	
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "folder")
     private ArrayList<Folder> folders;
+	
+	@OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "folder")
     private ArrayList<Message> messages;
+    
+    @Column(name = "folder_rule", unique = false, nullable = false)
     private Rule rule;
 
     public Folder(int id, String name, ArrayList<Folder> folders, ArrayList<Message> messages, Rule rule) {

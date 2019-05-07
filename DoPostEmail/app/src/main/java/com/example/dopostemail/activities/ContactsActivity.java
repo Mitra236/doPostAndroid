@@ -187,8 +187,12 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
                 Intent l = new Intent(ContactsActivity.this, SettingsActivity.class);
                 startActivity(l);
                 break;
+            case R.id.nav_logout:
+                Intent m = new Intent(ContactsActivity.this, LoginActivity.class);
+                m.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(m);
+                break;
         }
-
 
         return true;
     }

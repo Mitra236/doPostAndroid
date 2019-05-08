@@ -276,6 +276,11 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
                 Intent l = new Intent(FoldersActivity.this, SettingsActivity.class);
                 startActivity(l);
                 break;
+            case R.id.nav_logout:
+                Intent m = new Intent(FoldersActivity.this, LoginActivity.class);
+                m.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(m);
+                break;
         }
 
         return true;

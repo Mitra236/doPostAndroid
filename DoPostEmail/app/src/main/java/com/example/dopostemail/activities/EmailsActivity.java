@@ -96,11 +96,11 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     public Message messageTemp2 = new Message(2, conTemp2, to2, new ArrayList<Contact>(), bcc2, "2019-01-29 13:24",  "Osnove programiranja", "Just a dumb message",tags2, attachments2, folder2, account);
     public Message messageTemp3 = new Message(3,  conTemp3, to3, cc2, new ArrayList<Contact>(),"2019-03-19 22:22", "Sistemski softver", "Another dumb message", tags3, attachments3, folder3, account);
 
-    public Attachment attachment = new Attachment(1, "some data", "type1", "attachment1", messageTemp );
-    public Attachment attachment2 = new Attachment(2, "some data", "type2", "attachment2", messageTemp2 );
-    public Attachment attachment3 = new Attachment(3, "some data", "type3", "attachment3", messageTemp3 );
-    public Attachment attachment4 = new Attachment(4, "some data", "type4", "attachment4", messageTemp );
-    public Attachment attachment5 = new Attachment(5, "some data", "type5", "attachment5", messageTemp3 );
+    public Attachment attachment = new Attachment(1, "some data", "type1", "attachment1.pdf", messageTemp );
+    public Attachment attachment2 = new Attachment(2, "some data", "type2", "attachment2.pdf", messageTemp2 );
+    public Attachment attachment3 = new Attachment(3, "some data", "type3", "attachment3.pdf", messageTemp3 );
+    public Attachment attachment4 = new Attachment(4, "some data", "type4", "attachment4.pdf", messageTemp );
+    public Attachment attachment5 = new Attachment(5, "some data", "type5", "attachment5.pdf", messageTemp3 );
 
 
     @Override

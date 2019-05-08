@@ -101,9 +101,10 @@ public class EmailActivity extends AppCompatActivity {
 
         StringBuilder builder2 = new StringBuilder();
         builder2.append("Attachments: ");
-        int count;
-        count = m.getAttachments().size();
-        attachment.setText(builder2.append(count));
+        for(Attachment a: m.getAttachments()) {
+
+            attachment.setText(builder2.append(a.getName() + ", "));
+        }
 
 
         dateTime.setText("Date: " + m.getDateTime());

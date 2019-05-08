@@ -1,6 +1,8 @@
 package com.example.dopostemail.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -64,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                         isLogged = true;
                         Username = a.getUsername();
                         btnStartEmailsActivity(v);
+
+                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                         Toast.makeText(LoginActivity.this, "Good credentials!", Toast.LENGTH_SHORT).show();
 
                    }

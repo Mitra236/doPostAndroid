@@ -63,28 +63,28 @@ public class ContactActivity extends AppCompatActivity {
         TextView twCc = findViewById(R.id.con_cc);
         TextView twBcc = findViewById(R.id.con_bcc);
 
-        StringBuilder builder1 = new StringBuilder();
-        builder1.append("To: ");
-        for (Message me : c.getTo()) {
-            twTo.setText(builder1.append(me.getSubject()  + ", "));
-        }
-
-        StringBuilder builder2 = new StringBuilder();
-        builder2.append("From: ");
-        for (Message me : c.getFrom()) {
-            twFrom.setText(builder2.append(me.getSubject()  + ", "));
-        }
-
-        StringBuilder builder3 = new StringBuilder();
-        builder3.append("Cc: ");
-        for (Message me : c.getCc()) {
-            twCc.setText(builder3.append(me.getSubject() + ", "));
-        }
-        StringBuilder builder4 = new StringBuilder();
-        builder4.append("Bcc: ");
-        for (Message me : c.getBcc()) {
-            twBcc.setText(builder4.append(me.getSubject() + ", "));
-        }
+//        StringBuilder builder1 = new StringBuilder();
+//        builder1.append("To: ");
+//        for (Message me : c.getTo()) {
+//            twTo.setText(builder1.append(me.getSubject()  + ", "));
+//        }
+//
+//        StringBuilder builder2 = new StringBuilder();
+//        builder2.append("From: ");
+//        for (Message me : c.getFrom()) {
+//            twFrom.setText(builder2.append(me.getSubject()  + ", "));
+//        }
+//
+//        StringBuilder builder3 = new StringBuilder();
+//        builder3.append("Cc: ");
+//        for (Message me : c.getCc()) {
+//            twCc.setText(builder3.append(me.getSubject() + ", "));
+//        }
+//        StringBuilder builder4 = new StringBuilder();
+//        builder4.append("Bcc: ");
+//        for (Message me : c.getBcc()) {
+//            twBcc.setText(builder4.append(me.getSubject() + ", "));
+//        }
     }
 
     @Override

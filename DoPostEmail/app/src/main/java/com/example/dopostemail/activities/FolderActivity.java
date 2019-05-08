@@ -51,28 +51,28 @@ public class FolderActivity extends AppCompatActivity {
         ListView list_subflders = findViewById(R.id.list_view_subfolders);
         ListView list_emails = findViewById(R.id.list_view_emails);
 
-        FolderAdapter fa = new FolderAdapter(getApplicationContext(), f.getFolders());
-        list_subflders.setAdapter(fa);
+//        FolderAdapter fa = new FolderAdapter(getApplicationContext(), f.getFolders());
+//        list_subflders.setAdapter(fa);
 
         CustomAdapter ca = new CustomAdapter(getApplicationContext(), f.getMessages());
         list_emails.setAdapter(ca);
 
-        list_subflders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Folder m = f.getFolders().get(position);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("folder", m);
-
-                Intent i = new Intent(FolderActivity.this, FolderActivity.class);
-                i.putExtras(bundle);
-                startActivity(i);
-
-
-            }
-        });
+//        list_subflders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                Folder m = f.getFolders().get(position);
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("folder", m);
+//
+//                Intent i = new Intent(FolderActivity.this, FolderActivity.class);
+//                i.putExtras(bundle);
+//                startActivity(i);
+//
+//
+//            }
+//        });
 
         list_emails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -1,7 +1,9 @@
 package com.example.dopostemail.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -199,7 +201,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
             @Override
             public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
-                Toast.makeText(EmailsActivity.this, "Some unexpectedly expected error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -263,6 +265,8 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                 break;
             case R.id.nav_logout:
                 Intent m = new Intent(EmailsActivity.this, LoginActivity.class);
+                SharedPreferences settings = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                settings.edit().remove("currentUser").commit();
                 m.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(m);
                 break;

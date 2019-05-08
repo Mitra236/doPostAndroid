@@ -1,6 +1,8 @@
 package com.example.dopostemail.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -80,6 +82,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_logout:
                 Intent m = new Intent(ProfileActivity.this, LoginActivity.class);
                 m.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                SharedPreferences settings = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                settings.edit().remove("currentUser").commit();
                 startActivity(m);
                 break;
         }

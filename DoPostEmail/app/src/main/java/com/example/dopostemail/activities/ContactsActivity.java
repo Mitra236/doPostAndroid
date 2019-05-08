@@ -1,7 +1,9 @@
 package com.example.dopostemail.activities;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -32,9 +34,16 @@ import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Photo;
+import com.example.dopostemail.server.ContactsInterface;
+import com.example.dopostemail.server.MessagesInterface;
+import com.example.dopostemail.server.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ContactsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -102,34 +111,49 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 //        Contact conTemp5 = new Contact(5, "Emily", "Emmy", "Emily", "emily123@gmail.com", Format.HTML, photo2, to2, from2, cc1, bcc2);
 
 
+        ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+        Call<ArrayList<Contact>> call = service.getContacts();
 
-
-        contacts = new ArrayList<>();
-//        contacts.add(conTemp);
-//        contacts.add(conTemp2);
-//        contacts.add(conTemp3);
-//        contacts.add(conTemp4);
-//        contacts.add(conTemp5);
-
-        adapter = new ContactsAdapter(getApplicationContext(), contacts);
-        mListView.setAdapter(adapter);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        call.enqueue(new Callback<ArrayList<Contact>>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
+                ArrayList<Contact> contacts1 = response.body();
 
-                Contact con = contacts.get(position);
+                if(contacts1 == null){
+                    Toast.makeText(ContactsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }else {
+                    contacts = contacts1;
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("contacts", con);
+                    adapter = new ContactsAdapter(getApplicationContext(), contacts);
+                    mListView.setAdapter(adapter);
 
-                Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
-                i.putExtras(bundle);
-                startActivity(i);
+                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            Contact con = contacts.get(position);
+
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("contacts", con);
+
+                            Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
+                            i.putExtras(bundle);
+                            startActivity(i);
 
 
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Contact>> call, Throwable t) {
+                Toast.makeText(ContactsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
 
 
 
@@ -189,6 +213,8 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
                 break;
             case R.id.nav_logout:
                 Intent m = new Intent(ContactsActivity.this, LoginActivity.class);
+                SharedPreferences settings = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                settings.edit().remove("currentUser").commit();
                 m.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(m);
                 break;

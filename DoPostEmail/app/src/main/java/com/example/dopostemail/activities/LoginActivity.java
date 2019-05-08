@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginInterface service = RetrofitClient.getClient().create(LoginInterface.class);
         Call<ArrayList<Account>> call = service.getAccounts();
 
-        EditText username = findViewById(R.id.usernameLogin);
+        final EditText username = findViewById(R.id.usernameLogin);
         EditText password = findViewById(R.id.passwordLogin);
         final String u = username.getText().toString();
 
@@ -67,7 +67,11 @@ public class LoginActivity extends AppCompatActivity {
                         Username = a.getUsername();
                         btnStartEmailsActivity(v);
 
-                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("currentUser", a.getUsername());
+                        editor.apply();
+                        editor.commit();
                         Toast.makeText(LoginActivity.this, "Good credentials!", Toast.LENGTH_SHORT).show();
 
                    }

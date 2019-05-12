@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -37,6 +39,7 @@ import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +55,8 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
     private ArrayList<Message> messages = new ArrayList<>();
     private ArrayList<Contact> contact1 = new ArrayList<>();
     private ArrayList<Folder> folderss;
+    private long mInterval = 0;
+    private Handler mHandler;
 
 //    private ArrayList<Message> m = new ArrayList<>();
 //    private ArrayList<Message> m2 = new ArrayList<>();
@@ -113,6 +118,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHandler = new Handler();
         setTitle("Folders");
         setContentView(R.layout.activity_folders);
 
@@ -120,6 +126,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         setSupportActionBar(toolbar);
 
         mListView = findViewById(R.id.list_view);
+
 
 //        m.add(messageTemp);
 //        m2.add(messageTemp2);
@@ -156,50 +163,6 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 //        mes2.add(messageTemp2);
 //        mes3.add(messageTemp3);
 
-        FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-        Call<ArrayList<Folder>> call = service.getFolders();
-
-        call.enqueue(new Callback<ArrayList<Folder>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Folder>> call, Response<ArrayList<Folder>> response) {
-                ArrayList<Folder> folders1 = response.body();
-
-                if(folders1 == null){
-                    Toast.makeText(FoldersActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                }else {
-                    folders = folders1;
-
-//        folders.add(folder);
-//        folders.add(folder2);
-//        folders.add(folder3);
-
-                    adapter = new FolderAdapter(getApplicationContext(), folders);
-                    mListView.setAdapter(adapter);
-
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            Folder f = folders.get(position);
-
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("folder", f);
-
-                            Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
-                            i.putExtras(bundle);
-                            startActivity(i);
-
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Folder>> call, Throwable t) {
-
-            }
-        });
 
 
 
@@ -262,7 +225,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         navView.setNavigationItemSelectedListener(this);
 
         View headerView = navView.getHeaderView(0);
-        headerView.setOnClickListener(new View.OnClickListener(){
+        headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(FoldersActivity.this, ProfileActivity.class);
@@ -284,8 +247,10 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
                 startActivity(i);
 
             }
-        });
 
+
+
+        });
     }
 
     @Override
@@ -319,6 +284,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         return true;
     }
 
+
     @Override
     protected void onStart(){
         super.onStart();
@@ -327,11 +293,78 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onResume(){
         super.onResume();
+        startRepeatingTask();
     }
 
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String syncTimeStr = pref.getString("refresh_rate", "0");
+                mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTimeStr));
+
+                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+                Call<ArrayList<Folder>> call = service.getFolders();
+
+                call.enqueue(new Callback<ArrayList<Folder>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Folder>> call, Response<ArrayList<Folder>> response) {
+                        ArrayList<Folder> folders1 = response.body();
+
+                        if (folders1 == null) {
+                            Toast.makeText(FoldersActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        } else {
+                            folders = folders1;
+
+                            adapter = new FolderAdapter(getApplicationContext(), folders);
+                            mListView.setAdapter(adapter);
+
+                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    Folder f = folders.get(position);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("folder", f);
+
+                                    Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
+                                    i.putExtras(bundle);
+                                    startActivity(i);
+
+
+                                }
+                            });
+                        }
+                    }
+
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Folder>> call, Throwable t) {
+
+                    }
+                });
+
+
+            } finally {
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }
+        }
+    };
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
     @Override
     protected void onPause(){
         super.onPause();
+        stopRepeatingTask();
     }
 
     @Override

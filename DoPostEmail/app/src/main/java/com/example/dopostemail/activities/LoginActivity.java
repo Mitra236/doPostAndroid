@@ -70,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(LOGGED_USERNAME, a.getUsername());
-                        editor.putString(LOGGED_PASSWORD, a.getUsername());
+                        editor.putString("currentUser", a.getUsername());
+                       // editor.putString(LOGGED_PASSWORD, a.getUsername());
                         editor.apply();
                         editor.commit();
                         Toast.makeText(LoginActivity.this, "Good credentials!", Toast.LENGTH_SHORT).show();

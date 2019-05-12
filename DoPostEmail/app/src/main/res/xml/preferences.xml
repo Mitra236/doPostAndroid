@@ -32,17 +32,22 @@
         android:title="DATE SORTING"
         android:key="date_sorting_setting">
 
-        <ListPreference
-            android:key="@string/pref_date_sorting_list"
-            android:title="@string/pref_date_sorting_title"
-            android:entryValues="@array/pref_dateSorting_values"
-            android:dialogTitle="@string/pref_sortingList"
-            android:entries="@array/pref_dateSorting_entries"
-            android:summary="%s"
-            android:defaultValue="Ascending">
+        <CheckBoxPreference
 
-        </ListPreference>
+            android:key="sort_descending"
+            android:title="Sort Descending"
+            android:id="@+id/checkBoxDesc"
+            android:onClick="onCheckboxClicked"
+            />
 
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="sort_ascending"
+            android:title="Sort Ascending"
+            android:id="@+id/checkBoxAsc"
+
+            android:onClick="onCheckboxClicked"
+            />
 
     </PreferenceCategory>
 

@@ -28,7 +28,8 @@ public class LoginActivity extends AppCompatActivity {
 
     Boolean isLogged = false;
     String Username;
-
+    public static final String LOGGED_USERNAME = "username";
+    public static final String LOGGED_PASSWORD = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("currentUser", a.getUsername());
+                        editor.putString(LOGGED_USERNAME, a.getUsername());
+                        editor.putString(LOGGED_PASSWORD, a.getUsername());
                         editor.apply();
                         editor.commit();
                         Toast.makeText(LoginActivity.this, "Good credentials!", Toast.LENGTH_SHORT).show();

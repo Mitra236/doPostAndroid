@@ -40,6 +40,7 @@ import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,6 +57,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     private ListView mListView;
     private CustomAdapter adapter;
     private List<Message> messages;
+    private int sortingDirection;
 
 
 //    private ArrayList<Message> m = new ArrayList<>();
@@ -285,6 +287,22 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
 
     }
+
+//    public void allMessages(List<Message> mess) {
+//
+//        messages = new ArrayList<>();
+//
+//
+//
+//        for(Message m: mess){
+//            messages.add(m);
+//
+//        }
+
+//        if(sortingDirection == 1){
+//            Collections.sort(messages);
+//        }
+ //   }
 
 
 

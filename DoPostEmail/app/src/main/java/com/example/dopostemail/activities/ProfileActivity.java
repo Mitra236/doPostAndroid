@@ -14,9 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.model.Account;
+import com.example.dopostemail.server.LoginInterface;
+import com.example.dopostemail.server.RetrofitClient;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,6 +28,12 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
+//    private TextView txtUsername = findViewById(R.id.textUserName);
+//    private TextView txtPass = findViewById(R.id.textPass);
+//    private SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+//    private SharedPreferences.Editor editor = sharedPreferences.edit();
+//    private Account acc;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -47,6 +57,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 R.string.navigation_drawer_open, R.string.navigation_drawer_open);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
 
     }
 
@@ -116,6 +128,26 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onStart(){
         super.onStart();
+
+//        Button btn = findViewById(R.id.button_logout);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                String username = txtUsername.getText().toString().trim();
+//                String password = txtPass.getText().toString().trim();
+//
+//                if(!username.equals("") && !password.equals("")) {
+//                    acc.setPassword(password);
+//                    acc.setUsername(username);
+//
+//
+//                    LoginInterface service = RetrofitClient.getClient().create(LoginInterface.class);
+//                    se
+//
+//                }
+//                }
+//        });
     }
 
     protected void onResume(){

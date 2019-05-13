@@ -81,15 +81,43 @@ public class ContactActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Contact> call, Response<Contact> response) {
                         Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
+                        startActivity(i);
                     }
 
                     @Override
                     public void onFailure(Call<Contact> call, Throwable t) {
                         Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
+                        startActivity(i);
                     }
                 });
             }
         });
+
+
+
+//        Button btnSave = findViewById(R.id.button_save_c);
+//
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+//                Call<Contact> call = service.updateContact(c);
+//
+//                call.enqueue(new Callback<Contact>() {
+//                    @Override
+//                    public void onResponse(Call<Contact> call, Response<Contact> response) {
+//                        Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Contact> call, Throwable t) {
+//                        Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
 
 //        StringBuilder builder1 = new StringBuilder();
 //        builder1.append("To: ");

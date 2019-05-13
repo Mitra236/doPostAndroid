@@ -32,6 +32,15 @@ public class Contact implements Serializable {
         this.bcc = bcc;
     }
 
+    public Contact(String display, String email, String firstName, Format format, String lastName){
+        this.display = display;
+        this.email = email;
+        this.firstName = firstName;
+        this.format = format;
+      //  this.id = id;
+        this.lastName = lastName;
+    }
+
 //    public Contact(int id, String firstName, String lastName, String display, String email, Format format, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
 //        this.id = id;
 //        this.firstName = firstName;

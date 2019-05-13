@@ -59,7 +59,7 @@ public class CreateContactActivity extends AppCompatActivity {
         String d = display.getText().toString().trim();
         String e = email.getText().toString().trim();
 
-        final Contact contact = new Contact(6, f, l, d, e, Format.PLAIN);
+        final Contact contact = new Contact(d, e, f, Format.PLAIN, l);
 
         Button b = findViewById(R.id.button_save_cc);
 
@@ -68,11 +68,8 @@ public class CreateContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
-
                 ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                Call<Contact> call = service.addContacts(contact);
+                Call<Contact> call = service.addContact(contact);
 
                 call.enqueue(new Callback<Contact>() {
                     @Override
@@ -101,14 +98,14 @@ public class CreateContactActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
-        Button save = (Button)findViewById(R.id.button_save_cc);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CreateContactActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+//        Button save = (Button)findViewById(R.id.button_save_cc);
+//        save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(CreateContactActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         Button back = (Button)findViewById(R.id.button_back_cc);
         back.setOnClickListener(new View.OnClickListener() {

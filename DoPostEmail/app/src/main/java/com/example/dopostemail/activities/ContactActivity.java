@@ -15,6 +15,12 @@ import com.example.dopostemail.R;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.server.ContactsInterface;
+import com.example.dopostemail.server.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ContactActivity extends AppCompatActivity {
 
@@ -38,7 +44,7 @@ public class ContactActivity extends AppCompatActivity {
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
         Bundle bundle = getIntent().getExtras();
-        Contact c = (Contact) bundle.getSerializable("contacts");
+        final Contact c = (Contact) bundle.getSerializable("contacts");
 
         ImageView img = findViewById(R.id.contact_icon);
         img.setImageResource(c.getPhoto().getPath());
@@ -58,10 +64,32 @@ public class ContactActivity extends AppCompatActivity {
         EditText tbFormat = findViewById(R.id.formatEdit);
         tbFormat.setText(c.getFormat().toString());
 
-        TextView twTo = findViewById(R.id.con_to);
-        TextView twFrom = findViewById(R.id.con_from);
-        TextView twCc = findViewById(R.id.con_cc);
-        TextView twBcc = findViewById(R.id.con_bcc);
+//        TextView twTo = findViewById(R.id.con_to);
+//        TextView twFrom = findViewById(R.id.con_from);
+//        TextView twCc = findViewById(R.id.con_cc);
+//        TextView twBcc = findViewById(R.id.con_bcc);
+
+        Button btnDelete = findViewById(R.id.button_delete_c);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                Call<Contact> call = service.deleteContact(c.getId());
+
+                call.enqueue(new Callback<Contact>() {
+                    @Override
+                    public void onResponse(Call<Contact> call, Response<Contact> response) {
+                        Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Contact> call, Throwable t) {
+                        Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
 //        StringBuilder builder1 = new StringBuilder();
 //        builder1.append("To: ");

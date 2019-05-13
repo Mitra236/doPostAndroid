@@ -5,7 +5,11 @@ import com.example.dopostemail.model.Contact;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ContactsInterface {
@@ -15,4 +19,13 @@ public interface ContactsInterface {
 
     @GET("contacts/{id}")
     Call<Contact> getContactById(@Path("id") int id);
+
+    @POST("contacts/add")
+    Call<Contact> addContacts(@Body Contact contact);
+
+    @PUT("contacts/update")
+    Call<Contact> updateContact(@Body Contact con);
+
+    @DELETE("contacts/{id}")
+    Call<Contact> deleteContact(@Path("id") int id);
 }

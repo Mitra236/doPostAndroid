@@ -15,4 +15,10 @@ public interface MessagesInterface {
 
     @GET("messages/{id}")
     Call<Message> getMessageById(@Path("id") int id);
+
+    @GET("sortDesc")
+    Call<ArrayList<Message>> getAllMessagesDesc();
+
+    @GET("sortAsc")
+    Call<ArrayList<Message>> getAllMessagesAsc();
 }

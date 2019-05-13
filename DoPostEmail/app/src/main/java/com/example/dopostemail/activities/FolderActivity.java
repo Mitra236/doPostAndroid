@@ -3,20 +3,24 @@ package com.example.dopostemail.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.CustomAdapter;
-import com.example.dopostemail.adapter.FolderAdapter;
-import com.example.dopostemail.model.Dummy;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.server.FoldersInterface;
+import com.example.dopostemail.server.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
 
@@ -40,13 +44,40 @@ public class FolderActivity extends AppCompatActivity {
 //            }
 //        });
 
-        Utils.darkenStatusBar(this, R.color.colorToolbar);
-
         Bundle bundle = getIntent().getExtras();
         final Folder f = (Folder) bundle.getSerializable("folder");
 
-        TextView nazivFoldera = findViewById(R.id.folder_name);
-        nazivFoldera.setText(f.getName());
+        TextView tbFolderName = findViewById(R.id.folder_name);
+        tbFolderName.setText(f.getName());
+
+        Button btnDelete = findViewById(R.id.button_delete_f);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+                Call<Folder> call = service.deleteFolder(f.getId());
+
+                call.enqueue(new Callback<Folder>() {
+                    @Override
+                    public void onResponse(Call<Folder> call, Response<Folder> response) {
+                        Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Folder> call, Throwable t) {
+//                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        Utils.darkenStatusBar(this, R.color.colorToolbar);
+
+
+
+//        TextView nazivFoldera = findViewById(R.id.folder_name);
+//        nazivFoldera.setText(f.getName());
 
         ListView list_subflders = findViewById(R.id.list_view_subfolders);
         ListView list_emails = findViewById(R.id.list_view_emails);

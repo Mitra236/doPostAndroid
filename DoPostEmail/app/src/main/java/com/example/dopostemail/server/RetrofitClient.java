@@ -12,7 +12,7 @@ public class RetrofitClient {
 
 
 
-    private static final String BASE_URL = "http://192.168.65.217:8080/postDoREST/api/service/";
+    private static final String BASE_URL = "http://192.168.0.105:8080/postDoREST/api/service/";
 
 
     public static OkHttpClient test(){

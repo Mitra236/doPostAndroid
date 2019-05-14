@@ -102,7 +102,7 @@ public class CreateContactActivity extends AppCompatActivity {
                     final Contact contact = new Contact(6, f, l, d, e, Format.PLAIN);
 
                     ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                    Call<Contact> call = service.addContacts(contact);
+                    Call<Contact> call = service.addContact(contact);
 
                     call.enqueue(new Callback<Contact>() {
                         @Override

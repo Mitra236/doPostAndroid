@@ -1,7 +1,9 @@
 package com.example.dopostemail.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -73,24 +75,49 @@ public class ContactActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                Call<Contact> call = service.deleteContact(c.getId());
 
-                call.enqueue(new Callback<Contact>() {
-                    @Override
-                    public void onResponse(Call<Contact> call, Response<Contact> response) {
-                        Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
-                        startActivity(i);
-                    }
+                AlertDialog.Builder builder = new AlertDialog.Builder(ContactActivity.this);
 
+                builder.setTitle("Confirm");
+
+                builder.setMessage("Are you sure that you want to delete contact?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onFailure(Call<Contact> call, Throwable t) {
-                        Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
-                        startActivity(i);
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                        Call<Contact> call = service.deleteContact(c.getId());
+
+                        call.enqueue(new Callback<Contact>() {
+                            @Override
+                            public void onResponse(Call<Contact> call, Response<Contact> response) {
+                                Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Contact> call, Throwable t) {
+                                Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
+                                startActivity(i);
+                            }
+                        });
                     }
                 });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),
+                                "Canceled",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 
@@ -113,6 +140,8 @@ public class ContactActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Contact> call, Response<Contact> response) {
                         Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(ContactActivity.this, ContactActivity.class);
+                        startActivity(i);
                     }
 
                     @Override
@@ -155,18 +184,6 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-
-        Button save = (Button)findViewById(R.id.button_save_c);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ContactActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
-
 
     }
 

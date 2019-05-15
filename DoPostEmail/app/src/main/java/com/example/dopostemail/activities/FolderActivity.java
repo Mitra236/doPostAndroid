@@ -74,15 +74,10 @@ public class FolderActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Folder edit_folder = new Folder();
                 FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-//                edit_folder.setName(tbFolderName.getText().toString());
-//                ArrayList<String> params = new ArrayList<>();
                 String content = "";
                 content = Integer.toString(f.getId()) + "," + tbFolderName.getText().toString();
-//                params.add(Integer.toString(f.getId()));
-//                params.add(tbFolderName.getText().toString());
-//asdads
+
                 Call<Folder> call = service.updateFolder(content);
 
                 call.enqueue(new Callback<Folder>() {

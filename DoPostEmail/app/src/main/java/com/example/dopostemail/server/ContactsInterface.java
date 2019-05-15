@@ -21,7 +21,7 @@ public interface ContactsInterface {
     Call<Contact> getContactById(@Path("id") int id);
 
     @POST("contacts/add")
-    Call<Contact> addContact(@Body Contact contact);
+    Call<Contact> addContact(@Body String content);
 
     @PUT("contacts/edit")
     Call<Contact> editContact(@Body String params);

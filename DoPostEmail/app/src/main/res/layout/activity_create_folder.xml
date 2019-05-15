@@ -20,4 +20,87 @@
         android:backgroundTint="@color/colorGray"
         android:text="" />
 
+    <RadioGroup
+        android:id="@+id/radioCondition"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/folder_name">
+
+        <RadioButton
+            android:id="@+id/radioTo"
+            android:textSize="18dp"
+            android:buttonTint="@color/colorToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioFrom"
+            android:textSize="18dp"
+            android:layout_marginTop="5dp"
+            android:buttonTint="@color/colorToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From" />
+
+        <RadioButton
+            android:id="@+id/radioCc"
+            android:textSize="18dp"
+            android:layout_marginTop="5dp"
+            android:buttonTint="@color/colorToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CC" />
+
+        <RadioButton
+            android:id="@+id/radioSubject"
+            android:textSize="18dp"
+            android:layout_marginTop="5dp"
+            android:buttonTint="@color/colorToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subject" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/radioOperation"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radioCondition">
+
+        <RadioButton
+            android:id="@+id/radioMove"
+            android:textSize="18dp"
+            android:buttonTint="@color/colorToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Move"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioCopy"
+            android:textSize="18dp"
+            android:layout_marginTop="5dp"
+            android:buttonTint="@color/colorToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Copy" />
+
+        <RadioButton
+            android:id="@+id/radioDelete"
+            android:textSize="18dp"
+            android:layout_marginTop="5dp"
+            android:buttonTint="@color/colorToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete" />
+
+
+
+    </RadioGroup>
+
 </RelativeLayout>

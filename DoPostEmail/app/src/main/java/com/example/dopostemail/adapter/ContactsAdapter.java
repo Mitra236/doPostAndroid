@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Message;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -50,7 +51,12 @@ public class ContactsAdapter extends BaseAdapter {
 
         mTitle.setText(contactList.get(position).getDisplay());
         mSubTitle.setText(contactList.get(position).getEmail());
-        img.setImageResource(contactList.get(position).getPhoto().getPath());
+        img.setImageResource(R.drawable.contacts_icon);
+//        img.setImageResource(contactList.get(position).getPhoto().getPath());
+
+//        String imgPath = contactList.get(position).getPhoto().getPath();
+
+//        Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(img);
 
         view.setTag(contactList.get(position).getId());
         return view;

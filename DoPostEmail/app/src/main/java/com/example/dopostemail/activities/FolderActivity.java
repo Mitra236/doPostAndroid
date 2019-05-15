@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
@@ -21,8 +20,6 @@ import com.example.dopostemail.server.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.util.ArrayList;
 
 public class FolderActivity extends AppCompatActivity {
 
@@ -85,7 +82,7 @@ public class FolderActivity extends AppCompatActivity {
                 content = Integer.toString(f.getId()) + "," + tbFolderName.getText().toString();
 //                params.add(Integer.toString(f.getId()));
 //                params.add(tbFolderName.getText().toString());
-
+//asdads
                 Call<Folder> call = service.updateFolder(content);
 
                 call.enqueue(new Callback<Folder>() {

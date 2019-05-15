@@ -14,13 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
-import com.example.dopostemail.model.Account;
-import com.example.dopostemail.server.LoginInterface;
-import com.example.dopostemail.server.RetrofitClient;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

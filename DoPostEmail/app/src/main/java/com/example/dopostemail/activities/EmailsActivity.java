@@ -25,22 +25,11 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.CustomAdapter;
-import com.example.dopostemail.model.Account;
-import com.example.dopostemail.model.Attachment;
-import com.example.dopostemail.model.Condition;
-import com.example.dopostemail.model.Contact;
-import com.example.dopostemail.model.Folder;
-import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
-import com.example.dopostemail.model.Operation;
-import com.example.dopostemail.model.Rule;
-import com.example.dopostemail.model.Tag;
-import com.example.dopostemail.server.LoginInterface;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;

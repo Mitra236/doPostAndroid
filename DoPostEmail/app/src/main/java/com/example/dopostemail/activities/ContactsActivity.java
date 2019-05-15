@@ -1,13 +1,9 @@
 package com.example.dopostemail.activities;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,26 +12,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.ContactsAdapter;
-import com.example.dopostemail.adapter.CustomAdapter;
 import com.example.dopostemail.model.Contact;
-import com.example.dopostemail.model.Format;
-import com.example.dopostemail.model.Message;
-import com.example.dopostemail.model.Photo;
 import com.example.dopostemail.server.ContactsInterface;
-import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
 import java.util.ArrayList;

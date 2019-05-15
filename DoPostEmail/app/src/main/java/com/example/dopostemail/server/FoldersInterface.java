@@ -24,8 +24,8 @@ public interface FoldersInterface {
     @POST("folders/add")
     Call<Folder> addFolder(@Body Folder folder);
 
-    @PUT("folders/update")
-    Call<Folder> updateFolder(@Body Folder folder);
+    @PUT("folders/edit")
+    Call<Folder> updateFolder(@Body ArrayList<String> params);
 
     @DELETE("folders/{id}")
     Call<Folder> deleteFolder(@Path("id") int id);

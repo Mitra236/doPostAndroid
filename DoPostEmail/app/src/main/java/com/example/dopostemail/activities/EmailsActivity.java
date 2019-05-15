@@ -268,7 +268,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
             case R.id.nav_logout:
                 Intent m = new Intent(EmailsActivity.this, LoginActivity.class);
                 SharedPreferences settings = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                settings.edit().remove("currentUser").commit();
+                settings.edit().remove("currentUser").apply();
                 m.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(m);
                 break;

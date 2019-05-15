@@ -54,12 +54,7 @@ public class CreateContactActivity extends AppCompatActivity {
         display = findViewById(R.id.usernameEdit);
         email = findViewById(R.id.emailEdit);
 
-        String f = firstName.getText().toString().trim();
-        String l = lastName.getText().toString().trim();
-        String d = display.getText().toString().trim();
-        String e = email.getText().toString().trim();
 
-        final Contact contact = new Contact(d, e, f, Format.PLAIN, l);
 
         Button b = findViewById(R.id.button_save_cc);
 
@@ -68,20 +63,9 @@ public class CreateContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                Call<Contact> call = service.addContact(contact);
 
-                call.enqueue(new Callback<Contact>() {
-                    @Override
-                    public void onResponse(Call<Contact> call, Response<Contact> response) {
-                        Toast.makeText(CreateContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onFailure(Call<Contact> call, Throwable t) {
-                        Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
 
             }
         });
@@ -98,14 +82,42 @@ public class CreateContactActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
-//        Button save = (Button)findViewById(R.id.button_save_cc);
-//        save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(CreateContactActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+        Button save = (Button)findViewById(R.id.button_save_cc);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(CreateContactActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                String f = firstName.getText().toString().trim();
+                String l = lastName.getText().toString().trim();
+                String d = display.getText().toString().trim();
+                String e = email.getText().toString().trim();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+                if(f.equals("") || l.equals("") || e.equals("")) {
+                    Toast.makeText(CreateContactActivity.this, "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
+
+                }else if(!e.matches(emailPattern)) {
+                    Toast.makeText(CreateContactActivity.this, "Invalid email address", Toast.LENGTH_SHORT).show();
+                } else {
+                    final Contact contact = new Contact(6, f, l, d, e, Format.PLAIN);
+
+                    ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                    Call<Contact> call = service.addContact(contact);
+
+                    call.enqueue(new Callback<Contact>() {
+                        @Override
+                        public void onResponse(Call<Contact> call, Response<Contact> response) {
+                            Toast.makeText(CreateContactActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Contact> call, Throwable t) {
+                            Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
 
         Button back = (Button)findViewById(R.id.button_back_cc);
         back.setOnClickListener(new View.OnClickListener() {

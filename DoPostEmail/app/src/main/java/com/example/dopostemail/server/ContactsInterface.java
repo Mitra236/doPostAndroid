@@ -23,8 +23,8 @@ public interface ContactsInterface {
     @POST("contacts/add")
     Call<Contact> addContact(@Body Contact contact);
 
-    @PUT("contacts/update")
-    Call<Contact> updateContact(@Body Contact con);
+    @PUT("contacts/edit")
+    Call<Contact> editContact(@Body String params);
 
     @DELETE("contacts/{id}")
     Call<Contact> deleteContact(@Path("id") int id);

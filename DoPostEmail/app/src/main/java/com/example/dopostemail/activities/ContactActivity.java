@@ -18,6 +18,8 @@ import com.example.dopostemail.model.Message;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,16 +51,16 @@ public class ContactActivity extends AppCompatActivity {
         ImageView img = findViewById(R.id.contact_icon);
         img.setImageResource(c.getPhoto().getPath());
 
-        EditText tbFirstName = findViewById(R.id.firstNameEdit);
+        final EditText tbFirstName = findViewById(R.id.firstNameEdit);
         tbFirstName.setText(c.getFirstName());
 
-        EditText tbLastName = findViewById(R.id.lastNameEdit);
+        final EditText tbLastName = findViewById(R.id.lastNameEdit);
         tbLastName.setText(c.getLastName());
 
-        EditText tbUsername = findViewById(R.id.usernameEdit);
+        final EditText tbUsername = findViewById(R.id.usernameEdit);
         tbUsername.setText(c.getDisplay());
 
-        EditText tbEmail = findViewById(R.id.emailEdit);
+        final EditText tbEmail = findViewById(R.id.emailEdit);
         tbEmail.setText(c.getEmail());
 
         EditText tbFormat = findViewById(R.id.formatEdit);
@@ -97,27 +99,32 @@ public class ContactActivity extends AppCompatActivity {
 
 
 
-//        Button btnSave = findViewById(R.id.button_save_c);
-//
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-//                Call<Contact> call = service.updateContact(c);
-//
-//                call.enqueue(new Callback<Contact>() {
-//                    @Override
-//                    public void onResponse(Call<Contact> call, Response<Contact> response) {
-//                        Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Contact> call, Throwable t) {
-//                        Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//        });
+        Button btnSave = findViewById(R.id.button_save_c);
+
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                String params = "";
+                params = Integer.toString(c.getId()) + "," + tbFirstName.getText().toString() + "," +
+                        tbLastName.getText().toString() + "," + tbUsername.getText().toString() + "," + tbEmail.getText().toString() + "," + "HTML";
+
+                Call<Contact> call = service.editContact(params);
+
+                call.enqueue(new Callback<Contact>() {
+                    @Override
+                    public void onResponse(Call<Contact> call, Response<Contact> response) {
+                        Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Contact> call, Throwable t) {
+                        Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
 //        StringBuilder builder1 = new StringBuilder();
 //        builder1.append("To: ");

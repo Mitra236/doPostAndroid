@@ -4,19 +4,19 @@ import java.io.Serializable;
 
 public class Photo implements Serializable {
     private int id;
-    private int path;
+    private String path;
     private Contact contact;
 
     public Photo() {
     }
 
-    public Photo(int id, int path, Contact contact) {
+    public Photo(int id, String path, Contact contact) {
         this.id = id;
         this.path = path;
         this.contact = contact;
     }
 
-    public Photo(int id, int path) {
+    public Photo(int id, String path) {
         this.id = id;
         this.path = path;
     }
@@ -29,11 +29,11 @@ public class Photo implements Serializable {
         this.id = id;
     }
 
-    public int getPath() {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(int path) {
+    public void setPath(String path) {
         this.path = path;
     }
 

@@ -22,7 +22,7 @@ public interface FoldersInterface {
     Call<Folder> getFoldersById(@Path("id") int id);
 
     @POST("folders/add")
-    Call<Folder> addFolder(@Body Folder folder);
+    Call<Folder> addFolder(@Body String content);
 
     @PUT("folders/edit")
     Call<Folder> updateFolder(@Body String content);

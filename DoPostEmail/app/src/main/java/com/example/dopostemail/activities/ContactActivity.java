@@ -46,7 +46,12 @@ public class ContactActivity extends AppCompatActivity {
         final Contact c = (Contact) bundle.getSerializable("contacts");
 
         ImageView img = findViewById(R.id.contact_icon);
-        img.setImageResource(c.getPhoto().getPath());
+//        if(c.getPhoto() != null){
+//            img.setImageResource(c.getPhoto().getPath());
+//        }else{
+            img.setImageResource(R.drawable.contacts_icon);
+//        }
+
 
         final EditText tbFirstName = findViewById(R.id.firstNameEdit);
         tbFirstName.setText(c.getFirstName());

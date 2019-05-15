@@ -1,8 +1,11 @@
 package com.example.dopostemail.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,6 +19,8 @@ import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.RetrofitClient;
+
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,20 +57,47 @@ public class FolderActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-                Call<Folder> call = service.deleteFolder(f.getId());
+                AlertDialog.Builder builder = new AlertDialog.Builder(FolderActivity.this);
 
-                call.enqueue(new Callback<Folder>() {
-                    @Override
-                    public void onResponse(Call<Folder> call, Response<Folder> response) {
-                        Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                    }
+                builder.setTitle("Confirm");
 
+                builder.setMessage("Are you sure that you want to delete contact?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onFailure(Call<Folder> call, Throwable t) {
-//                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialog, int which) {
+                        FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+                        Call<Folder> call = service.deleteFolder(f.getId());
+
+                        call.enqueue(new Callback<Folder>() {
+                            @Override
+                            public void onResponse(Call<Folder> call, Response<Folder> response) {
+                                Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Folder> call, Throwable t) {
+                                Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
+                                startActivity(i);
+                            }
+                        });
                     }
                 });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),
+                                "Canceled",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 
@@ -74,23 +106,31 @@ public class FolderActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-                String content = "";
-                content = Integer.toString(f.getId()) + "," + tbFolderName.getText().toString();
+                String fName = tbFolderName.getText().toString();
 
-                Call<Folder> call = service.updateFolder(content);
+                if(TextUtils.isEmpty(fName)){
+                    tbFolderName.setError(getString(R.string.edit_name));
+                }else {
+                    FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+                    String content = "";
+                    content = Integer.toString(f.getId()) + "," + tbFolderName.getText().toString();
 
-                call.enqueue(new Callback<Folder>() {
-                    @Override
-                    public void onResponse(Call<Folder> call, Response<Folder> response) {
-                        Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                    }
+                    Call<Folder> call = service.updateFolder(content);
 
-                    @Override
-                    public void onFailure(Call<Folder> call, Throwable t) {
-//                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    call.enqueue(new Callback<Folder>() {
+                        @Override
+                        public void onResponse(Call<Folder> call, Response<Folder> response) {
+                            Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
+                            startActivity(i);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Folder> call, Throwable t) {
+                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 

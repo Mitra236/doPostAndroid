@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,33 +65,54 @@ public class CreateContactActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                String content = "";
-                RadioButton formatHTML = findViewById(R.id.radioHTML);
+                String name = firstName.getText().toString();
+                String lastNameC = lastName.getText().toString();
+                String displayC = display.getText().toString();
+                String emailC = email.getText().toString();
 
-                String format;
-                if(formatHTML.isChecked() == true) {
-                    format = "HTML";
-                }else {
-                    format = "PLAIN";
-                }
+                if (TextUtils.isEmpty(name)) {
+                    firstName.setError(getString(R.string.edit_name));
+                    firstName.requestFocus();
+                } else if (TextUtils.isEmpty(lastNameC)) {
+                    lastName.setError(getString(R.string.edit_lastname));
+                    lastName.requestFocus();
+                } else if (TextUtils.isEmpty(displayC)) {
+                    display.setError(getString(R.string.edit_display));
+                    display.requestFocus();
+                } else if (TextUtils.isEmpty(emailC) || !Patterns.EMAIL_ADDRESS.matcher(emailC).matches()) {
+                    email.setError(getString(R.string.edit_email));
+                    email.requestFocus();
+                } else {
+                    ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                    String content = "";
+                    RadioButton formatHTML = findViewById(R.id.radioHTML);
 
-                content = firstName.getText().toString() + "," + lastName.getText().toString() + "," + display.getText().toString() + ","
+                    String format;
+                    if (formatHTML.isChecked() == true) {
+                        format = "HTML";
+                    } else {
+                        format = "PLAIN";
+                    }
+
+                    content = firstName.getText().toString() + "," + lastName.getText().toString() + "," + display.getText().toString() + ","
                             + email.getText().toString() + "," + format;
 
-                Call<Contact> call = service.addContact(content);
+                    Call<Contact> call = service.addContact(content);
 
-                call.enqueue(new Callback<Contact>() {
-                    @Override
-                    public void onResponse(Call<Contact> call, Response<Contact> response) {
-                        Toast.makeText(CreateContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                    }
+                    call.enqueue(new Callback<Contact>() {
+                        @Override
+                        public void onResponse(Call<Contact> call, Response<Contact> response) {
+                            Toast.makeText(CreateContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(CreateContactActivity.this, ContactsActivity.class);
+                            startActivity(i);
+                        }
 
-                    @Override
-                    public void onFailure(Call<Contact> call, Throwable t) {
-//                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Contact> call, Throwable t) {
+                        Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 

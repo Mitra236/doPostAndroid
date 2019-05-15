@@ -6,11 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
 
 public class CreateFolderActivity extends AppCompatActivity {
+
+    private EditText folderName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,9 @@ public class CreateFolderActivity extends AppCompatActivity {
         });
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
+
+        folderName = findViewById(R.id.folder_name);
+
     }
 
     @Override
@@ -44,7 +50,16 @@ public class CreateFolderActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CreateFolderActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+
+                String f = folderName.getText().toString().trim();
+
+                if(f.equals("")) {
+                    Toast.makeText(CreateFolderActivity.this, "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(CreateFolderActivity.this, "Saved", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

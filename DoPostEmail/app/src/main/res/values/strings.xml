@@ -34,4 +34,8 @@
     <string name = "radio_html">HTML</string>
     <string name = "radio_plain">Plain</string>
 
+    <string name = "edit_name">Name required</string>
+    <string name = "edit_lastname">Last name required</string>
+    <string name = "edit_display">Username required</string>
+    <string name = "edit_email">Email required</string>
 </resources>

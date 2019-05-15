@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import com.example.dopostemail.R;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.RetrofitClient;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -129,26 +132,46 @@ public class ContactActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                String params = "";
-                params = Integer.toString(c.getId()) + "," + tbFirstName.getText().toString() + "," +
-                        tbLastName.getText().toString() + "," + tbUsername.getText().toString() + "," + tbEmail.getText().toString() + "," + "HTML";
 
-                Call<Contact> call = service.editContact(params);
+                String name = tbFirstName.getText().toString();
+                String lastName = tbLastName.getText().toString();
+                String display = tbUsername.getText().toString();
+                String email = tbEmail.getText().toString();
+                
+                if (TextUtils.isEmpty(name)) {
+                    tbFirstName.setError(getString(R.string.edit_name));
+                    tbFirstName.requestFocus();
+                } else if (TextUtils.isEmpty(lastName)) {
+                    tbLastName.setError(getString(R.string.edit_lastname));
+                    tbLastName.requestFocus();
+                } else if (TextUtils.isEmpty(display)) {
+                    tbUsername.setError(getString(R.string.edit_display));
+                    tbUsername.requestFocus();
+                } else if (TextUtils.isEmpty(email)) {
+                    tbEmail.setError(getString(R.string.edit_email));
+                    tbEmail.requestFocus();
+                } else {
+                    ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                    String params = "";
+                    params = Integer.toString(c.getId()) + "," + tbFirstName.getText().toString() + "," +
+                            tbLastName.getText().toString() + "," + tbUsername.getText().toString() + "," + tbEmail.getText().toString() + "," + "HTML";
 
-                call.enqueue(new Callback<Contact>() {
-                    @Override
-                    public void onResponse(Call<Contact> call, Response<Contact> response) {
-                        Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(ContactActivity.this, ContactActivity.class);
-                        startActivity(i);
-                    }
+                    Call<Contact> call = service.editContact(params);
 
-                    @Override
-                    public void onFailure(Call<Contact> call, Throwable t) {
-                        Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    call.enqueue(new Callback<Contact>() {
+                        @Override
+                        public void onResponse(Call<Contact> call, Response<Contact> response) {
+                            Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(ContactActivity.this, ContactActivity.class);
+                            startActivity(i);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Contact> call, Throwable t) {
+                            Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 

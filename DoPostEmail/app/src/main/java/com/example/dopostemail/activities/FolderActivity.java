@@ -47,7 +47,7 @@ public class FolderActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final Folder f = (Folder) bundle.getSerializable("folder");
 
-        TextView tbFolderName = findViewById(R.id.folder_name);
+        final EditText tbFolderName = findViewById(R.id.folder_name);
         tbFolderName.setText(f.getName());
 
         Button btnDelete = findViewById(R.id.button_delete_f);
@@ -57,6 +57,34 @@ public class FolderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
                 Call<Folder> call = service.deleteFolder(f.getId());
+
+                call.enqueue(new Callback<Folder>() {
+                    @Override
+                    public void onResponse(Call<Folder> call, Response<Folder> response) {
+                        Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Folder> call, Throwable t) {
+//                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        Button btnEdit = findViewById(R.id.button_edit_f);
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Folder edit_folder = new Folder();
+                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+//                edit_folder.setName(tbFolderName.getText().toString());
+                ArrayList<String> params = new ArrayList<>();
+                params.add(Integer.toString(f.getId()));
+                params.add(tbFolderName.getText().toString());
+
+                Call<Folder> call = service.updateFolder(params);
 
                 call.enqueue(new Callback<Folder>() {
                     @Override
@@ -149,13 +177,13 @@ public class FolderActivity extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
-        Button edit = (Button)findViewById(R.id.button_edit_f);
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(FolderActivity.this, "Edit", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        Button edit = (Button)findViewById(R.id.button_edit_f);
+//        edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(FolderActivity.this, "Edit", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override

@@ -31,7 +31,7 @@
 
         android:layout_below="@id/text"/>
 
-    <TextView
+    <EditText
         android:id="@+id/folder_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

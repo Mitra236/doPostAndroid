@@ -1,6 +1,7 @@
 package com.example.dopostemail.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -45,9 +46,16 @@ public class CustomAdapter extends BaseAdapter {
         TextView mTitle = view.findViewById(R.id.title);
         TextView mSubTitle = view.findViewById(R.id.subTitle);
         TextView mDate = view.findViewById(R.id.date);
+        if(messageList.get(position).isMessageRead() == false) {
+            mSubTitle.setTypeface(null, Typeface.BOLD_ITALIC);
+            mDate.setTypeface(null, Typeface.BOLD_ITALIC);
+        }
+
         mTitle.setText(messageList.get(position).getFrom().getFirstName());
         mSubTitle.setText(messageList.get(position).getContent());
         mDate.setText(messageList.get(position).getDateTime());
+
+
 
         view.setTag(messageList.get(position).getId());
         return view;

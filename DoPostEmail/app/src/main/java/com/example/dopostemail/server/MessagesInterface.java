@@ -5,7 +5,10 @@ import com.example.dopostemail.model.Message;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface MessagesInterface {
@@ -21,4 +24,10 @@ public interface MessagesInterface {
 
     @GET("sortAsc")
     Call<ArrayList<Message>> getAllMessagesAsc();
+
+    @DELETE("messages/{id}")
+    Call<Message> deleteMessage(@Path("id") int id);
+
+    @PUT("messages/edit")
+    Call<Message> editMessage(@Body String params);
 }

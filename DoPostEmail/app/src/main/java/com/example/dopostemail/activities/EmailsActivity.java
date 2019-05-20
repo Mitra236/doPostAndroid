@@ -4,6 +4,7 @@ package com.example.dopostemail.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -171,21 +173,51 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                     mListView.setAdapter(adapter);
 
 
+
                     mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            Message m = messages.get(position);
+                            final Message m = messages.get(position);
 
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("messages", m);
+                            if (!m.isMessageRead()) {
+                                MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                                String params = "";
 
-                            Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
-                            i.putExtras(bundle);
-                            startActivity(i);
+                                params = Integer.toString(m.getId()) + "," + Boolean.toString(m.isMessageRead());
+
+                                Call<Message> call = service.editMessage(params);
+
+                                call.enqueue(new Callback<Message>() {
+                                    @Override
+                                    public void onResponse(Call<Message> call, Response<Message> response) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("messages", m);
+
+                                        Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                                        i.putExtras(bundle);
+                                        startActivity(i);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Message> call, Throwable t) {
+
+                                    }
+                                });
+                            } else {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("messages", m);
+
+                                Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                                i.putExtras(bundle);
+                                startActivity(i);
 
 
+                            }
                         }
+
                     });
                 }
             }

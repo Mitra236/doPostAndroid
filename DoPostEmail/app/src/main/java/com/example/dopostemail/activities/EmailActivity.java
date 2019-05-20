@@ -1,6 +1,8 @@
 package com.example.dopostemail.activities;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,8 +20,15 @@ import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Tag;
+import com.example.dopostemail.server.ContactsInterface;
+import com.example.dopostemail.server.MessagesInterface;
+import com.example.dopostemail.server.RetrofitClient;
 
 import org.w3c.dom.Text;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class EmailActivity extends AppCompatActivity {
@@ -130,7 +139,52 @@ public class EmailActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Replied", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_delete:
-                Toast.makeText(getApplicationContext(), "Message deleted", Toast.LENGTH_SHORT).show();
+
+                Bundle bundle = getIntent().getExtras();
+                final Message m = (Message) bundle.getSerializable("messages");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(EmailActivity.this);
+
+                builder.setTitle("Confirm");
+
+                builder.setMessage("Are you sure that you want to delete this message?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                        Call<Message> call = service.deleteMessage(m.getId());
+
+                        call.enqueue(new Callback<Message>() {
+                            @Override
+                            public void onResponse(Call<Message> call, Response<Message> response) {
+                                Toast.makeText(EmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(EmailActivity.this, EmailActivity.class);
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Message> call, Throwable t) {
+                                Toast.makeText(EmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(EmailActivity.this, EmailsActivity.class);
+                                startActivity(i);
+                            }
+                        });
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(),
+                                "Canceled",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
                 return true;
             case R.id.action_replay_toAll:
                 Toast.makeText(getApplicationContext(), "Replied to all", Toast.LENGTH_SHORT).show();

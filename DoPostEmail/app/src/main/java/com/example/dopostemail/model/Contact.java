@@ -169,4 +169,9 @@ public class Contact implements Serializable {
         this.bcc = bcc;
     }
 
+    @Override
+    public String toString(){
+        return firstName + " " + lastName + " " + email;
+    }
+
 }

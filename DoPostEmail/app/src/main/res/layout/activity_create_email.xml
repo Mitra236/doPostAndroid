@@ -12,7 +12,7 @@
     </include>
 
 
-    <EditText
+    <MultiAutoCompleteTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTo"
@@ -36,7 +36,7 @@
         android:textSize="15dp"
         android:backgroundTint="@color/colorGray"/>
 
-    <EditText
+    <MultiAutoCompleteTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editCC"
@@ -48,7 +48,7 @@
         android:textSize="15dp"
         android:backgroundTint="@color/colorGray"/>
 
-    <EditText
+    <MultiAutoCompleteTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editBCC"

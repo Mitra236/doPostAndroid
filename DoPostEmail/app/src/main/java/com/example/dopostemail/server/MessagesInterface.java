@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -31,6 +32,6 @@ public interface MessagesInterface {
     @PUT("messages/edit")
     Call<Message> editMessage(@Body String params);
 
-    @PUT("messages/add")
+    @POST("messages/add")
     Call<Message> addMessage(@Body String params);
 }

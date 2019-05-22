@@ -2,6 +2,7 @@ package com.example.dopostemail.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -37,6 +39,10 @@ import retrofit2.Response;
 
 public class CreateEmailActivity extends AppCompatActivity {
 
+    ArrayList<Contact> to = new ArrayList<>();
+    ArrayList<Contact> cc = new ArrayList<>();
+    ArrayList<Contact> bcc = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +61,9 @@ public class CreateEmailActivity extends AppCompatActivity {
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
+        to.clear();
+        cc.clear();
+        bcc.clear();
 
         final MultiAutoCompleteTextView mTo = findViewById(R.id.editTo);
         final MultiAutoCompleteTextView mCc = findViewById(R.id.editCC);
@@ -86,21 +95,24 @@ public class CreateEmailActivity extends AppCompatActivity {
                 mTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                        Contact selected = (Contact) parent.getAdapter().getItem(position);
+                        to.add(selected);
                     }
                 });
 
                 mCc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                        Contact selected = (Contact) parent.getAdapter().getItem(position);
+                        cc.add(selected);
                     }
                 });
 
                 mBcc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                        Contact selected = (Contact) parent.getAdapter().getItem(position);
+                        bcc.add(selected);
                     }
                 });
 
@@ -125,6 +137,88 @@ public class CreateEmailActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_send:
+
+//                ArrayList<Contact> allContacts = new ArrayList<>();
+
+                ContactsInterface serviceCon = RetrofitClient.getClient().create(ContactsInterface.class);
+                Call<ArrayList<Contact>> callCon = serviceCon.getContacts();
+
+                callCon.enqueue(new Callback<ArrayList<Contact>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
+                        final ArrayList<Contact> allContacts = response.body();
+
+
+                        EditText subjectTB = findViewById(R.id.editSubject);
+                        EditText contentTB = findViewById(R.id.editMessage);
+                        String subject = subjectTB.getText().toString();
+                        String content = contentTB.getText().toString();
+
+                        if (TextUtils.isEmpty(subject)) {
+                            subjectTB.setError("Subject required");
+                            subjectTB.requestFocus();
+                        } else if (TextUtils.isEmpty(content)) {
+                            contentTB.setError("Content required");
+                            contentTB.requestFocus();
+                        } else {
+                            MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                            String params = "";
+
+                            String contactId = "";
+
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
+                            String currentUser = pref.getString("loggedInUser", "");
+                            int userId = pref.getInt("userId", 0);
+
+
+
+                            for(Contact con : allContacts){
+
+                                if(currentUser.equals(con.getEmail())){
+                                    contactId = String.valueOf(con.getId());
+                                }
+                            }
+
+                            String toString = "", ccString = "", bccString = "";
+                            for(Contact con : to){
+                                toString += con.getId();
+                            }
+                            for(Contact con : cc){
+                                ccString += con.getId();
+                            }
+                            for(Contact con : bcc){
+                                bccString += con.getId();
+                            }
+                        params = contactId + "," + toString + "," + ccString + "," + bccString + "," + "dateTime" + "," + subject + "," +
+                                content + "," + "name1.name2" + "," + "data|type|name.data|type|name" + "," + "3" + "," + String.valueOf(userId);
+
+
+                        Call<Message> callM = service.addMessage(params);
+
+                        callM.enqueue(new Callback<Message>() {
+                            @Override
+                            public void onResponse(Call<Message> call, Response<Message> response) {
+                                Toast.makeText(CreateEmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Message> call, Throwable t) {
+                                Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<Contact>> call, Throwable t) {
+                            Toast.makeText(CreateEmailActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
+                        }
+
+                    });
                 Toast.makeText(getApplicationContext(), "Message sent", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_cancel:
@@ -145,60 +239,9 @@ public class CreateEmailActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
 
-        Button btnCreate = findViewById(R.id.button_save_cc);
 
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                String name = firstName.getText().toString();
-//                String lastNameC = lastName.getText().toString();
-//                String displayC = display.getText().toString();
-//                String emailC = email.getText().toString();
 
-//                if (TextUtils.isEmpty(name)) {
-//                    firstName.setError(getString(R.string.edit_name));
-//                    firstName.requestFocus();
-//                } else if (TextUtils.isEmpty(lastNameC)) {
-//                    lastName.setError(getString(R.string.edit_lastname));
-//                    lastName.requestFocus();
-//                } else if (TextUtils.isEmpty(displayC)) {
-//                    display.setError(getString(R.string.edit_display));
-//                    display.requestFocus();
-//                } else if (TextUtils.isEmpty(emailC) || !Patterns.EMAIL_ADDRESS.matcher(emailC).matches()) {
-//                    email.setError(getString(R.string.edit_email));
-//                    email.requestFocus();
-//                } else {
-                    MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-                    String content = "";
-//                    RadioButton formatHTML = findViewById(R.id.radioHTML);
-//
-//                    String format;
-//                    if (formatHTML.isChecked() == true) {
-//                        format = "HTML";
-//                    } else {
-//                        format = "PLAIN";
-//                    }
 
-                    content = "";
-
-                    Call<Message> call = service.addMessage(content);
-
-                    call.enqueue(new Callback<Message>() {
-                        @Override
-                        public void onResponse(Call<Message> call, Response<Message> response) {
-                            Toast.makeText(CreateEmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
-                            startActivity(i);
-                        }
-
-                        @Override
-                        public void onFailure(Call<Message> call, Throwable t) {
-                            Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-//                }
-            }
-        });
 
     }
 

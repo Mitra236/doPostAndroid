@@ -30,4 +30,7 @@ public interface MessagesInterface {
 
     @PUT("messages/edit")
     Call<Message> editMessage(@Body String params);
+
+    @PUT("messages/add")
+    Call<Message> addMessage(@Body String params);
 }

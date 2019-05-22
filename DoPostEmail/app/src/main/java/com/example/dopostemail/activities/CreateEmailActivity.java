@@ -8,19 +8,25 @@ import android.preference.CheckBoxPreference;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewUtils;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.ContactsAdapter;
 import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Message;
 import com.example.dopostemail.server.ContactsInterface;
+import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
 import java.util.ArrayList;
@@ -138,6 +144,61 @@ public class CreateEmailActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+
+        Button btnCreate = findViewById(R.id.button_save_cc);
+
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                String name = firstName.getText().toString();
+//                String lastNameC = lastName.getText().toString();
+//                String displayC = display.getText().toString();
+//                String emailC = email.getText().toString();
+
+//                if (TextUtils.isEmpty(name)) {
+//                    firstName.setError(getString(R.string.edit_name));
+//                    firstName.requestFocus();
+//                } else if (TextUtils.isEmpty(lastNameC)) {
+//                    lastName.setError(getString(R.string.edit_lastname));
+//                    lastName.requestFocus();
+//                } else if (TextUtils.isEmpty(displayC)) {
+//                    display.setError(getString(R.string.edit_display));
+//                    display.requestFocus();
+//                } else if (TextUtils.isEmpty(emailC) || !Patterns.EMAIL_ADDRESS.matcher(emailC).matches()) {
+//                    email.setError(getString(R.string.edit_email));
+//                    email.requestFocus();
+//                } else {
+                    MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                    String content = "";
+//                    RadioButton formatHTML = findViewById(R.id.radioHTML);
+//
+//                    String format;
+//                    if (formatHTML.isChecked() == true) {
+//                        format = "HTML";
+//                    } else {
+//                        format = "PLAIN";
+//                    }
+
+                    content = "";
+
+                    Call<Message> call = service.addMessage(content);
+
+                    call.enqueue(new Callback<Message>() {
+                        @Override
+                        public void onResponse(Call<Message> call, Response<Message> response) {
+                            Toast.makeText(CreateEmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+                            startActivity(i);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Message> call, Throwable t) {
+                            Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+//                }
+            }
+        });
 
     }
 

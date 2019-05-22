@@ -104,7 +104,14 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
 
                                 builder.setSmallIcon(R.drawable.ic_sms_notification);
-                                builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                if(m1.getId() == 1){
+                                    builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                }else if(m1.getId() == 2){
+                                    builder.setContentTitle(m1.getFrom().getEmail()+  "     " + counter);
+                                }else {
+                                    builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                }
+
                                 builder.setContentText(m1.getContent());
                                 builder.setPriority(NotificationCompat.PRIORITY_HIGH);
                                 builder.setContentIntent(intentPending);
@@ -122,7 +129,13 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
 
                                 builder.setSmallIcon(R.drawable.ic_sms_notification);
-                                builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                if(m1.getId() == 1){
+                                    builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                }else if(m1.getId() == 2){
+                                    builder.setContentTitle(m1.getFrom().getEmail()+  "     " + counter);
+                                }else {
+                                    builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                }
                                 builder.setContentText(m1.getContent());
                                 builder.setPriority(NotificationCompat.PRIORITY_HIGH);
                                 builder.setContentIntent(intentPending);

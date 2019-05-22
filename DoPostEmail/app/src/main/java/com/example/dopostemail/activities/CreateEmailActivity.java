@@ -138,8 +138,6 @@ public class CreateEmailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_send:
 
-//                ArrayList<Contact> allContacts = new ArrayList<>();
-
                 ContactsInterface serviceCon = RetrofitClient.getClient().create(ContactsInterface.class);
                 Call<ArrayList<Contact>> callCon = serviceCon.getContacts();
 
@@ -222,7 +220,80 @@ public class CreateEmailActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Message sent", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_cancel:
-                Toast.makeText(getApplicationContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                ContactsInterface serviceCon2 = RetrofitClient.getClient().create(ContactsInterface.class);
+                Call<ArrayList<Contact>> callCon2 = serviceCon2.getContacts();
+
+                callCon2.enqueue(new Callback<ArrayList<Contact>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
+                        final ArrayList<Contact> allContacts = response.body();
+
+
+                        EditText subjectTB = findViewById(R.id.editSubject);
+                        EditText contentTB = findViewById(R.id.editMessage);
+                        String subject = subjectTB.getText().toString();
+                        String content = contentTB.getText().toString();
+
+
+                            MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                            String params = "";
+
+                            String contactId = "";
+
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
+                            String currentUser = pref.getString("loggedInUser", "");
+                            int userId = pref.getInt("userId", 0);
+
+
+
+                            for(Contact con : allContacts){
+
+                                if(currentUser.equals(con.getEmail())){
+                                    contactId = String.valueOf(con.getId());
+                                }
+                            }
+
+                            String toString = "", ccString = "", bccString = "";
+                            for(Contact con : to){
+                                toString += con.getId();
+                            }
+                            for(Contact con : cc){
+                                ccString += con.getId();
+                            }
+                            for(Contact con : bcc){
+                                bccString += con.getId();
+                            }
+                            params = contactId + "," + toString + "," + ccString + "," + bccString + "," + "dateTime" + "," + subject + "," +
+                                    content + "," + "name1.name2" + "," + "data|type|name.data|type|name" + "," + "3" + "," + String.valueOf(userId);
+
+
+                            Call<Message> callM = service.draftMessage(params);
+
+                            callM.enqueue(new Callback<Message>() {
+                                @Override
+                                public void onResponse(Call<Message> call, Response<Message> response) {
+                                    Toast.makeText(CreateEmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+                                    startActivity(i);
+                                }
+
+                                @Override
+                                public void onFailure(Call<Message> call, Throwable t) {
+                                    Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Contact>> call, Throwable t) {
+                        Toast.makeText(CreateEmailActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+                Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

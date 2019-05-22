@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Message;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CustomAdapter extends BaseAdapter {
@@ -53,7 +55,10 @@ public class CustomAdapter extends BaseAdapter {
 
         mTitle.setText(messageList.get(position).getFrom().getFirstName());
         mSubTitle.setText(messageList.get(position).getContent());
-        mDate.setText(messageList.get(position).getDateTime());
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+        mDate.setText(dateFormat.format(messageList.get(position).getDateTime()));
 
 
 

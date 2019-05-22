@@ -31,7 +31,10 @@ import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -267,7 +270,12 @@ public class CreateEmailActivity extends AppCompatActivity {
                                 bccString += con.getId();
                                 bccString += "|";
                             }
-                            params = contactId + "," + toString + "," + ccString + "," + bccString + "," + "dateTime" + "," + subject + "," +
+
+                            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Date date = new Date(System.currentTimeMillis());
+                            String nowString = date.toString();
+
+                            params = contactId + "," + toString + "," + ccString + "," + bccString + "," + nowString + "," + subject + "," +
                                     content + "," + "name1.name2" + "," + "data|type|name.data|type|name" + "," + "3" + "," + String.valueOf(userId);
 
 

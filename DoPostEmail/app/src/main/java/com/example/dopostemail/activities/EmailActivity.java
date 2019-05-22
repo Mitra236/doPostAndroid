@@ -26,6 +26,9 @@ import com.example.dopostemail.server.RetrofitClient;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -117,8 +120,10 @@ public class EmailActivity extends AppCompatActivity {
             attachment.setText(builder2.append(a.getName() + ", "));
         }
 
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        dateTime.setText("Date: " + m.getDateTime());
+
+        dateTime.setText("Date: " + dateFormat.format(m.getDateTime()));
         from.setText("From: " + m.getFrom().getFirstName());
         message.setText(m.getContent());
         folder.setText("Folder: " + m.getFolder().getName());

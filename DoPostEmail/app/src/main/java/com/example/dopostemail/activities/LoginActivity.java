@@ -43,6 +43,11 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+        EditText username = findViewById(R.id.usernameLogin);
+        EditText password = findViewById(R.id.passwordLogin);
+        username.setText("user@gmail.com");
+        password.setText("user");
+
     }
 
     private void doLogin( final View v){
@@ -69,7 +74,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("currentUser", a.getUsername());
+                        editor.putString("loggedInUser", a.getUsername());
+                        editor.putInt("userId", a.getId());
                        // editor.putString(LOGGED_PASSWORD, a.getUsername());
                         editor.apply();
                         editor.commit();

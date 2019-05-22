@@ -256,12 +256,16 @@ public class CreateEmailActivity extends AppCompatActivity {
                             String toString = "", ccString = "", bccString = "";
                             for(Contact con : to){
                                 toString += con.getId();
+                                toString += "|";
+                                Toast.makeText(CreateEmailActivity.this, "wtf", Toast.LENGTH_SHORT).show();
                             }
                             for(Contact con : cc){
                                 ccString += con.getId();
+                                ccString += "|";
                             }
                             for(Contact con : bcc){
                                 bccString += con.getId();
+                                bccString += "|";
                             }
                             params = contactId + "," + toString + "," + ccString + "," + bccString + "," + "dateTime" + "," + subject + "," +
                                     content + "," + "name1.name2" + "," + "data|type|name.data|type|name" + "," + "3" + "," + String.valueOf(userId);

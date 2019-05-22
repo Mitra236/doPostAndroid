@@ -260,7 +260,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                             for(Contact con : to){
                                 toString += con.getId();
                                 toString += "|";
-                                Toast.makeText(CreateEmailActivity.this, "wtf", Toast.LENGTH_SHORT).show();
+
                             }
                             for(Contact con : cc){
                                 ccString += con.getId();

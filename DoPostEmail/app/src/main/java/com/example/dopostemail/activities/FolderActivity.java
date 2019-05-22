@@ -191,24 +191,24 @@ public class FolderActivity extends AppCompatActivity {
 //            public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
 //                ArrayList<Message> folderMessages = response.body();
 //
-//                CustomAdapter ca = new CustomAdapter(getApplicationContext(), f.getMessages());
-//                list_emails.setAdapter(ca);
-//                list_emails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                        Message m = f.getMessages().get(position);
-//
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable("messages", m);
-//
-//                        Intent i = new Intent(FolderActivity.this, EmailActivity.class);
-//                        i.putExtras(bundle);
-//                        startActivity(i);
-//
-//
-//                    }
-//                });
+                CustomAdapter ca = new CustomAdapter(getApplicationContext(), f.getMessages());
+                list_emails.setAdapter(ca);
+                list_emails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Message m = f.getMessages().get(position);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("messages", m);
+
+                        Intent i = new Intent(FolderActivity.this, EmailActivity.class);
+                        i.putExtras(bundle);
+                        startActivity(i);
+
+
+                    }
+                });
 //            }
 //
 //            @Override

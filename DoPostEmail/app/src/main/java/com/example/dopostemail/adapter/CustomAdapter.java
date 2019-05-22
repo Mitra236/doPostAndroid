@@ -10,7 +10,12 @@ import android.widget.TextView;
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Message;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class CustomAdapter extends BaseAdapter {
 
@@ -37,8 +42,23 @@ public class CustomAdapter extends BaseAdapter {
         return position;
     }
 
+    public static Date fromUTC(String dateParam) {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        df.setTimeZone(tz);
+
+        try {
+            return df.parse(dateParam);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
 
 
         View view = View.inflate(mContext, R.layout.activity_listview, null);
@@ -53,7 +73,10 @@ public class CustomAdapter extends BaseAdapter {
 
         mTitle.setText(messageList.get(position).getFrom().getFirstName());
         mSubTitle.setText(messageList.get(position).getContent());
-        mDate.setText(messageList.get(position).getDateTime());
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = fromUTC(messageList.get(position).getDateTime());
+        mDate.setText(dateFormat.format(date));
 
 
 

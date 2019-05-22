@@ -48,7 +48,9 @@ public class EmailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(EmailActivity.this, EmailsActivity.class);
+                i.removeExtra("messages");
                 startActivity(i);
+                getIntent().removeExtra("messages");
             }
         });
 

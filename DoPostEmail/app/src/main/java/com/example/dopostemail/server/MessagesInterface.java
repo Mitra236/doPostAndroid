@@ -34,4 +34,7 @@ public interface MessagesInterface {
 
     @POST("messages/add")
     Call<Message> addMessage(@Body String params);
+
+    @POST("messages/draft")
+    Call<Message> draftMessage(@Body String params);
 }

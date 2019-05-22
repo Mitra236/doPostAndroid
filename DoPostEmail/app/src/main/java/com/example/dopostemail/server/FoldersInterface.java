@@ -2,6 +2,7 @@ package com.example.dopostemail.server;
 
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Folder;
+import com.example.dopostemail.model.Message;
 
 import java.util.ArrayList;
 
@@ -29,4 +30,10 @@ public interface FoldersInterface {
 
     @DELETE("folders/{id}")
     Call<Folder> deleteFolder(@Path("id") int id);
+
+    @GET("foldermesages")
+    Call<ArrayList<Message>> getFolderMessageList();
+
+    @GET("foldermessages/{id}")
+    Call<Message> getFolderMessageById(@Path("id") int id);
 }

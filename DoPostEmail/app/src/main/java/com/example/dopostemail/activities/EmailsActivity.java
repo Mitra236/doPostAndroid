@@ -1,6 +1,7 @@
 package com.example.dopostemail.activities;
 
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -54,67 +55,10 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     private ListView mListView;
     private CustomAdapter adapter;
     private List<Message> messages;
-    private int sortingDirection;
 
     private final String CHANNEL_ID = "my_channel";
     private final int NOTIFICATION_ID = 001;
     private int counter = 0;
-    private Intent intent;
-
-
-//    private ArrayList<Message> m = new ArrayList<>();
-//    private ArrayList<Message> m2 = new ArrayList<>();
-//    private ArrayList<Message> m3 = new ArrayList<>();
-//    private ArrayList<Tag> tags = new ArrayList<>();
-//    private ArrayList<Tag> tags2 = new ArrayList<>();
-//    private ArrayList<Tag> tags3 = new ArrayList<>();
-//    private ArrayList<Folder> folders = new ArrayList<>();
-//    private ArrayList<Contact> to = new ArrayList<>();
-//    private ArrayList<Contact> to2 = new ArrayList<>();
-//    private ArrayList<Contact> to3 = new ArrayList<>();
-//    private ArrayList<Contact> cc = new ArrayList<>();
-//    private ArrayList<Contact> cc2 = new ArrayList<>();
-//    private ArrayList<Contact> bcc = new ArrayList<>();
-//    private ArrayList<Contact> bcc2 = new ArrayList<>();
-//    private ArrayList<Attachment> attachments = new ArrayList<>();
-//    private ArrayList<Attachment> attachments2 = new ArrayList<>();
-//    private ArrayList<Attachment> attachments3 = new ArrayList<>();
-//
-//    public Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN);
-//    public Contact conTemp2 = new Contact(2, "Aleksandar", "Aleksic", "Acoo", "aco123@gmail.com", Format.HTML);
-//    public Contact conTemp3 = new Contact(3, "Maja", "Maric", "Maki", "maki123@gmail.com", Format.HTML);
-//    public Contact conTemp4 = new Contact(4, "me", "Stevic", "Stefi", "stefi123@gmail.com", Format.HTML);
-//    public Contact conTemp5 = new Contact(5, "Emily", "Emmy", "Emily", "emily123@gmail.com", Format.HTML);
-//
-//    public Tag tagTemp = new Tag(1, "First Tag", m);
-//    public Tag tagTemp2 = new Tag(2, "Second Tag", m2);
-//    public Tag tagTemp3 = new Tag(3, "Third Tag", m3);
-//    public Tag tagTemp4 = new Tag(4, "Fourth Tag", m2);
-//    public Tag tagTemp5 = new Tag(5, "Fifth Tag", m3);
-//
-//
-//    private Rule rule = new Rule(1, Condition.TO, Operation.MOVE);
-//    private Rule rule2 = new Rule(2, Condition.FROM, Operation.DELETE);
-//    private Rule rule3 = new Rule(3, Condition.SUBJECT, Operation.COPY);
-//
-//    public Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(),new ArrayList<Message>(),rule3);
-//    public Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), new ArrayList<Message>(),rule);
-//    public Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), new ArrayList<Message>(),rule2);
-//    public Folder folder4 = new Folder(4, "Electronics", folders, new ArrayList<Message>(),rule2);
-//    public Folder folder5 = new Folder(5, "Recent promotions", folders, new ArrayList<Message>(),rule2);
-//
-//    public Account account = new Account(1, "smtp", "pop3", "myemail@gmail.com", "123", m);
-//
-//
-//    public Message messageTemp = new Message(1, conTemp, to, cc, bcc,  "2019-02-13 09:50", "Matematika 1" , "This is some message", tags, attachments, folder, account );
-//    public Message messageTemp2 = new Message(2, conTemp2, to2, new ArrayList<Contact>(), bcc2, "2019-01-29 13:24",  "Osnove programiranja", "Just a dumb message",tags2, attachments2, folder2, account);
-//    public Message messageTemp3 = new Message(3,  conTemp3, to3, cc2, new ArrayList<Contact>(),"2019-03-19 22:22", "Sistemski softver", "Another dumb message", tags3, attachments3, folder3, account);
-//
-//    public Attachment attachment = new Attachment(1, "some data", "type1", "attachment1.pdf", messageTemp );
-//    public Attachment attachment2 = new Attachment(2, "some data", "type2", "attachment2.pdf", messageTemp2 );
-//    public Attachment attachment3 = new Attachment(3, "some data", "type3", "attachment3.pdf", messageTemp3 );
-//    public Attachment attachment4 = new Attachment(4, "some data", "type4", "attachment4.pdf", messageTemp );
-//    public Attachment attachment5 = new Attachment(5, "some data", "type5", "attachment5.pdf", messageTemp3 );
 
 
     @Override
@@ -127,38 +71,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         setSupportActionBar(toolbar);
 
         mListView = findViewById(R.id.list_view);
-
-//        m.add(messageTemp);
-//        m2.add(messageTemp2);
-//        m3.add(messageTemp3);
-//
-//        tags.add(tagTemp);
-//        tags2.add(tagTemp2);
-//        tags2.add(tagTemp4);
-//        tags3.add(tagTemp3);
-//        tags3.add(tagTemp5);
-//
-//        to.add(conTemp4);
-//        to2.add(conTemp4);
-//        to2.add(conTemp5);
-//        to3.add(conTemp4);
-//        cc.add(conTemp3);
-//        cc.add(conTemp5);
-//        bcc.add(conTemp5);
-//        cc2.add(conTemp);
-//        cc2.add(conTemp4);
-//        bcc2.add(conTemp);
-//        bcc2.add(conTemp2);
-//
-//        folders.add(folder4);
-//        folders.add(folder5);
-//
-//        attachments.add(attachment);
-//        attachments.add(attachment4);
-//        attachments2.add(attachment2);
-//        attachments3.add(attachment3);
-//        attachments3.add(attachment5);
-
 
 
         MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
@@ -173,35 +85,55 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                     Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }else {
 
-
-                //        messages.add(messageTemp);
-                //        messages.add(messageTemp2);
-                //        messages.add(messageTemp3);
-
                     messages = messages1;
 
 
                     final NotificationCompat.Builder builder = new NotificationCompat.Builder(EmailsActivity.this, CHANNEL_ID);
                     for(Message m1 : messages){
                         if(!m1.isMessageRead()){
-                            Intent intent = new Intent(EmailsActivity.this, EmailActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("messages", m1);
-                            intent.putExtras(bundle);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
                             counter++;
-                            builder.setSmallIcon(R.drawable.ic_sms_notification);
-                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter );
-                            builder.setContentText(m1.getContent());
-                            builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-                            builder.setContentIntent(intentPending);
+                            if(counter <= 1) {
+                                Intent intent = new Intent(EmailsActivity.this, EmailActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("messages", m1);
+                                intent.removeExtra("messages");
+                                intent.putExtras(bundle);
+
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
+                                builder.setSmallIcon(R.drawable.ic_sms_notification);
+                                builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                builder.setContentText(m1.getContent());
+                                builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+                                builder.setContentIntent(intentPending);
+                                builder.setAutoCancel(true);
+                                builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
 
-                            NotificationManagerCompat notificationManagerCompat =  NotificationManagerCompat.from(EmailsActivity.this);
-                            notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+
+                                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
+                                notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+                            }else {
+
+                                Intent intent = new Intent(EmailsActivity.this, EmailsActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+                                builder.setSmallIcon(R.drawable.ic_sms_notification);
+                                builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                builder.setContentText(m1.getContent());
+                                builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+                                builder.setContentIntent(intentPending);
+                                builder.setAutoCancel(true);
+                                builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
+
+
+                                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
+                                notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+
+                            }
 
 
                         }
@@ -248,6 +180,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                                         bundle.putSerializable("messages", m);
 
                                         Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                                        i.removeExtra("messages");
                                         i.putExtras(bundle);
                                         startActivity(i);
 

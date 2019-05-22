@@ -14,7 +14,7 @@ public class Message implements Serializable {
     private ArrayList<Contact> to;
     private ArrayList<Contact> cc;
     private ArrayList<Contact> bcc;
-    private Date dateTime;
+    private String dateTime;
     private String subject;
     private String content;
     private ArrayList<Tag> tag;
@@ -29,7 +29,7 @@ public class Message implements Serializable {
         this.content = content;
     }
 
-    public Message(int id, Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, Date dateTime, String subject, String content, ArrayList<Tag> tag,
+    public Message(int id, Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag,
                    ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
         this.id = id;
         this.from = from;
@@ -128,11 +128,11 @@ public class Message implements Serializable {
         this.bcc = bcc;
     }
 
-    public Date getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 

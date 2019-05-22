@@ -27,7 +27,10 @@ import com.example.dopostemail.server.RetrofitClient;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +39,19 @@ import retrofit2.Response;
 
 public class EmailActivity extends AppCompatActivity {
 
+    public static Date fromUTC(String dateParam) {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        df.setTimeZone(tz);
+
+        try {
+            return df.parse(dateParam);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,9 +137,10 @@ public class EmailActivity extends AppCompatActivity {
         }
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = fromUTC(m.getDateTime());
 
 
-        dateTime.setText("Date: " + dateFormat.format(m.getDateTime()));
+        dateTime.setText("Date: " + dateFormat.format(date));
         from.setText("From: " + m.getFrom().getFirstName());
         message.setText(m.getContent());
         folder.setText("Folder: " + m.getFolder().getName());

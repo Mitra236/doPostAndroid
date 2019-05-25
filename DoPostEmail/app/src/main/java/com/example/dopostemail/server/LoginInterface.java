@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 
 public interface LoginInterface {
 
-    @GET("accounts")
+    @GET("api/service/accounts")
     Call<ArrayList<Account>> getAccounts();
 
     @GET("editAccount")

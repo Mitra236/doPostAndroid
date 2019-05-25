@@ -16,6 +16,7 @@ import com.example.dopostemail.R;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Format;
+import com.example.dopostemail.model.Photo;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.RetrofitClient;
@@ -65,6 +66,7 @@ public class CreateContactActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String name = firstName.getText().toString();
                 String lastNameC = lastName.getText().toString();
                 String displayC = display.getText().toString();
@@ -83,8 +85,7 @@ public class CreateContactActivity extends AppCompatActivity {
                     email.setError(getString(R.string.edit_email));
                     email.requestFocus();
                 } else {
-                    ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                    String content = "";
+
                     RadioButton formatHTML = findViewById(R.id.radioHTML);
 
                     String format;
@@ -93,11 +94,9 @@ public class CreateContactActivity extends AppCompatActivity {
                     } else {
                         format = "PLAIN";
                     }
-
-                    content = firstName.getText().toString() + "," + lastName.getText().toString() + "," + display.getText().toString() + ","
-                            + email.getText().toString() + "," + format;
-
-                    Call<Contact> call = service.addContact(content);
+                    ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                    Contact contact = new Contact(name, lastNameC, displayC, emailC, Format.HTML, new Photo());
+                    Call<Contact> call = service.addContact(contact);
 
                     call.enqueue(new Callback<Contact>() {
                         @Override
@@ -109,10 +108,60 @@ public class CreateContactActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Contact> call, Throwable t) {
-                        Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
+
+
+//                String name = firstName.getText().toString();
+//                String lastNameC = lastName.getText().toString();
+//                String displayC = display.getText().toString();
+//                String emailC = email.getText().toString();
+//
+//                if (TextUtils.isEmpty(name)) {
+//                    firstName.setError(getString(R.string.edit_name));
+//                    firstName.requestFocus();
+//                } else if (TextUtils.isEmpty(lastNameC)) {
+//                    lastName.setError(getString(R.string.edit_lastname));
+//                    lastName.requestFocus();
+//                } else if (TextUtils.isEmpty(displayC)) {
+//                    display.setError(getString(R.string.edit_display));
+//                    display.requestFocus();
+//                } else if (TextUtils.isEmpty(emailC) || !Patterns.EMAIL_ADDRESS.matcher(emailC).matches()) {
+//                    email.setError(getString(R.string.edit_email));
+//                    email.requestFocus();
+//                } else {
+//                    ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+//                    String content = "";
+//                    RadioButton formatHTML = findViewById(R.id.radioHTML);
+//
+//                    String format;
+//                    if (formatHTML.isChecked() == true) {
+//                        format = "HTML";
+//                    } else {
+//                        format = "PLAIN";
+//                    }
+//
+//                    content = firstName.getText().toString() + "," + lastName.getText().toString() + "," + display.getText().toString() + ","
+//                            + email.getText().toString() + "," + format;
+//
+//                    Call<Contact> call = service.addContact(content);
+//
+//                    call.enqueue(new Callback<Contact>() {
+//                        @Override
+//                        public void onResponse(Call<Contact> call, Response<Contact> response) {
+//                            Toast.makeText(CreateContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+//                            Intent i = new Intent(CreateContactActivity.this, ContactsActivity.class);
+//                            startActivity(i);
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<Contact> call, Throwable t) {
+//                        Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                }
             }
         });
 

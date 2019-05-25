@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Format;
+import com.example.dopostemail.model.Photo;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
@@ -75,10 +77,6 @@ public class ContactActivity extends AppCompatActivity {
         EditText tbFormat = findViewById(R.id.formatEdit);
         tbFormat.setText(c.getFormat().toString());
 
-//        TextView twTo = findViewById(R.id.con_to);
-//        TextView twFrom = findViewById(R.id.con_from);
-//        TextView twCc = findViewById(R.id.con_cc);
-//        TextView twBcc = findViewById(R.id.con_bcc);
 
         Button btnDelete = findViewById(R.id.button_delete_c);
 
@@ -162,11 +160,12 @@ public class ContactActivity extends AppCompatActivity {
                     tbEmail.requestFocus();
                 }else {
                     ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                    String params = "";
-                    params = Integer.toString(c.getId()) + "," + tbFirstName.getText().toString() + "," +
-                            tbLastName.getText().toString() + "," + tbUsername.getText().toString() + "," + tbEmail.getText().toString() + "," + "HTML";
+                   // String params = "";
+//                    params = Integer.toString(c.getId()) + "," + tbFirstName.getText().toString() + "," +
+//                            tbLastName.getText().toString() + "," + tbUsername.getText().toString() + "," + tbEmail.getText().toString() + "," + "HTML";
 
-                    Call<Contact> call = service.editContact(params);
+                    Contact contact = new Contact(c.getId(), name, lastName, display, email, Format.HTML, new Photo());
+                    Call<Contact> call = service.editContact(c.getId(), contact);
 
                     call.enqueue(new Callback<Contact>() {
                         @Override
@@ -185,28 +184,6 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
 
-//        StringBuilder builder1 = new StringBuilder();
-//        builder1.append("To: ");
-//        for (Message me : c.getTo()) {
-//            twTo.setText(builder1.append(me.getSubject()  + ", "));
-//        }
-//
-//        StringBuilder builder2 = new StringBuilder();
-//        builder2.append("From: ");
-//        for (Message me : c.getFrom()) {
-//            twFrom.setText(builder2.append(me.getSubject()  + ", "));
-//        }
-//
-//        StringBuilder builder3 = new StringBuilder();
-//        builder3.append("Cc: ");
-//        for (Message me : c.getCc()) {
-//            twCc.setText(builder3.append(me.getSubject() + ", "));
-//        }
-//        StringBuilder builder4 = new StringBuilder();
-//        builder4.append("Bcc: ");
-//        for (Message me : c.getBcc()) {
-//            twBcc.setText(builder4.append(me.getSubject() + ", "));
-//        }
     }
 
     @Override

@@ -180,11 +180,13 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
                             if (!m.isMessageRead()) {
                                 MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-                                String params = "";
+//                                String params = "";
+//
+//                                params = Integer.toString(m.getId()) + "," + Boolean.toString(m.isMessageRead());
 
-                                params = Integer.toString(m.getId()) + "," + Boolean.toString(m.isMessageRead());
+                                Message mess = new Message(m.getId(), m.getFrom(), m.getTo(), m.getCc(), m.getBcc(), m.getDateTime(), m.getSubject(), m.getContent(), m.getTag(), m.getAttachments(), m.getFolder(), m.getAccount(), true);
 
-                                Call<Message> call = service.editMessage(params);
+                                Call<Message> call = service.editMessage(m.getId(), mess );
 
                                 call.enqueue(new Callback<Message>() {
                                     @Override

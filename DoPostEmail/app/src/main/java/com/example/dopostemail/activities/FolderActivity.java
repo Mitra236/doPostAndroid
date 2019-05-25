@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.CustomAdapter;
+import com.example.dopostemail.adapter.FolderAdapter;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.Rule;
 import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
@@ -120,31 +122,47 @@ public class FolderActivity extends AppCompatActivity {
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String fName = tbFolderName.getText().toString();
+                    FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+                    Folder folder = new Folder(f.getId(), tbFolderName.getText().toString(), f.getFolders(), f.getMessages(), f.getRule());
+                    Call<Folder> call = service.updateFolder(f.getId(), folder);
 
-                    if (TextUtils.isEmpty(fName)) {
-                        tbFolderName.setError(getString(R.string.edit_name));
-                    } else {
-                        FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-                        String content = "";
-                        content = Integer.toString(f.getId()) + "," + tbFolderName.getText().toString();
+                    call.enqueue(new Callback<Folder>() {
+                        @Override
+                        public void onResponse(Call<Folder> call, Response<Folder> response) {
+                            Toast.makeText(FolderActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                        }
 
-                        Call<Folder> call = service.updateFolder(content);
+                        @Override
+                        public void onFailure(Call<Folder> call, Throwable t) {
+                            Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
-                        call.enqueue(new Callback<Folder>() {
-                            @Override
-                            public void onResponse(Call<Folder> call, Response<Folder> response) {
-                                Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
-                                startActivity(i);
-                            }
-
-                            @Override
-                            public void onFailure(Call<Folder> call, Throwable t) {
-                                Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
+//                    String fName = tbFolderName.getText().toString();
+//
+//                    if (TextUtils.isEmpty(fName)) {
+//                        tbFolderName.setError(getString(R.string.edit_name));
+//                    } else {
+//                        FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+//                        String content = "";
+//                        content = Integer.toString(f.getId()) + "," + tbFolderName.getText().toString();
+//
+//                        Call<Folder> call = service.updateFolder(content);
+//
+//                        call.enqueue(new Callback<Folder>() {
+//                            @Override
+//                            public void onResponse(Call<Folder> call, Response<Folder> response) {
+//                                Toast.makeText(FolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+//                                Intent i = new Intent(FolderActivity.this, FoldersActivity.class);
+//                                startActivity(i);
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<Folder> call, Throwable t) {
+//                                Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                    }
                 }
             });
         }
@@ -157,31 +175,31 @@ public class FolderActivity extends AppCompatActivity {
 //        nazivFoldera.setText(f.getName());
 
         ListView list_subflders = findViewById(R.id.list_view_subfolders);
-       final  ListView list_emails = findViewById(R.id.list_view_emails);
+         final  ListView list_emails = findViewById(R.id.list_view_emails);
 
-//        FolderAdapter fa = new FolderAdapter(getApplicationContext(), f.getFolders());
-//        list_subflders.setAdapter(fa);
-
-
+        FolderAdapter fa = new FolderAdapter(getApplicationContext(), f.getFolders());
+        list_subflders.setAdapter(fa);
 
 
 
-//        list_subflders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                Folder m = f.getFolders().get(position);
-//
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("folder", m);
-//
-//                Intent i = new Intent(FolderActivity.this, FolderActivity.class);
-//                i.putExtras(bundle);
-//                startActivity(i);
-//
-//
-//            }
-//        });
+
+
+        list_subflders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Folder m = f.getFolders().get(position);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("folder", m);
+
+                Intent i = new Intent(FolderActivity.this, FolderActivity.class);
+                i.putExtras(bundle);
+                startActivity(i);
+
+
+            }
+        });
 
 //        FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
 //        Call<ArrayList<Message>> calls = service.getFolderMessageList();

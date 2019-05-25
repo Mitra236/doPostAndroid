@@ -65,6 +65,15 @@ public class Contact implements Serializable {
         this.photo = photo;
     }
 
+    public Contact(String firstName, String lastName, String display, String email, Format format, Photo photo) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.display = display;
+        this.email = email;
+        this.format = format;
+        this.photo = photo;
+    }
+
     public Contact(int id, String firstName, String lastName, String display, String email, Format format) {
         this.id = id;
         this.firstName = firstName;

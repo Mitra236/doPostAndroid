@@ -20,6 +20,14 @@ public class Folder implements Serializable {
         this.rule = rule;
     }
 
+    public Folder(String name, ArrayList<Folder> folders, ArrayList<Message> messages, Rule rule) {
+
+        this.name = name;
+        this.folders = folders;
+        this.messages = messages;
+        this.rule = rule;
+    }
+
     public Folder(int id, String name) {
         this.id = id;
         this.name = name;
@@ -55,5 +63,14 @@ public class Folder implements Serializable {
 
     public ArrayList<Folder> getFolders() {
         return folders;
+    }
+
+    public Rule getRule() {
+        return rule;
+    }
+
+
+    public void setRule(Rule rule) {
+        this.rule = rule;
     }
 }

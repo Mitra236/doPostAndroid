@@ -13,9 +13,13 @@ import android.widget.Toast;
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Condition;
 import com.example.dopostemail.model.Folder;
+import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Operation;
+import com.example.dopostemail.model.Rule;
 import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.RetrofitClient;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,58 +56,80 @@ public class CreateFolderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-
-                //---------------
-                RadioButton radioMove = findViewById(R.id.radioMove);
-                RadioButton radioCopy = findViewById(R.id.radioCopy);
-                RadioButton radioDelete = findViewById(R.id.radioDelete);
-
-                RadioButton radioTo = findViewById(R.id.radioTo);
-                RadioButton radioFrom = findViewById(R.id.radioFrom);
-                RadioButton radioCc = findViewById(R.id.radioCc);
-                RadioButton radioSubject = findViewById(R.id.radioSubject);
-
-                Condition condition = Condition.TO;
-                Operation operation = Operation.MOVE;
-
-                if(radioTo.isChecked() == true){
-                    condition = Condition.TO;
-                }else if(radioFrom.isChecked() == true){
-                    condition = Condition.FROM;
-                }else if(radioCc.isChecked() == true){
-                    condition = Condition.CC;
-                }else if(radioSubject.isChecked() == true){
-                    condition = Condition.SUBJECT;
-                }
-
-                if(radioMove.isChecked() == true){
-                    operation = Operation.MOVE;
-                }else if(radioCopy.isChecked() == true){
-                    operation = Operation.COPY;
-                }else if(radioDelete.isChecked() == true){
-                    operation = Operation.DELETE;
-                }
-                //-----------------
-
-
-                String content = "";
-                content = folderName.getText().toString() + "," + operation.toString() + "," + condition.toString();
-
-                Call<Folder> call = service.addFolder(content);
+                Folder folder = new Folder(folderName.getText().toString(), new ArrayList<Folder>(), new ArrayList<Message>(), new Rule());
+                Call<Folder> call = service.addFolder(folder);
 
                 call.enqueue(new Callback<Folder>() {
                     @Override
                     public void onResponse(Call<Folder> call, Response<Folder> response) {
-                        Toast.makeText(CreateFolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateFolderActivity.this, "Success", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(Call<Folder> call, Throwable t) {
-//                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateFolderActivity.this, "failure", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
+
+
+//        btnCreate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+//
+//                //---------------
+//                RadioButton radioMove = findViewById(R.id.radioMove);
+//                RadioButton radioCopy = findViewById(R.id.radioCopy);
+//                RadioButton radioDelete = findViewById(R.id.radioDelete);
+//
+//                RadioButton radioTo = findViewById(R.id.radioTo);
+//                RadioButton radioFrom = findViewById(R.id.radioFrom);
+//                RadioButton radioCc = findViewById(R.id.radioCc);
+//                RadioButton radioSubject = findViewById(R.id.radioSubject);
+//
+//                Condition condition = Condition.TO;
+//                Operation operation = Operation.MOVE;
+//
+//                if(radioTo.isChecked() == true){
+//                    condition = Condition.TO;
+//                }else if(radioFrom.isChecked() == true){
+//                    condition = Condition.FROM;
+//                }else if(radioCc.isChecked() == true){
+//                    condition = Condition.CC;
+//                }else if(radioSubject.isChecked() == true){
+//                    condition = Condition.SUBJECT;
+//                }
+//
+//                if(radioMove.isChecked() == true){
+//                    operation = Operation.MOVE;
+//                }else if(radioCopy.isChecked() == true){
+//                    operation = Operation.COPY;
+//                }else if(radioDelete.isChecked() == true){
+//                    operation = Operation.DELETE;
+//                }
+//                //-----------------
+//
+//
+//                String content = "";
+//                content = folderName.getText().toString() + "," + operation.toString() + "," + condition.toString();
+//
+//                Call<Folder> call = service.addFolder(content);
+//
+//                call.enqueue(new Callback<Folder>() {
+//                    @Override
+//                    public void onResponse(Call<Folder> call, Response<Folder> response) {
+//                        Toast.makeText(CreateFolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Folder> call, Throwable t) {
+////                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+ //           }
+  //      });
 
 
     }

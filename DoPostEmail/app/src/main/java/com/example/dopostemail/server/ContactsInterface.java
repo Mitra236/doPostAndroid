@@ -11,21 +11,22 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ContactsInterface {
 
     @GET("contacts")
     Call<ArrayList<Contact>> getContacts();
 
-    @GET("contacts/{id}")
-    Call<Contact> getContactById(@Path("id") int id);
+    @GET("contacts/id")
+    Call<Contact> getContactById(@Query("id") int id);
 
     @POST("contacts/add")
-    Call<Contact> addContact(@Body String content);
+    Call<Contact> addContact(@Body Contact contact);
 
     @PUT("contacts/edit")
-    Call<Contact> editContact(@Body String params);
+    Call<Contact> editContact(@Query("id") int id, @Body Contact contact);
 
-    @DELETE("contacts/{id}")
-    Call<Contact> deleteContact(@Path("id") int id);
+    @DELETE("contacts/delete")
+    Call<Contact> deleteContact(@Query("id") int id);
 }

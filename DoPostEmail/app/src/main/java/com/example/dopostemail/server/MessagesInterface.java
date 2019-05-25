@@ -11,14 +11,15 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface MessagesInterface {
 
     @GET("messages")
     Call<ArrayList<Message>> getMessages();
 
-    @GET("messages/{id}")
-    Call<Message> getMessageById(@Path("id") int id);
+    @GET("api/message")
+    Call<Message> getMessageById(@Query("id") int id);
 
     @GET("sortDesc")
     Call<ArrayList<Message>> getAllMessagesDesc();
@@ -26,11 +27,11 @@ public interface MessagesInterface {
     @GET("sortAsc")
     Call<ArrayList<Message>> getAllMessagesAsc();
 
-    @DELETE("messages/{id}")
-    Call<Message> deleteMessage(@Path("id") int id);
+    @DELETE("api/messages")
+    Call<Message> deleteMessage(@Query("id") int id);
 
     @PUT("messages/edit")
-    Call<Message> editMessage(@Body String params);
+    Call<Message> editMessage(@Query ("id") int id, @Body Message message);
 
     @POST("messages/add")
     Call<Message> addMessage(@Body String params);

@@ -1,9 +1,12 @@
 package com.example.dopostemail.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import com.example.dopostemail.R;
 import com.example.dopostemail.model.Account;
 import com.example.dopostemail.server.LoginInterface;
 import com.example.dopostemail.server.RetrofitClient;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -35,18 +39,28 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button btnEmails = (Button) findViewById(R.id.button_login);
-        btnEmails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doLogin(v);
-
-            }
-        });
+//        Button btnEmails = (Button) findViewById(R.id.button_login);
+//        btnEmails.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                doLogin(v);
+//
+//            }
+//        });
         EditText username = findViewById(R.id.usernameLogin);
         EditText password = findViewById(R.id.passwordLogin);
         username.setText("user@gmail.com");
         password.setText("user");
+
+//        Button loginButton = findViewById(R.id.button_login);
+//        loginButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(LoginActivity.this, EmailsActivity.class);
+//                startActivity(i);
+//
+//            }
+//        });
 
     }
 
@@ -70,10 +84,19 @@ public class LoginActivity extends AppCompatActivity {
                     if(a.getUsername().equals(u) && a.getPassword().equals(p)){
                         isLogged = true;
                         Username = a.getUsername();
-                        btnStartEmailsActivity(v);
+//                        btnStartEmailsActivity(v);
+
+                        Intent i = new Intent(LoginActivity.this, EmailsActivity.class);
+                        startActivity(i);
+
+
+                        Gson gson = new Gson();
+                        String json = gson.toJson(a);
+
 
                         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userObject", json);
                         editor.putString("loggedInUser", a.getUsername());
                         editor.putInt("userId", a.getId());
                        // editor.putString(LOGGED_PASSWORD, a.getUsername());
@@ -103,9 +126,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    public void btnStartEmailsActivity(View v){
-        Intent i = new Intent(LoginActivity.this, EmailsActivity.class);
-        startActivity(i);
+//    public void btnStartEmailsActivity(View v){
+//        Intent i = new Intent(LoginActivity.this, EmailsActivity.class);
+//        startActivity(i);
+//    }
+
+    public void showProgress(View view) {
+        final int THREE_SECONDS = 3000*1000;
+        final ProgressDialog dlg = new ProgressDialog(this);
+        dlg.setMessage("Loading...");
+        dlg.setCancelable(false);
+        dlg.show();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                dlg.dismiss();
+            }
+        }, THREE_SECONDS);
+
+        doLogin(view);
     }
 
     @Override

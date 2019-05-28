@@ -107,7 +107,7 @@ public class ContactActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Contact> call, Throwable t) {
-                                Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
                                 startActivity(i);
                             }
@@ -171,7 +171,7 @@ public class ContactActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Contact> call, Response<Contact> response) {
                             Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(ContactActivity.this, ContactActivity.class);
+                            Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
                             startActivity(i);
                         }
 

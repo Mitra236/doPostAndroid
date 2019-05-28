@@ -1,5 +1,6 @@
 package com.example.dopostemail.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -226,6 +227,8 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
         Call<ArrayList<Folder>> call = service.getFolders();
 
+        showProgress();
+
         call.enqueue(new Callback<ArrayList<Folder>>() {
             @Override
             public void onResponse(Call<ArrayList<Folder>> call, Response<ArrayList<Folder>> response) {
@@ -320,6 +323,19 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onStart(){
         super.onStart();
+    }
+
+    public void showProgress() {
+        final int THREE_SECONDS = 2*1000;
+        final ProgressDialog dlg = new ProgressDialog(this);
+        dlg.setMessage("Loading...");
+        dlg.setCancelable(false);
+        dlg.show();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                dlg.dismiss();
+            }
+        }, THREE_SECONDS);
     }
 
     @Override

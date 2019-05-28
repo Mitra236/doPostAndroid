@@ -1,9 +1,11 @@
 package com.example.dopostemail.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -100,6 +102,8 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
         Call<ArrayList<Contact>> call = service.getContacts();
 
+        showProgress();
+
         call.enqueue(new Callback<ArrayList<Contact>>() {
             @Override
             public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
@@ -176,6 +180,18 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
     }
 
 
+    public void showProgress() {
+        final int THREE_SECONDS = 2*1000;
+        final ProgressDialog dlg = new ProgressDialog(this);
+        dlg.setMessage("Loading...");
+        dlg.setCancelable(false);
+        dlg.show();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                dlg.dismiss();
+            }
+        }, THREE_SECONDS);
+    }
 
 
     @Override

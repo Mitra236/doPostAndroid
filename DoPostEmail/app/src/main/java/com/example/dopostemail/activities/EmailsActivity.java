@@ -5,12 +5,14 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -34,9 +36,11 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.CustomAdapter;
+import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +71,14 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         setTitle("Emails");
         setContentView(R.layout.activity_posts);
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
+        String json = pref.getString("userObject", "");
+
+        Gson gson = new Gson();
+        Account acc = gson.fromJson(json, Account.class);
+
+//        Toast.makeText(this, acc.getUsername(), Toast.LENGTH_SHORT).show();
+
         Toolbar toolbar = findViewById(R.id.nav_toolbar_emails);
         setSupportActionBar(toolbar);
 
@@ -75,11 +87,13 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
         MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
         Call<ArrayList<Message>> call = service.getMessages();
+        showProgress();
 
         call.enqueue(new Callback<ArrayList<Message>>() {
             @Override
             public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
                 ArrayList<Message> messages1 = response.body();
+
 
                 if(messages1 == null){
                     Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -267,6 +281,20 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
 
     }
+
+    public void showProgress() {
+        final int THREE_SECONDS = 2*1000;
+        final ProgressDialog dlg = new ProgressDialog(this);
+        dlg.setMessage("Loading...");
+        dlg.setCancelable(false);
+        dlg.show();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                dlg.dismiss();
+            }
+        }, THREE_SECONDS);
+    }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

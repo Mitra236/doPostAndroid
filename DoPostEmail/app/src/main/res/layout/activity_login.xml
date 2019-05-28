@@ -70,7 +70,7 @@
         android:layout_centerHorizontal="true"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:onClick="btnStartEmailsActivity"
+        android:onClick="showProgress"
         android:text="Login"
         android:textColor="@color/colorWhite"
         tools:layout_editor_absoluteX="46dp"

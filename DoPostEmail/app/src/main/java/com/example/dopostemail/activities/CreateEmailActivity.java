@@ -71,6 +71,46 @@ public class CreateEmailActivity extends AppCompatActivity {
         final MultiAutoCompleteTextView mTo = findViewById(R.id.editTo);
         final MultiAutoCompleteTextView mCc = findViewById(R.id.editCC);
         final MultiAutoCompleteTextView mBcc = findViewById(R.id.editBCC);
+
+        EditText subjectCreate = findViewById(R.id.editSubject);
+        EditText contentCreate = findViewById(R.id.editMessage);
+//        String subject = subjectCreate.getText().toString();
+//        String content = contentCreate.getText().toString();
+
+        Bundle bundle = getIntent().getExtras();
+
+        Message m = new Message();
+        String action = "";
+        try{
+            m = (Message) bundle.getSerializable("message");
+            action = bundle.getString("action");
+        }catch(Exception ex){}
+
+
+
+        if(m != null){
+            if(action.equals("reply")){
+                subjectCreate.setText(m.getSubject());
+                contentCreate.setText(m.getContent());
+                to.add(m.getFrom());
+                mTo.setText(m.getFrom().toString() + ", ");
+            }else if(action.equals("replyAll")){
+                subjectCreate.setText(m.getSubject());
+                contentCreate.setText(m.getContent());
+                to.add(m.getFrom());
+                mTo.setText(m.getFrom().toString());
+                for(Contact con : m.getTo()){
+                    to.add(con);
+                    mTo.setText(mTo.getText() + ", " + con.toString());
+                }
+            }else if(action.equals("Forword")){
+                subjectCreate.setText(m.getSubject());
+                contentCreate.setText(m.getContent());
+            }
+        }
+
+
+
         ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
         Call<ArrayList<Contact>> call = service.getContacts();
 

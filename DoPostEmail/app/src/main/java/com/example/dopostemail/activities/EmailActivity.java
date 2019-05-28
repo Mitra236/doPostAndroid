@@ -157,10 +157,21 @@ public class EmailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
+        Bundle bundleMain = getIntent().getExtras();
+        final Message m1 = (Message) bundleMain.getSerializable("messages");
 
+        switch (item.getItemId()) {
             case R.id.action_replay:
-                Toast.makeText(getApplicationContext(), "Replied", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(EmailActivity.this, CreateEmailActivity.class);
+                Bundle bundleReply = new Bundle();
+                bundleReply.putSerializable("message", m1);
+                bundleReply.putString("action", "reply");
+                intent.removeExtra("message");
+                intent.putExtras(bundleReply);
+                startActivity(intent);
+
+
                 return true;
             case R.id.action_delete:
 
@@ -184,13 +195,13 @@ public class EmailActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Message> call, Response<Message> response) {
                                 Toast.makeText(EmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(EmailActivity.this, EmailActivity.class);
+                                Intent i = new Intent(EmailActivity.this, EmailsActivity.class);
                                 startActivity(i);
                             }
 
                             @Override
                             public void onFailure(Call<Message> call, Throwable t) {
-                                Toast.makeText(EmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(EmailActivity.this, EmailsActivity.class);
                                 startActivity(i);
                             }
@@ -211,13 +222,29 @@ public class EmailActivity extends AppCompatActivity {
 
                 return true;
             case R.id.action_replay_toAll:
-                Toast.makeText(getApplicationContext(), "Replied to all", Toast.LENGTH_SHORT).show();
+
+                Intent intentReplyAll = new Intent(EmailActivity.this, CreateEmailActivity.class);
+                Bundle bundleReplyAll = new Bundle();
+                bundleReplyAll.putSerializable("message", m1);
+                bundleReplyAll.putString("action", "replyAll");
+                intentReplyAll.removeExtra("message");
+                intentReplyAll.putExtras(bundleReplyAll);
+                startActivity(intentReplyAll);
+
                 return true;
             case R.id.action_attach:
                 Toast.makeText(getApplicationContext(), "Attachment saved", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_forward:
-                Toast.makeText(getApplicationContext(), "Forwarded", Toast.LENGTH_SHORT).show();
+
+                Intent intentForword = new Intent(EmailActivity.this, CreateEmailActivity.class);
+                Bundle bundleForword = new Bundle();
+                bundleForword.putSerializable("message", m1);
+                bundleForword.putString("action", "Forword");
+                intentForword.removeExtra("message");
+                intentForword.putExtras(bundleForword);
+                startActivity(intentForword);
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

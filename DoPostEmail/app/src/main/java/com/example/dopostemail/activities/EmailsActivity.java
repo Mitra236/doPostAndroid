@@ -21,9 +21,12 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -71,6 +74,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         setTitle("Emails");
         setContentView(R.layout.activity_posts);
 
+
         SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
         String json = pref.getString("userObject", "");
 
@@ -83,6 +87,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         setSupportActionBar(toolbar);
 
         mListView = findViewById(R.id.list_view);
+//        mListView.setTextFilterEnabled(true);
 
 
         MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
@@ -194,9 +199,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
                             if (!m.isMessageRead()) {
                                 MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-//                                String params = "";
-//
-//                                params = Integer.toString(m.getId()) + "," + Boolean.toString(m.isMessageRead());
 
                                 Message mess = new Message(m.getId(), m.getFrom(), m.getTo(), m.getCc(), m.getBcc(), m.getDateTime(), m.getSubject(), m.getContent(), m.getTag(), m.getAttachments(), m.getFolder(), m.getAccount(), true);
 
@@ -327,34 +329,49 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_emails_search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.search_view:
+
+                final android.support.v7.widget.SearchView searchView = (SearchView) item.getActionView();
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        adapter.getFilter().filter(newText);
+
+                        return true;
+                    }
+                });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+
+    }
+
+    @Override
     protected void onStart(){
         super.onStart();
     }
 
     @Override
     protected void onResume(){
-        super.onResume();
-
-
-    }
-
-//    public void allMessages(List<Message> mess) {
-//
-//        messages = new ArrayList<>();
-//
-//
-//
-//        for(Message m: mess){
-//            messages.add(m);
-//
-//        }
-
-//        if(sortingDirection == 1){
-//            Collections.sort(messages);
-//        }
- //   }
-
-
+        super.onResume(); }
 
     @Override
     protected void onPause(){
@@ -371,7 +388,4 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         super.onDestroy();
     }
 
-   // public ArrayList<Folder> getFolders() {
-//        return folders;
-//    }
 }

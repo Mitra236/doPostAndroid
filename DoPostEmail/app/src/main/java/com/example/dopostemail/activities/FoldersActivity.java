@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -30,6 +31,7 @@ import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -118,94 +120,6 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         mListView = findViewById(R.id.list_view);
 
 
-//        m.add(messageTemp);
-//        m2.add(messageTemp2);
-//        m3.add(messageTemp3);
-//
-//        tags.add(tagTemp);
-//        tags2.add(tagTemp2);
-//        tags2.add(tagTemp4);
-//        tags3.add(tagTemp3);
-//        tags3.add(tagTemp5);
-//
-//        to.add(conTemp4);
-//        to2.add(conTemp4);
-//        to2.add(conTemp5);
-//        to3.add(conTemp4);
-//        cc.add(conTemp3);
-//        cc.add(conTemp5);
-//        bcc.add(conTemp5);
-//        cc2.add(conTemp);
-//        cc2.add(conTemp4);
-//        bcc2.add(conTemp);
-//        bcc2.add(conTemp2);
-//
-//        folders1.add(folder4);
-//        folders1.add(folder5);
-//
-//        attachments.add(attachment);
-//        attachments.add(attachment4);
-//        attachments2.add(attachment2);
-//        attachments3.add(attachment3);
-//        attachments3.add(attachment5);
-//
-//        mes1.add(messageTemp);
-//        mes2.add(messageTemp2);
-//        mes3.add(messageTemp3);
-
-
-
-
-        /*Rule rule = new Rule(1, Condition.TO, Operation.MOVE);
-        Rule rule2 = new Rule(2, Condition.FROM, Operation.DELETE);
-        Rule rule3 = new Rule(3, Condition.SUBJECT, Operation.COPY);
-
-
-        Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(), rule3);
-        Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), rule);
-        Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), rule2);
-        Folder folder4 = new Folder(4, "Electronics", new ArrayList<Folder>(), rule2);
-        Folder folder5 = new Folder(5, "Recent promotions", new ArrayList<Folder>(), rule2);
-
-        folders = new ArrayList<>();
-        folders.add(folder);
-        folders.add(folder2);
-        folders.add(folder3);
-        folders.add(folder4);
-        folders.add(folder5);
-
-        Folder folder = new Folder(1, "Drafts", new ArrayList<Folder>(), messages, rule3);
-        Folder folder2 = new Folder(2, "Promotions", new ArrayList<Folder>(), messages, rule);
-        Folder folder3 = new Folder(3, "Trash", new ArrayList<Folder>(), messages, rule2);
-        Folder folder4 = new Folder(4, "Electronics", folders, messages, rule2);
-        Folder folder5 = new Folder(5, "Recent promotions", folders, messages, rule2);
-
-        Contact con1 = new Contact("John");
-        Message mess1 = new Message(con1, "You passed!Congrats!");
-
-
-        messages.add(mess1);
-
-        folders.add(folder4);
-        folders.add(folder5);
-
-        folderss = new ArrayList<>();
-        folderss.add(folder);
-        folderss.add(folder2);
-        folderss.add(folder3);
-
-        folders.add(folder4);
-        folders.add(folder5);
-
-        folder2.getFolders().addAll(folders)*/
-
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("folders", f);
-
-//        ListView mListView = findViewById(R.id.list_view);
-//        ArrayList<Folder> folders = new Dummy().getFolders();
-//        FoldersAdapter fa = new FoldersAdapter(this, R.layout.activity_listview,folders);
-//        mListView.setAdapter(fa);
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
@@ -223,11 +137,11 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
             }
         });
-
+/*
         FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
         Call<ArrayList<Folder>> call = service.getFolders();
 
-        showProgress();
+//        showProgress();
 
         call.enqueue(new Callback<ArrayList<Folder>>() {
             @Override
@@ -268,7 +182,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
                 Toast.makeText(FoldersActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
             }
         });
-
+*/
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_open);
         drawer.addDrawerListener(toggle);
@@ -286,6 +200,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
 
         });
+
     }
 
     @Override
@@ -341,78 +256,79 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onResume(){
         super.onResume();
-//        startRepeatingTask();
+        startRepeatingTask();
     }
 
-//    Runnable mStatusChecker = new Runnable() {
-//        @Override
-//        public void run() {
-//            try {
-//
-//                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//                String syncTimeStr = pref.getString("refresh_rate", "0");
-//                mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTimeStr));
-//
-//                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-//                Call<ArrayList<Folder>> call = service.getFolders();
-//
-//                call.enqueue(new Callback<ArrayList<Folder>>() {
-//                    @Override
-//                    public void onResponse(Call<ArrayList<Folder>> call, Response<ArrayList<Folder>> response) {
-//                        ArrayList<Folder> folders1 = response.body();
-//
-//                        if (folders1 == null) {
-//                            Toast.makeText(FoldersActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            folders = folders1;
-//
-//                            adapter = new FolderAdapter(getApplicationContext(), folders);
-//                            mListView.setAdapter(adapter);
-//
-//                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                @Override
-//                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                                    Folder f = folders.get(position);
-//
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putSerializable("folder", f);
-//
-//                                    Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
-//                                    i.putExtras(bundle);
-//                                    startActivity(i);
-//
-//
-//                                }
-//                            });
-//                        }
-//                    }
-//
-//
-//                    @Override
-//                    public void onFailure(Call<ArrayList<Folder>> call, Throwable t) {
-//
-//                    }
-//                });
-//
-//
-//            } finally {
-//                mHandler.postDelayed(mStatusChecker, mInterval);
-//            }
-//        }
-//    };
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
 
-//    void startRepeatingTask() {
-//        mStatusChecker.run();
-//    }
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String syncTimeStr = pref.getString("refresh_setting", "0");
+//                String syncTimeStr = "2";
+                mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTimeStr));
 
-//    void stopRepeatingTask() {
-//        mHandler.removeCallbacks(mStatusChecker);
-//    }
+                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
+                Call<ArrayList<Folder>> call = service.getFolders();
+
+                call.enqueue(new Callback<ArrayList<Folder>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Folder>> call, Response<ArrayList<Folder>> response) {
+                        ArrayList<Folder> folders1 = response.body();
+
+                        if (folders1 == null) {
+                            Toast.makeText(FoldersActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        } else {
+                            folders = folders1;
+
+                            adapter = new FolderAdapter(getApplicationContext(), folders);
+                            mListView.setAdapter(adapter);
+
+                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    Folder f = folders.get(position);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("folder", f);
+
+                                    Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
+                                    i.putExtras(bundle);
+                                    startActivity(i);
+
+
+                                }
+                            });
+                        }
+                    }
+
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Folder>> call, Throwable t) {
+
+                    }
+                });
+
+
+            } finally {
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }
+        }
+    };
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
     @Override
     protected void onPause(){
         super.onPause();
-//        stopRepeatingTask();
+        stopRepeatingTask();
     }
 
     @Override

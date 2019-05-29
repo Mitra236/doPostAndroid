@@ -96,7 +96,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
         MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
         Call<ArrayList<Message>> call = service.getMessages();
-        showProgress();
+//        showProgress();
 
         call.enqueue(new Callback<ArrayList<Message>>() {
             @Override

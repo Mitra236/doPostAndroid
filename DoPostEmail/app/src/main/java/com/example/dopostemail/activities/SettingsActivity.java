@@ -55,9 +55,6 @@ public class SettingsActivity extends PreferenceActivity {
                         }
                     @Override
                     public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
-                        Log.d("dadsda", "fdsd");
-                        Log.d("asssss", t.getMessage());
-                        Log.d("dgdh", t.getStackTrace().toString());
                         Toast.makeText(SettingsActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -86,10 +83,7 @@ public class SettingsActivity extends PreferenceActivity {
 
                     @Override
                     public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
-                        Log.d("dadsda","fdsd");
-                        Log.d("asssss",t.getMessage());
-                        Log.d("dgdh",t.getStackTrace().toString());
-                        Toast.makeText(SettingsActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SettingsActivity.this, "Something went wrong...Please try again later!", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

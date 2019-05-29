@@ -102,7 +102,7 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
         Call<ArrayList<Contact>> call = service.getContacts();
 
-        showProgress();
+//        showProgress();
 
         call.enqueue(new Callback<ArrayList<Contact>>() {
             @Override

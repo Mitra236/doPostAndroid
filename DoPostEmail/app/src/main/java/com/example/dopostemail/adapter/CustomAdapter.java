@@ -10,8 +10,10 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.model.Attachment;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.Tag;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -106,11 +108,31 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
                 for(Message m : messageFilteredList){
 //                    if(m.getCc() != null || m.getBcc() != null) {
 //                        for(Contact c: m.getCc()) {
-
+                            String to="", cc="", bcc="", tags="", attachments="";
+                            for(Contact con : m.getCc()){
+                                cc += con.getFirstName() + ", " + con.getEmail() + ", ";
+                            }
+                            for(Contact con : m.getBcc()){
+                                bcc += con.getFirstName() + ", " + con.getEmail() + ", ";
+                            }
+                            for(Contact con : m.getTo()){
+                                to += con.getFirstName() + ", " + con.getEmail() + ", ";
+                            }
+                            for(Tag tg : m.getTag()){
+                                tags += tg.getName() + ", ";
+                            }
+                            for(Attachment att : m.getAttachments()){
+                                attachments += att.getName() + ", ";
+                            }
 
                             if (m.getSubject().toLowerCase().contains(filteredPattern)
                                     || m.getContent().toLowerCase().contains(filteredPattern)
                                     || m.getFrom().getFirstName().toLowerCase().contains(filteredPattern)
+                                    || cc.toLowerCase().contains(filteredPattern)
+                                    || bcc.toLowerCase().contains(filteredPattern)
+                                    || to.toLowerCase().contains(filteredPattern)
+                                    || tags.toLowerCase().contains(filteredPattern)
+                                    || attachments.toLowerCase().contains(filteredPattern)
                                     ) {
 
                                 filteredMessageList.add(m);

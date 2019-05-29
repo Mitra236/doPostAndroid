@@ -91,6 +91,15 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         Gson gson = new Gson();
         Account acc = gson.fromJson(json, Account.class);
 
+//        TextView tv = (TextView)findViewById(R.id.navUsername);
+//        tv.setText("asd");
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView2 = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView2.findViewById(R.id.navUsername);
+        navUsername.setText(acc.getUsername());
+
+
 //        Toast.makeText(this, acc.getUsername(), Toast.LENGTH_SHORT).show();
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_emails);
@@ -248,7 +257,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 //                String syncTimeStr = "2";
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
 
-                Toast.makeText(EmailsActivity.this, Long.toString(mInterval), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EmailsActivity.this, Long.toString(mInterval), Toast.LENGTH_SHORT).show();
 
                 MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
                 Call<ArrayList<Message>> call = service.getMessages();

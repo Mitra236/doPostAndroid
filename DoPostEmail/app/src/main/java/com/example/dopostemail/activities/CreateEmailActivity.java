@@ -53,6 +53,7 @@ public class CreateEmailActivity extends AppCompatActivity {
     ArrayList<Contact> to = new ArrayList<>();
     ArrayList<Contact> cc = new ArrayList<>();
     ArrayList<Contact> bcc = new ArrayList<>();
+    public ArrayList<Contact> allContactsUnique = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,9 +126,10 @@ public class CreateEmailActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Contact>>() {
             @Override
             public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
-                ArrayList<Contact> contacts1 = response.body();
+//                ArrayList<Contact> contacts1 = response.body();
+                allContactsUnique = response.body();
 
-                ArrayAdapter<Contact> adapter = new ArrayAdapter<Contact>(CreateEmailActivity.this, android.R.layout.simple_dropdown_item_1line, contacts1);
+                ArrayAdapter<Contact> adapter = new ArrayAdapter<Contact>(CreateEmailActivity.this, android.R.layout.simple_dropdown_item_1line, allContactsUnique);
                 mTo.setAdapter(adapter);
                 mTo.setThreshold(1);
                 mTo.setTextColor(Color.GRAY);
@@ -189,102 +191,84 @@ public class CreateEmailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_send:
 
-                ContactsInterface serviceCon = RetrofitClient.getClient().create(ContactsInterface.class);
-                Call<ArrayList<Contact>> callCon = serviceCon.getContacts();
+                EditText subjectTB = findViewById(R.id.editSubject);
+                EditText contentTB = findViewById(R.id.editMessage);
+                String subject = subjectTB.getText().toString();
+                String content = contentTB.getText().toString();
 
-                callCon.enqueue(new Callback<ArrayList<Contact>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
-                        final ArrayList<Contact> allContacts = response.body();
-
-
-                        EditText subjectTB = findViewById(R.id.editSubject);
-                        EditText contentTB = findViewById(R.id.editMessage);
-                        String subject = subjectTB.getText().toString();
-                        String content = contentTB.getText().toString();
-
-                        if (TextUtils.isEmpty(subject)) {
-                            subjectTB.setError("Subject required");
-                            subjectTB.requestFocus();
-                        } else if (TextUtils.isEmpty(content)) {
-                            contentTB.setError("Content required");
-                            contentTB.requestFocus();
-                        } else {
-                            MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                if (TextUtils.isEmpty(subject)) {
+                    subjectTB.setError("Subject required");
+                    subjectTB.requestFocus();
+                } else if (TextUtils.isEmpty(content)) {
+                    contentTB.setError("Content required");
+                    contentTB.requestFocus();
+                } else {
+                    MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
 
 
-                            SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
-                            String currentUser = pref.getString("loggedInUser", "");
-                            int userId = pref.getInt("userId", 0);
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
+                    String currentUser = pref.getString("loggedInUser", "");
+                    int userId = pref.getInt("userId", 0);
 
-                            Contact sender = new Contact();
+                    Contact sender = new Contact();
 
-                            for(Contact con : allContacts){
+                    for(Contact con : allContactsUnique){
 
-                                if(currentUser.equals(con.getEmail())){
-                                    sender = con;
-                                }
-                            }
-                            Date date = new Date();
-                            String dateStr = toUTC(date);
-                            ArrayList<Attachment> atts = new ArrayList<>();
-                            ArrayList<Tag> tags = new ArrayList<>();
+                        if(currentUser.equals(con.getEmail())){
+                            sender = con;
+                        }
+                    }
+                    Date date = new Date();
+                    String dateStr = toUTC(date);
+                    ArrayList<Attachment> atts = new ArrayList<>();
+                    ArrayList<Tag> tags = new ArrayList<>();
 
-                            SharedPreferences prefUser = getApplicationContext().getSharedPreferences("userInfo", 0);
-                            String json = prefUser.getString("userObject", "");
+                    SharedPreferences prefUser = getApplicationContext().getSharedPreferences("userInfo", 0);
+                    String json = prefUser.getString("userObject", "");
 
-                            Gson gson = new Gson();
-                            Account acc = gson.fromJson(json, Account.class);
+                    Gson gson = new Gson();
+                    Account acc = gson.fromJson(json, Account.class);
 
-                            Folder fold = new Folder();
+                    Folder fold = new Folder();
 
 
-                            Message msg = new Message(sender, to, cc, bcc, dateStr, subject, content, tags, atts, fold, acc, false);
+                    Message msg = new Message(sender, to, cc, bcc, dateStr, subject, content, tags, atts, fold, acc, false);
 
 
 
-                        Call<Message> callM = service.addMessage(msg);
+                    Call<Message> callM = service.addMessage(msg);
 
-                        callM.enqueue(new Callback<Message>() {
-                            @Override
-                            public void onResponse(Call<Message> call, Response<Message> response) {
-                                Toast.makeText(CreateEmailActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
-                                startActivity(i);
-                            }
-
-                            @Override
-                            public void onFailure(Call<Message> call, Throwable t) {
-                                Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                            }
-
-
+                    callM.enqueue(new Callback<Message>() {
+                        @Override
+                        public void onResponse(Call<Message> call, Response<Message> response) {
+                            Toast.makeText(CreateEmailActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+                            startActivity(i);
                         }
 
                         @Override
-                        public void onFailure(Call<ArrayList<Contact>> call, Throwable t) {
-                            Toast.makeText(CreateEmailActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
+                        public void onFailure(Call<Message> call, Throwable t) {
+                            Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                         }
-
                     });
+                }
+
+
+
+
 //                Toast.makeText(getApplicationContext(), "Message sent", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_cancel:
-                ContactsInterface serviceCon2 = RetrofitClient.getClient().create(ContactsInterface.class);
-                Call<ArrayList<Contact>> callCon2 = serviceCon2.getContacts();
-
-                callCon2.enqueue(new Callback<ArrayList<Contact>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
-                        final ArrayList<Contact> allContacts = response.body();
 
 
-                        EditText subjectTB = findViewById(R.id.editSubject);
-                        EditText contentTB = findViewById(R.id.editMessage);
-                        String subject = subjectTB.getText().toString();
-                        String content = contentTB.getText().toString();
+
+
+
+
+                        EditText subjectTB2 = findViewById(R.id.editSubject);
+                        EditText contentTB2 = findViewById(R.id.editMessage);
+                        String subject2 = subjectTB2.getText().toString();
+                        String content2 = contentTB2.getText().toString();
 
 
                         MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
@@ -296,7 +280,7 @@ public class CreateEmailActivity extends AppCompatActivity {
 
                         Contact sender = new Contact();
 
-                        for(Contact con : allContacts){
+                        for(Contact con : allContactsUnique){
 
                             if(currentUser.equals(con.getEmail())){
                                 sender = con;
@@ -316,7 +300,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                         Folder fold = new Folder();
 
 
-                        Message msg = new Message(sender, to, cc, bcc, dateStr, subject, content, tags, atts, fold, acc, false);
+                        Message msg = new Message(sender, to, cc, bcc, dateStr, subject2, content2, tags, atts, fold, acc, false);
 
 
                             Call<Message> callM = service.draftMessage(msg);
@@ -335,16 +319,6 @@ public class CreateEmailActivity extends AppCompatActivity {
                                 }
                             });
 
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<Contact>> call, Throwable t) {
-                        Toast.makeText(CreateEmailActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
-                    }
-
-                });
 //                Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
                 return true;
             default:

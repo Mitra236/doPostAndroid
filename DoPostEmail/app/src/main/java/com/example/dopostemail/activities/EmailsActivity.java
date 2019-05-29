@@ -101,7 +101,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
 
 
-
+        startRepeatingTask();
 
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
@@ -233,7 +233,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onResume(){
         super.onResume();
-        startRepeatingTask();
+
     }
 
     Runnable mStatusChecker = new Runnable() {
@@ -247,6 +247,8 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                 String syncTime = split[0];
 //                String syncTimeStr = "2";
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
+
+                Toast.makeText(EmailsActivity.this, Long.toString(mInterval), Toast.LENGTH_SHORT).show();
 
                 MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
                 Call<ArrayList<Message>> call = service.getMessages();

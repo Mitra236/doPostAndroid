@@ -104,16 +104,19 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
                 String filteredPattern = constraint.toString().toLowerCase().trim();
 
                 for(Message m : messageFilteredList){
+//                    if(m.getCc() != null || m.getBcc() != null) {
+//                        for(Contact c: m.getCc()) {
 
 
+                            if (m.getSubject().toLowerCase().contains(filteredPattern)
+                                    || m.getContent().toLowerCase().contains(filteredPattern)
+                                    || m.getFrom().getFirstName().toLowerCase().contains(filteredPattern)
+                                    ) {
 
-                        if (m.getSubject().toLowerCase().contains(filteredPattern)
-                                || m.getContent().toLowerCase().contains(filteredPattern)
-                                || m.getFrom().getFirstName().toLowerCase().contains(filteredPattern)
-                                ) {
-                            filteredMessageList.add(m);
-                        }
-                    
+                                filteredMessageList.add(m);
+                            }
+//                        }
+//                    }
 
                 }
             }

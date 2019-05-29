@@ -1,11 +1,13 @@
 package com.example.dopostemail.activities;
 
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +15,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -46,6 +49,7 @@ import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -121,6 +125,22 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+//                                long futureInMillis = SystemClock.elapsedRealtime() + 1000;
+//                                AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//                                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, intentPending);
+
+                                AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                Calendar calendar1Notify = Calendar.getInstance();
+                                calendar1Notify.setTimeInMillis(System.currentTimeMillis());
+                                calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
+                                calendar1Notify.set(Calendar.MINUTE, 00);
+
+                                alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
+
+                                long time24h = 24*60*60*1000;
+
+                                alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
+
 
                                 builder.setSmallIcon(R.drawable.ic_sms_notification);
                                 if(m1.getId() == 1){
@@ -145,6 +165,19 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                                 Intent intent = new Intent(EmailsActivity.this, EmailsActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                Calendar calendar1Notify = Calendar.getInstance();
+                                calendar1Notify.setTimeInMillis(System.currentTimeMillis());
+                                calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
+                                calendar1Notify.set(Calendar.MINUTE, 00);
+
+                                alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
+
+                                long time24h = 24*60*60*1000;
+
+                                alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
+
 
 
                                 builder.setSmallIcon(R.drawable.ic_sms_notification);
@@ -340,7 +373,11 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         switch (item.getItemId()) {
             case R.id.search_view:
 
+                SearchManager searchManager =
+                        (SearchManager) getSystemService(Context.SEARCH_SERVICE);
                 final android.support.v7.widget.SearchView searchView = (SearchView) item.getActionView();
+                searchView.setSearchableInfo(
+                        searchManager.getSearchableInfo(getComponentName()));
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {

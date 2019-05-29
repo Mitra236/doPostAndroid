@@ -24,11 +24,13 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.FolderAdapter;
+import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.RetrofitClient;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -63,7 +65,11 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         setSupportActionBar(toolbar);
 
         mListView = findViewById(R.id.list_view);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
+        String json = pref.getString("userObject", "");
 
+        Gson gson = new Gson();
+        final Account acc = gson.fromJson(json, Account.class);
 
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
@@ -77,8 +83,12 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(FoldersActivity.this, ProfileActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(FoldersActivity.this, ProfileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", acc);
+                intent.removeExtra("user");
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
         });

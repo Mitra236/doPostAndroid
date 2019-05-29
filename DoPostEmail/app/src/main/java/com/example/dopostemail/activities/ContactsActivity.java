@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -22,9 +23,11 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.ContactsAdapter;
+import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.RetrofitClient;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +54,11 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.activity_contacts);
         mHandler = new Handler();
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
+        String json = pref.getString("userObject", "");
+
+        Gson gson = new Gson();
+        final Account acc = gson.fromJson(json, Account.class);
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_contacts);
         setSupportActionBar(toolbar);
@@ -68,8 +76,12 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         headerView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ContactsActivity.this, ProfileActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(ContactsActivity.this, ProfileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", acc);
+                intent.removeExtra("user");
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
         });

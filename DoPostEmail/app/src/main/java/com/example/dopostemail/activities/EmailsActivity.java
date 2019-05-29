@@ -89,7 +89,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         String json = pref.getString("userObject", "");
 
         Gson gson = new Gson();
-        Account acc = gson.fromJson(json, Account.class);
+        final Account acc = gson.fromJson(json, Account.class);
 
 //        TextView tv = (TextView)findViewById(R.id.navUsername);
 //        tv.setText("asd");
@@ -124,8 +124,12 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         headerView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(EmailsActivity.this, ProfileActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(EmailsActivity.this, ProfileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", acc);
+                intent.removeExtra("user");
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
         });

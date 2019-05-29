@@ -14,9 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.model.Account;
+import com.example.dopostemail.model.Folder;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,11 +27,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-//    private TextView txtUsername = findViewById(R.id.textUserName);
-//    private TextView txtPass = findViewById(R.id.textPass);
-//    private SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-//    private SharedPreferences.Editor editor = sharedPreferences.edit();
-//    private Account acc;
 
 
     @Override
@@ -37,7 +35,14 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         setTitle("Profile");
         setContentView(R.layout.activity_profile);
 
+        Bundle bundle = getIntent().getExtras();
+        final Account account = (Account) bundle.getSerializable("user");
 
+        TextView txtUsername = findViewById(R.id.textUserName);
+        TextView txtPass = findViewById(R.id.textPass);
+
+        txtUsername.setText(account.getUsername());
+        txtPass.setText(account.getPassword());
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_profile);
         setSupportActionBar(toolbar);

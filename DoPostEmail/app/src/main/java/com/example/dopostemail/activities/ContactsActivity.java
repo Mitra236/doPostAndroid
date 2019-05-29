@@ -28,6 +28,7 @@ import com.example.dopostemail.server.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,112 +41,21 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
     ListView mListView;
     private ContactsAdapter adapter;
     private List<Contact> contacts;
-
-
-
-
+    private long mInterval = 0;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setTitle("Contacts");
         setContentView(R.layout.activity_contacts);
+        mHandler = new Handler();
+
 
         Toolbar toolbar = findViewById(R.id.nav_toolbar_contacts);
         setSupportActionBar(toolbar);
 
         mListView = findViewById(R.id.list_view);
-
-//        Photo photo1 = new Photo(1, R.drawable.pikachu);
-//        Photo photo2 = new Photo(1, R.drawable.contacts_icon);
-
-//        Message message1 = new Message(1, "Matematika 1", "This is some message");
-//        Message message2 = new Message(1, "Osnovne programiranja", "This is another message");
-//        Message message3 = new Message(1, "Sistemski softver", "This is (you guessed it) some message");
-
-//        EmailsActivity em = new EmailsActivity();
-
-//        Message message1 = em.messageTemp;
-//        Message message2 = em.messageTemp2;
-//        Message message3 = em.messageTemp3;
-
-//        ArrayList<Message> to1 = new ArrayList<>();
-//        ArrayList<Message> from1 = new ArrayList<>();
-//        ArrayList<Message> cc1 = new ArrayList<>();
-//        ArrayList<Message> bcc1 = new ArrayList<>();
-//        ArrayList<Message> to2 = new ArrayList<>();
-//        ArrayList<Message> from2 = new ArrayList<>();
-//        ArrayList<Message> cc2 = new ArrayList<>();
-//        ArrayList<Message> bcc2 = new ArrayList<>();
-
-//        to1.add(message1);
-//        to2.add(message2);
-//        from1.add(message2);
-//        from2.add(message1);
-//        cc1.add(message1);
-//        cc1.add(message2);
-//        bcc1.add(message2);
-//        bcc1.add(message1);
-//        cc2.add(message3);
-//        cc2.add(message2);
-//        bcc2.add(message1);
-//        bcc2.add(message2);
-//        bcc2.add(message3);
-
-//        Contact conTemp = new Contact(1, "Pera", "Peric", "Pex", "pera123@gmail.com", Format.PLAIN, photo1, to1, from1, cc1, bcc1);
-//        Contact conTemp2 = new Contact(2, "Aleksandar", "Aleksic", "Acoo", "aco123@gmail.com", Format.HTML, photo2, to1, from2, cc1, bcc2);
-//        Contact conTemp3 = new Contact(3, "Maja", "Maric", "Maki", "maki123@gmail.com", Format.HTML, photo2, to2, from1, cc2, bcc1);
-//        Contact conTemp4 = new Contact(4, "me", "Stevic", "Stefi", "stefi123@gmail.com", Format.HTML, photo2, to1, from1, cc2, bcc2);
-//        Contact conTemp5 = new Contact(5, "Emily", "Emmy", "Emily", "emily123@gmail.com", Format.HTML, photo2, to2, from2, cc1, bcc2);
-
-
-        ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-        Call<ArrayList<Contact>> call = service.getContacts();
-
-//        showProgress();
-
-        call.enqueue(new Callback<ArrayList<Contact>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
-                ArrayList<Contact> contacts1 = response.body();
-
-                if(contacts1 == null){
-                    Toast.makeText(ContactsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                }else {
-                    contacts = contacts1;
-
-                    adapter = new ContactsAdapter(getApplicationContext(), contacts);
-                    mListView.setAdapter(adapter);
-
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            Contact con = contacts.get(position);
-
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("contacts", con);
-
-                            Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
-                            i.putExtras(bundle);
-                            startActivity(i);
-
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Contact>> call, Throwable t) {
-                Toast.makeText(ContactsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
-
-
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
@@ -233,12 +143,84 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onResume(){
         super.onResume();
-
+        startRepeatingTask();
     }
 
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("preferences", 0);
+                String syncTimeStr = pref.getString("refresh_rate", "1");
+                String[] split = syncTimeStr.split(" ");
+                String syncTime = split[0];
+//                String syncTimeStr = "2";
+                mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
+
+                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                Call<ArrayList<Contact>> call = service.getContacts();
+
+//        showProgress();
+
+                call.enqueue(new Callback<ArrayList<Contact>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
+                        ArrayList<Contact> contacts1 = response.body();
+
+                        if(contacts1 == null){
+                            Toast.makeText(ContactsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }else {
+                            contacts = contacts1;
+
+                            adapter = new ContactsAdapter(getApplicationContext(), contacts);
+                            mListView.setAdapter(adapter);
+
+                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    Contact con = contacts.get(position);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("contacts", con);
+
+                                    Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
+                                    i.putExtras(bundle);
+                                    startActivity(i);
+
+
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Contact>> call, Throwable t) {
+                        Toast.makeText(ContactsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+
+            } finally {
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }
+        }
+    };
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
     @Override
     protected void onPause(){
         super.onPause();
+        stopRepeatingTask();
     }
 
     @Override
@@ -251,40 +233,5 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
         super.onDestroy();
     }
 
-//    class CustomAdapter extends BaseAdapter {
-//
-//
-//
-//        @Override
-//        public int getCount() {
-//            return images.length;
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            return null;
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return 0;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//
-//
-//            View view = getLayoutInflater().inflate(R.layout.activity_listview, null);
-//
-//            ImageView mImageView = view.findViewById(R.id.icon);
-//            TextView mTitle = view.findViewById(R.id.title);
-//            TextView mSubTitle = view.findViewById(R.id.subTitle);
-//
-//            mImageView.setImageResource(images[position]);
-//            mTitle.setText(names[position]);
-//            mSubTitle.setText(emails[position]);
-//            return view;
-//        }
-//    }
 
 }

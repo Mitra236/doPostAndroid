@@ -45,6 +45,22 @@ public class Message implements Serializable {
         this.account = account;
         this.messageRead = messageRead;
     }
+    public Message(Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag,
+                   ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
+
+        this.from = from;
+        this.to = to;
+        this.cc = cc;
+        this.bcc = bcc;
+        this.dateTime = dateTime;
+        this.subject = subject;
+        this.content = content;
+        this.tag = tag;
+        this.attachments = attachments;
+        this.folder = folder;
+        this.account = account;
+        this.messageRead = messageRead;
+    }
 
     public Message(Contact from, String subject) {
         this.from = from;

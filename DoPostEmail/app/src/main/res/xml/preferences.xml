@@ -33,11 +33,11 @@
         android:key="date_sorting_setting">
 
         <CheckBoxPreference
-
+            android:defaultValue="true"
             android:key="sort_descending"
             android:title="Sort Descending"
             android:id="@+id/checkBoxDesc"
-            android:onClick="onCheckboxClicked"
+            android:onClick="onCheckboxClickedDesc"
             />
 
         <CheckBoxPreference
@@ -46,7 +46,7 @@
             android:title="Sort Ascending"
             android:id="@+id/checkBoxAsc"
 
-            android:onClick="onCheckboxClicked"
+            android:onClick="onCheckboxClickedAsc"
             />
 
     </PreferenceCategory>

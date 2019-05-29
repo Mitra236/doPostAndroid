@@ -25,16 +25,24 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.ContactsAdapter;
+import com.example.dopostemail.model.Account;
+import com.example.dopostemail.model.Attachment;
 import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.Tag;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
+import com.google.gson.Gson;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -203,43 +211,44 @@ public class CreateEmailActivity extends AppCompatActivity {
                             contentTB.requestFocus();
                         } else {
                             MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-                            String params = "";
 
-                            String contactId = "";
 
                             SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
                             String currentUser = pref.getString("loggedInUser", "");
                             int userId = pref.getInt("userId", 0);
 
-
+                            Contact sender = new Contact();
 
                             for(Contact con : allContacts){
 
                                 if(currentUser.equals(con.getEmail())){
-                                    contactId = String.valueOf(con.getId());
+                                    sender = con;
                                 }
                             }
+                            Date date = new Date();
+                            String dateStr = toUTC(date);
+                            ArrayList<Attachment> atts = new ArrayList<>();
+                            ArrayList<Tag> tags = new ArrayList<>();
 
-                            String toString = "", ccString = "", bccString = "";
-                            for(Contact con : to){
-                                toString += con.getId();
-                            }
-                            for(Contact con : cc){
-                                ccString += con.getId();
-                            }
-                            for(Contact con : bcc){
-                                bccString += con.getId();
-                            }
-                        params = contactId + "," + toString + "," + ccString + "," + bccString + "," + "dateTime" + "," + subject + "," +
-                                content + "," + "name1.name2" + "," + "data|type|name.data|type|name" + "," + "3" + "," + String.valueOf(userId);
+                            SharedPreferences prefUser = getApplicationContext().getSharedPreferences("userInfo", 0);
+                            String json = prefUser.getString("userObject", "");
+
+                            Gson gson = new Gson();
+                            Account acc = gson.fromJson(json, Account.class);
+
+                            Folder fold = new Folder();
 
 
-                        Call<Message> callM = service.addMessage(params);
+                            Message msg = new Message(sender, to, cc, bcc, dateStr, subject, content, tags, atts, fold, acc, false);
+
+
+
+                        Call<Message> callM = service.addMessage(msg);
 
                         callM.enqueue(new Callback<Message>() {
                             @Override
                             public void onResponse(Call<Message> call, Response<Message> response) {
-                                Toast.makeText(CreateEmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CreateEmailActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
                                 startActivity(i);
                             }
@@ -260,7 +269,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                         }
 
                     });
-                Toast.makeText(getApplicationContext(), "Message sent", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Message sent", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_cancel:
                 ContactsInterface serviceCon2 = RetrofitClient.getClient().create(ContactsInterface.class);
@@ -278,53 +287,44 @@ public class CreateEmailActivity extends AppCompatActivity {
                         String content = contentTB.getText().toString();
 
 
-                            MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-                            String params = "";
-
-                            String contactId = "";
-
-                            SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
-                            String currentUser = pref.getString("loggedInUser", "");
-                            int userId = pref.getInt("userId", 0);
+                        MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
 
 
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
+                        String currentUser = pref.getString("loggedInUser", "");
+                        int userId = pref.getInt("userId", 0);
 
-                            for(Contact con : allContacts){
+                        Contact sender = new Contact();
 
-                                if(currentUser.equals(con.getEmail())){
-                                    contactId = String.valueOf(con.getId());
-                                }
+                        for(Contact con : allContacts){
+
+                            if(currentUser.equals(con.getEmail())){
+                                sender = con;
                             }
+                        }
+                        Date date = new Date();
+                        String dateStr = toUTC(date);
+                        ArrayList<Attachment> atts = new ArrayList<>();
+                        ArrayList<Tag> tags = new ArrayList<>();
 
-                            String toString = "", ccString = "", bccString = "";
-                            for(Contact con : to){
-                                toString += con.getId();
-                                toString += "|";
+                        SharedPreferences prefUser = getApplicationContext().getSharedPreferences("userInfo", 0);
+                        String json = prefUser.getString("userObject", "");
 
-                            }
-                            for(Contact con : cc){
-                                ccString += con.getId();
-                                ccString += "|";
-                            }
-                            for(Contact con : bcc){
-                                bccString += con.getId();
-                                bccString += "|";
-                            }
+                        Gson gson = new Gson();
+                        Account acc = gson.fromJson(json, Account.class);
 
-                            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            Date date = new Date(System.currentTimeMillis());
-                            String nowString = date.toString();
-
-                            params = contactId + "," + toString + "," + ccString + "," + bccString + "," + nowString + "," + subject + "," +
-                                    content + "," + "name1.name2" + "," + "data|type|name.data|type|name" + "," + "3" + "," + String.valueOf(userId);
+                        Folder fold = new Folder();
 
 
-                            Call<Message> callM = service.draftMessage(params);
+                        Message msg = new Message(sender, to, cc, bcc, dateStr, subject, content, tags, atts, fold, acc, false);
+
+
+                            Call<Message> callM = service.draftMessage(msg);
 
                             callM.enqueue(new Callback<Message>() {
                                 @Override
                                 public void onResponse(Call<Message> call, Response<Message> response) {
-                                    Toast.makeText(CreateEmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CreateEmailActivity.this, "Message drafted", Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
                                     startActivity(i);
                                 }
@@ -345,7 +345,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                     }
 
                 });
-                Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -366,6 +366,27 @@ public class CreateEmailActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public static String toUTC(Date date) {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        df.setTimeZone(tz);
+        return df.format(date);
+    }
+
+    public static Date fromUTC(String dateStr) {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        df.setTimeZone(tz);
+
+        try {
+            return df.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override

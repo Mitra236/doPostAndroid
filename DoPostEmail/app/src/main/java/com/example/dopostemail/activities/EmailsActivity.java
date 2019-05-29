@@ -41,9 +41,12 @@ import android.widget.Toast;
 
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.adapter.ContactsAdapter;
 import com.example.dopostemail.adapter.CustomAdapter;
 import com.example.dopostemail.model.Account;
+import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
@@ -51,6 +54,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,6 +74,8 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     private final String CHANNEL_ID = "my_channel";
     private final int NOTIFICATION_ID = 001;
     private int counter = 0;
+    private long mInterval = 0;
+    private Handler mHandler;
 
 
     @Override
@@ -77,7 +83,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setTitle("Emails");
         setContentView(R.layout.activity_posts);
-
+        mHandler = new Handler();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
         String json = pref.getString("userObject", "");
@@ -94,189 +100,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 //        mListView.setTextFilterEnabled(true);
 
 
-        MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-        Call<ArrayList<Message>> call = service.getMessages();
-//        showProgress();
 
-        call.enqueue(new Callback<ArrayList<Message>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
-                ArrayList<Message> messages1 = response.body();
-
-
-                if(messages1 == null){
-                    Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                }else {
-
-                    messages = messages1;
-
-
-                    final NotificationCompat.Builder builder = new NotificationCompat.Builder(EmailsActivity.this, CHANNEL_ID);
-                    for(Message m1 : messages){
-                        if(!m1.isMessageRead()){
-                            counter++;
-                            if(counter <= 1) {
-                                Intent intent = new Intent(EmailsActivity.this, EmailActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("messages", m1);
-                                intent.removeExtra("messages");
-                                intent.putExtras(bundle);
-
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-//                                long futureInMillis = SystemClock.elapsedRealtime() + 1000;
-//                                AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-//                                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, intentPending);
-
-                                AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                Calendar calendar1Notify = Calendar.getInstance();
-                                calendar1Notify.setTimeInMillis(System.currentTimeMillis());
-                                calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
-                                calendar1Notify.set(Calendar.MINUTE, 00);
-
-                                alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
-
-                                long time24h = 24*60*60*1000;
-
-                                alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
-
-
-                                builder.setSmallIcon(R.drawable.ic_sms_notification);
-                                if(m1.getId() == 1){
-                                    builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
-                                }else if(m1.getId() == 2){
-                                    builder.setContentTitle(m1.getFrom().getEmail()+  "     " + counter);
-                                }else {
-                                    builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
-                                }
-
-                                builder.setContentText(m1.getContent());
-                                builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-                                builder.setContentIntent(intentPending);
-                                builder.setAutoCancel(true);
-                                builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
-
-
-                                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
-                                notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
-                            }else {
-
-                                Intent intent = new Intent(EmailsActivity.this, EmailsActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                                AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                Calendar calendar1Notify = Calendar.getInstance();
-                                calendar1Notify.setTimeInMillis(System.currentTimeMillis());
-                                calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
-                                calendar1Notify.set(Calendar.MINUTE, 00);
-
-                                alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
-
-                                long time24h = 24*60*60*1000;
-
-                                alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
-
-
-
-                                builder.setSmallIcon(R.drawable.ic_sms_notification);
-                                if(m1.getId() == 1){
-                                    builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
-                                }else if(m1.getId() == 2){
-                                    builder.setContentTitle(m1.getFrom().getEmail()+  "     " + counter);
-                                }else {
-                                    builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
-                                }
-                                builder.setContentText(m1.getContent());
-                                builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-                                builder.setContentIntent(intentPending);
-                                builder.setAutoCancel(true);
-                                builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
-
-
-                                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
-                                notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
-
-                            }
-
-
-                        }
-                    }
-
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                        CharSequence name = "Message notification";
-                        String description = "Include all message notifications";
-
-                        int importance = NotificationManager.IMPORTANCE_HIGH;
-                        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-
-                        notificationChannel.setDescription(description);
-
-                        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-                        notificationManager.createNotificationChannel(notificationChannel);
-                    }
-
-
-
-                    adapter = new CustomAdapter(getApplicationContext(), messages);
-                    mListView.setAdapter(adapter);
-
-
-
-                    mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            final Message m = messages.get(position);
-
-                            if (!m.isMessageRead()) {
-                                MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-
-                                Message mess = new Message(m.getId(), m.getFrom(), m.getTo(), m.getCc(), m.getBcc(), m.getDateTime(), m.getSubject(), m.getContent(), m.getTag(), m.getAttachments(), m.getFolder(), m.getAccount(), true);
-
-                                Call<Message> call = service.editMessage(m.getId(), mess );
-
-                                call.enqueue(new Callback<Message>() {
-                                    @Override
-                                    public void onResponse(Call<Message> call, Response<Message> response) {
-                                        Bundle bundle = new Bundle();
-                                        bundle.putSerializable("messages", m);
-
-                                        Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
-                                        i.removeExtra("messages");
-                                        i.putExtras(bundle);
-                                        startActivity(i);
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Message> call, Throwable t) {
-
-                                    }
-                                });
-                            } else {
-
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("messages", m);
-
-                                Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
-                                i.putExtras(bundle);
-                                startActivity(i);
-
-
-                            }
-                        }
-
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
-                Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
-            }
-        });
 
 
 
@@ -408,11 +232,226 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
     @Override
     protected void onResume(){
-        super.onResume(); }
+        super.onResume();
+        startRepeatingTask();
+    }
 
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            try {
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("preferences", 0);
+                String syncTimeStr = pref.getString("refresh_rate", "1");
+                String[] split = syncTimeStr.split(" ");
+                String syncTime = split[0];
+//                String syncTimeStr = "2";
+                mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
+
+                MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                Call<ArrayList<Message>> call = service.getMessages();
+//        showProgress();
+
+                call.enqueue(new Callback<ArrayList<Message>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
+                        ArrayList<Message> messages1 = response.body();
+
+
+                        if(messages1 == null){
+                            Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }else {
+
+                            messages = messages1;
+
+
+                            final NotificationCompat.Builder builder = new NotificationCompat.Builder(EmailsActivity.this, CHANNEL_ID);
+                            for(Message m1 : messages){
+                                if(!m1.isMessageRead()){
+                                    counter++;
+                                    if(counter <= 1) {
+                                        Intent intent = new Intent(EmailsActivity.this, EmailActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("messages", m1);
+                                        intent.removeExtra("messages");
+                                        intent.putExtras(bundle);
+
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+//                                long futureInMillis = SystemClock.elapsedRealtime() + 1000;
+//                                AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//                                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, intentPending);
+
+                                        AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                        Calendar calendar1Notify = Calendar.getInstance();
+                                        calendar1Notify.setTimeInMillis(System.currentTimeMillis());
+                                        calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
+                                        calendar1Notify.set(Calendar.MINUTE, 00);
+
+                                        alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
+
+                                        long time24h = 24*60*60*1000;
+
+                                        alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
+
+
+                                        builder.setSmallIcon(R.drawable.ic_sms_notification);
+                                        if(m1.getId() == 1){
+                                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                        }else if(m1.getId() == 2){
+                                            builder.setContentTitle(m1.getFrom().getEmail()+  "     " + counter);
+                                        }else {
+                                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                        }
+
+                                        builder.setContentText(m1.getContent());
+                                        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+                                        builder.setContentIntent(intentPending);
+                                        builder.setAutoCancel(true);
+                                        builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
+
+
+                                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
+                                        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+                                    }else {
+
+                                        Intent intent = new Intent(EmailsActivity.this, EmailsActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                        AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                        Calendar calendar1Notify = Calendar.getInstance();
+                                        calendar1Notify.setTimeInMillis(System.currentTimeMillis());
+                                        calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
+                                        calendar1Notify.set(Calendar.MINUTE, 00);
+
+                                        alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
+
+                                        long time24h = 24*60*60*1000;
+
+                                        alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
+
+
+
+                                        builder.setSmallIcon(R.drawable.ic_sms_notification);
+                                        if(m1.getId() == 1){
+                                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                        }else if(m1.getId() == 2){
+                                            builder.setContentTitle(m1.getFrom().getEmail()+  "     " + counter);
+                                        }else {
+                                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                        }
+                                        builder.setContentText(m1.getContent());
+                                        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+                                        builder.setContentIntent(intentPending);
+                                        builder.setAutoCancel(true);
+                                        builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
+
+
+                                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
+                                        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+
+                                    }
+
+
+                                }
+                            }
+
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                CharSequence name = "Message notification";
+                                String description = "Include all message notifications";
+
+                                int importance = NotificationManager.IMPORTANCE_HIGH;
+                                NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+
+                                notificationChannel.setDescription(description);
+
+                                NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                                notificationManager.createNotificationChannel(notificationChannel);
+                            }
+
+
+
+                            adapter = new CustomAdapter(getApplicationContext(), messages);
+                            mListView.setAdapter(adapter);
+
+
+
+                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    final Message m = messages.get(position);
+
+                                    if (!m.isMessageRead()) {
+                                        MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+
+                                        Message mess = new Message(m.getId(), m.getFrom(), m.getTo(), m.getCc(), m.getBcc(), m.getDateTime(), m.getSubject(), m.getContent(), m.getTag(), m.getAttachments(), m.getFolder(), m.getAccount(), true);
+
+                                        Call<Message> call = service.editMessage(m.getId(), mess );
+
+                                        call.enqueue(new Callback<Message>() {
+                                            @Override
+                                            public void onResponse(Call<Message> call, Response<Message> response) {
+                                                Bundle bundle = new Bundle();
+                                                bundle.putSerializable("messages", m);
+
+                                                Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                                                i.removeExtra("messages");
+                                                i.putExtras(bundle);
+                                                startActivity(i);
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Message> call, Throwable t) {
+
+                                            }
+                                        });
+                                    } else {
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("messages", m);
+
+                                        Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                                        i.putExtras(bundle);
+                                        startActivity(i);
+
+
+                                    }
+                                }
+
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
+                        Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+
+            } finally {
+                mHandler.postDelayed(mStatusChecker, mInterval);
+            }
+        }
+    };
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
+    }
     @Override
     protected void onPause(){
         super.onPause();
+        stopRepeatingTask();
     }
 
     @Override

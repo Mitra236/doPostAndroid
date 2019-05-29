@@ -34,8 +34,8 @@ public interface MessagesInterface {
     Call<Message> editMessage(@Query ("id") int id, @Body Message message);
 
     @POST("messages/add")
-    Call<Message> addMessage(@Body String params);
+    Call<Message> addMessage(@Body Message params);
 
     @POST("messages/draft")
-    Call<Message> draftMessage(@Body String params);
+    Call<Message> draftMessage(@Body Message params);
 }

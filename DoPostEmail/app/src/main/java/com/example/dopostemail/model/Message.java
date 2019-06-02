@@ -10,10 +10,10 @@ import java.util.Date;
 
 public class Message implements Serializable {
     private int id;
-    private Contact from;
-    private ArrayList<Contact> to;
-    private ArrayList<Contact> cc;
-    private ArrayList<Contact> bcc;
+    private String from;
+    private ArrayList<String> to;
+    private ArrayList<String> cc;
+    private ArrayList<String> bcc;
     private String dateTime;
     private String subject;
     private String content;
@@ -23,14 +23,7 @@ public class Message implements Serializable {
     private Account account;
     private boolean messageRead = true;
 
-    public Message(int id, String subject, String content) {
-        this.id = id;
-        this.subject = subject;
-        this.content = content;
-    }
-
-    public Message(int id, Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag,
-                   ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
+    public Message(int id, String from, ArrayList<String> to, ArrayList<String> cc, ArrayList<String> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag, ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
         this.id = id;
         this.from = from;
         this.to = to;
@@ -45,9 +38,9 @@ public class Message implements Serializable {
         this.account = account;
         this.messageRead = messageRead;
     }
-    public Message(Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag,
-                   ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
 
+    public Message(String from, ArrayList<String> to, ArrayList<String> cc, ArrayList<String> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag, ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
+//        this.id = id;
         this.from = from;
         this.to = to;
         this.cc = cc;
@@ -61,47 +54,8 @@ public class Message implements Serializable {
         this.account = account;
         this.messageRead = messageRead;
     }
-
-    public Message(Contact from, String subject) {
-        this.from = from;
-        this.subject = subject;
-
-    }
-
 
     public Message() {
-    }
-
-    public ArrayList<Tag> getTag() {
-        return tag;
-    }
-
-    public void setTag(ArrayList<Tag> tag) {
-        this.tag = tag;
-    }
-
-    public ArrayList<Attachment> getAttachments() {
-        return attachments;
-    }
-
-    public Folder getFolder() {
-        return folder;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAttachments(ArrayList<Attachment> attachments) {
-        this.attachments = attachments;
-    }
-
-    public void setFolder(Folder folder) {
-        this.folder = folder;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public int getId() {
@@ -112,35 +66,35 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public Contact getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(Contact from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public ArrayList<Contact> getTo() {
+    public ArrayList<String> getTo() {
         return to;
     }
 
-    public void setTo(ArrayList<Contact> to) {
+    public void setTo(ArrayList<String> to) {
         this.to = to;
     }
 
-    public ArrayList<Contact> getCc() {
+    public ArrayList<String> getCc() {
         return cc;
     }
 
-    public void setCc(ArrayList<Contact> cc) {
+    public void setCc(ArrayList<String> cc) {
         this.cc = cc;
     }
 
-    public ArrayList<Contact> getBcc() {
+    public ArrayList<String> getBcc() {
         return bcc;
     }
 
-    public void setBcc(ArrayList<Contact> bcc) {
+    public void setBcc(ArrayList<String> bcc) {
         this.bcc = bcc;
     }
 
@@ -168,8 +122,43 @@ public class Message implements Serializable {
         this.content = content;
     }
 
-    public boolean isMessageRead() {return messageRead;}
+    public ArrayList<Tag> getTag() {
+        return tag;
+    }
 
-    public void setMessageRead(boolean messageRead){this.messageRead = messageRead;}
+    public void setTag(ArrayList<Tag> tag) {
+        this.tag = tag;
+    }
 
+    public ArrayList<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(ArrayList<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
+    public Folder getFolder() {
+        return folder;
+    }
+
+    public void setFolder(Folder folder) {
+        this.folder = folder;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public boolean isMessageRead() {
+        return messageRead;
+    }
+
+    public void setMessageRead(boolean messageRead) {
+        this.messageRead = messageRead;
+    }
 }

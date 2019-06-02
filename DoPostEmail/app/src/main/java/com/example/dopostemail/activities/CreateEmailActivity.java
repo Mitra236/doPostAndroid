@@ -50,9 +50,9 @@ import retrofit2.Response;
 
 public class CreateEmailActivity extends AppCompatActivity {
 
-    ArrayList<Contact> to = new ArrayList<>();
-    ArrayList<Contact> cc = new ArrayList<>();
-    ArrayList<Contact> bcc = new ArrayList<>();
+    ArrayList<String> to = new ArrayList<>();
+    ArrayList<String> cc = new ArrayList<>();
+    ArrayList<String> bcc = new ArrayList<>();
     public ArrayList<Contact> allContactsUnique = new ArrayList<>();
 
     @Override
@@ -108,7 +108,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                 contentCreate.setText(m.getContent());
                 to.add(m.getFrom());
                 mTo.setText(m.getFrom().toString());
-                for(Contact con : m.getTo()){
+                for(String con : m.getTo()){
                     to.add(con);
                     mTo.setText(mTo.getText() + ", " + con.toString());
                 }
@@ -128,8 +128,12 @@ public class CreateEmailActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
 //                ArrayList<Contact> contacts1 = response.body();
                 allContactsUnique = response.body();
+                ArrayList<String> stringyContacts = new ArrayList<>();
+                for(Contact con : allContactsUnique){
+                    stringyContacts.add(con.getEmail());
+                }
 
-                ArrayAdapter<Contact> adapter = new ArrayAdapter<Contact>(CreateEmailActivity.this, android.R.layout.simple_dropdown_item_1line, allContactsUnique);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateEmailActivity.this, android.R.layout.simple_dropdown_item_1line, stringyContacts);
                 mTo.setAdapter(adapter);
                 mTo.setThreshold(1);
                 mTo.setTextColor(Color.GRAY);
@@ -148,7 +152,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                 mTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Contact selected = (Contact) parent.getAdapter().getItem(position);
+                        String selected = (String) parent.getAdapter().getItem(position);
                         to.add(selected);
                     }
                 });
@@ -156,7 +160,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                 mCc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Contact selected = (Contact) parent.getAdapter().getItem(position);
+                        String selected = (String) parent.getAdapter().getItem(position);
                         cc.add(selected);
                     }
                 });
@@ -164,7 +168,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                 mBcc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Contact selected = (Contact) parent.getAdapter().getItem(position);
+                        String selected = (String) parent.getAdapter().getItem(position);
                         bcc.add(selected);
                     }
                 });
@@ -210,18 +214,26 @@ public class CreateEmailActivity extends AppCompatActivity {
                     String currentUser = pref.getString("loggedInUser", "");
                     int userId = pref.getInt("userId", 0);
 
-                    Contact sender = new Contact();
+//                    Contact sender = new Contact();
 
-                    for(Contact con : allContactsUnique){
-
-                        if(currentUser.equals(con.getEmail())){
-                            sender = con;
-                        }
-                    }
+//                    for(Contact con : allContactsUnique){
+//
+//                        if(currentUser.equals(con.getEmail())){
+//                            sender = con;
+//                        }
+//                    }
                     Date date = new Date();
                     String dateStr = toUTC(date);
                     ArrayList<Attachment> atts = new ArrayList<>();
                     ArrayList<Tag> tags = new ArrayList<>();
+
+                    EditText editTextTags = findViewById(R.id.editTags);
+                    String tagsString = editTextTags.getText().toString();
+                    String[] splitTags = tagsString.split(" ");
+                    for(String tagString : splitTags){
+                        Tag newTag = new Tag(hashCode(), "#" + tagString);
+                        tags.add(newTag);
+                    }
 
                     SharedPreferences prefUser = getApplicationContext().getSharedPreferences("userInfo", 0);
                     String json = prefUser.getString("userObject", "");
@@ -232,11 +244,15 @@ public class CreateEmailActivity extends AppCompatActivity {
                     Folder fold = new Folder();
 
 
-                    Message msg = new Message(sender, to, cc, bcc, dateStr, subject, content, tags, atts, fold, acc, false);
+                    Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject, content, tags, atts, fold, acc, false);
 
+                    SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                    String json2 = prefs.getString("userObject", "");
 
+                    Gson gson2 = new Gson();
+                    final Account acc2 = gson2.fromJson(json2, Account.class);
 
-                    Call<Message> callM = service.addMessage(msg);
+                    Call<Message> callM = service.sendMessage(msg);
 
                     callM.enqueue(new Callback<Message>() {
                         @Override
@@ -248,7 +264,9 @@ public class CreateEmailActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Message> call, Throwable t) {
-                            Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateEmailActivity.this, "Message sent (probably)", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+                            startActivity(i);
                         }
                     });
                 }
@@ -300,7 +318,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                         Folder fold = new Folder();
 
 
-                        Message msg = new Message(sender, to, cc, bcc, dateStr, subject2, content2, tags, atts, fold, acc, false);
+                        Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject2, content2, tags, atts, fold, acc, false);
 
 
                             Call<Message> callM = service.draftMessage(msg);

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,17 +13,12 @@ import android.widget.Toast;
 
 
 import com.example.dopostemail.R;
-import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Attachment;
-import com.example.dopostemail.model.Contact;
-import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Tag;
-import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -95,15 +89,15 @@ public class EmailActivity extends AppCompatActivity {
 
         StringBuilder builder3 = new StringBuilder();
         builder3.append("To: ");
-        for (Contact me : m.getTo()) {
-            to.setText(builder3.append(me.getFirstName()  + ", "));
+        for (String me : m.getTo()) {
+            to.setText(builder3.append(me  + ", "));
         }
 
         StringBuilder builder4 = new StringBuilder();
         builder4.append("Cc: ");
         if (!m.getCc().isEmpty()) {
-            for (Contact me : m.getCc()) {
-                cc.setText(builder4.append(me.getFirstName() + ", "));
+            for (String me : m.getCc()) {
+                cc.setText(builder4.append(me + ", "));
             }
 
         }
@@ -114,9 +108,9 @@ public class EmailActivity extends AppCompatActivity {
         StringBuilder builder5 = new StringBuilder();
         builder5.append("Bcc: ");
         if(!m.getBcc().isEmpty()) {
-            for(Contact me: m.getBcc()) {
+            for(String me: m.getBcc()) {
 
-                bcc.setText(builder5.append(me.getFirstName() + ", "));
+                bcc.setText(builder5.append(me + ", "));
 
             }
         }else{
@@ -125,27 +119,34 @@ public class EmailActivity extends AppCompatActivity {
 
         StringBuilder builder = new StringBuilder();
         builder.append("Tags: ");
-        for(Tag me: m.getTag()) {
-            tag.setText(builder.append(me.getName() + ", "));
+        if(m.getTag() != null){
+            for(Tag me: m.getTag()) {
+                tag.setText(builder.append(me.getName() + ", "));
+            }
         }
+
 
         StringBuilder builder2 = new StringBuilder();
         builder2.append("Attachments: ");
-        for(Attachment a: m.getAttachments()) {
+        if(m.getAttachments() != null) {
+            for (Attachment a : m.getAttachments()) {
 
-            attachment.setText(builder2.append(a.getName() + ", "));
+                attachment.setText(builder2.append(a.getName() + ", "));
+            }
         }
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = fromUTC(m.getDateTime());
 
 
         dateTime.setText("Date: " + dateFormat.format(date));
-        from.setText("From: " + m.getFrom().getFirstName());
+        from.setText("From: " + m.getFrom());
         message.setText(m.getContent());
-        folder.setText("Folder: " + m.getFolder().getName());
-        account.setText(m.getAccount().getUsername());
-
+        if(m.getFolder() != null){
+            folder.setText("Folder: " + m.getFolder().getName());
+        }
+        if(m.getAccount() != null) {
+            account.setText(m.getAccount().getUsername());
+        }
     }
 
     @Override

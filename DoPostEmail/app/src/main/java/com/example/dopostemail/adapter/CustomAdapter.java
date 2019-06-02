@@ -78,7 +78,7 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
             mDate.setTypeface(null, Typeface.BOLD_ITALIC);
         }
 
-        mTitle.setText(messageList.get(position).getFrom().getFirstName());
+        mTitle.setText(messageList.get(position).getFrom());
         mSubTitle.setText(messageList.get(position).getContent());
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -109,14 +109,14 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
 //                    if(m.getCc() != null || m.getBcc() != null) {
 //                        for(Contact c: m.getCc()) {
                             String to="", cc="", bcc="", tags="", attachments="";
-                            for(Contact con : m.getCc()){
-                                cc += con.getFirstName() + ", " + con.getEmail() + ", ";
+                            for(String con : m.getCc()){
+                                cc += con + ", ";
                             }
-                            for(Contact con : m.getBcc()){
-                                bcc += con.getFirstName() + ", " + con.getEmail() + ", ";
+                            for(String con : m.getBcc()){
+                                bcc += con + ", ";
                             }
-                            for(Contact con : m.getTo()){
-                                to += con.getFirstName() + ", " + con.getEmail() + ", ";
+                            for(String con : m.getTo()){
+                                to += con + ", ";
                             }
                             for(Tag tg : m.getTag()){
                                 tags += tg.getName() + ", ";
@@ -127,7 +127,7 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
 
                             if (m.getSubject().toLowerCase().contains(filteredPattern)
                                     || m.getContent().toLowerCase().contains(filteredPattern)
-                                    || m.getFrom().getFirstName().toLowerCase().contains(filteredPattern)
+                                    || m.getFrom().toLowerCase().contains(filteredPattern)
                                     || cc.toLowerCase().contains(filteredPattern)
                                     || bcc.toLowerCase().contains(filteredPattern)
                                     || to.toLowerCase().contains(filteredPattern)

@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
 //        });
         EditText username = findViewById(R.id.usernameLogin);
         EditText password = findViewById(R.id.passwordLogin);
-        username.setText("user@gmail.com");
-        password.setText("user");
+        username.setText("dopost123@gmail.com");
+        password.setText("sfdopost2019");
 
 //        Button loginButton = findViewById(R.id.button_login);
 //        loginButton.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 
     public void showProgress(View view) {
-        final int THREE_SECONDS = 3000*1000;
+        final int THREE_SECONDS = 4*1000;
         final ProgressDialog dlg = new ProgressDialog(this);
         dlg.setMessage("Loading...");
         dlg.setCancelable(false);

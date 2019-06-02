@@ -14,6 +14,10 @@ public class Tag implements Serializable {
         this.name = name;
         this.messages = messages;
     }
+    public Tag(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Tag() {
     }

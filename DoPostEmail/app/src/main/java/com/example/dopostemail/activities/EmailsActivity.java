@@ -43,10 +43,13 @@ import android.widget.Toast;
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.ContactsAdapter;
 import com.example.dopostemail.adapter.CustomAdapter;
+import com.example.dopostemail.adapter.FolderAdapter;
 import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.server.ContactsInterface;
+import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
@@ -91,8 +94,9 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         Gson gson = new Gson();
         final Account acc = gson.fromJson(json, Account.class);
 
-//        TextView tv = (TextView)findViewById(R.id.navUsername);
-//        tv.setText("asd");
+
+
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView2 = navigationView.getHeaderView(0);
@@ -247,12 +251,40 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     protected void onResume(){
         super.onResume();
 
+
+
     }
 
     Runnable mStatusChecker = new Runnable() {
         @Override
         public void run() {
             try {
+                SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                String json = prefs.getString("userObject", "");
+
+                Gson gson = new Gson();
+                final Account acc = gson.fromJson(json, Account.class);
+
+
+//                MessagesInterface service2 = RetrofitClient.getClient().create(MessagesInterface.class);
+//                Call<Message> call2 = service2.checkMessages(acc);
+//
+//
+//
+//                call2.enqueue(new Callback<Message>() {
+//                    @Override
+//                    public void onResponse(Call<Message> call, Response<Message> response) {
+//
+//
+//                    }
+//
+//
+//
+//                    @Override
+//                    public void onFailure(Call<Message> call, Throwable t) {
+////                Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened while checking new emails", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("preferences", 0);
                 String syncTimeStr = pref.getString("refresh_rate", "1");
@@ -263,8 +295,12 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
 //                Toast.makeText(EmailsActivity.this, Long.toString(mInterval), Toast.LENGTH_SHORT).show();
 
+
+
                 MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-                Call<ArrayList<Message>> call = service.getMessages();
+//                Call callCheck = service.checkMessages(acc);
+
+                Call<ArrayList<Message>> call = service.getMessages(acc);
 //        showProgress();
 
                 call.enqueue(new Callback<ArrayList<Message>>() {
@@ -313,11 +349,11 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
                                         builder.setSmallIcon(R.drawable.ic_sms_notification);
                                         if(m1.getId() == 1){
-                                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                            builder.setContentTitle(m1.getFrom()  + "     " + counter);
                                         }else if(m1.getId() == 2){
-                                            builder.setContentTitle(m1.getFrom().getEmail()+  "     " + counter);
+                                            builder.setContentTitle(m1.getFrom()+  "     " + counter);
                                         }else {
-                                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
                                         }
 
                                         builder.setContentText(m1.getContent());
@@ -351,11 +387,11 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
                                         builder.setSmallIcon(R.drawable.ic_sms_notification);
                                         if(m1.getId() == 1){
-                                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
                                         }else if(m1.getId() == 2){
-                                            builder.setContentTitle(m1.getFrom().getEmail()+  "     " + counter);
+                                            builder.setContentTitle(m1.getFrom()+  "     " + counter);
                                         }else {
-                                            builder.setContentTitle(m1.getFrom().getFirstName() + " " + m1.getFrom().getLastName() + "     " + counter);
+                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
                                         }
                                         builder.setContentText(m1.getContent());
                                         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
@@ -443,7 +479,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
                     @Override
                     public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
-                        Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened while loading messages", Toast.LENGTH_SHORT).show();
                     }
                 });
 

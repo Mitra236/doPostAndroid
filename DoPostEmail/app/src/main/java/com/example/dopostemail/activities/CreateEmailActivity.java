@@ -227,6 +227,14 @@ public class CreateEmailActivity extends AppCompatActivity {
                     ArrayList<Attachment> atts = new ArrayList<>();
                     ArrayList<Tag> tags = new ArrayList<>();
 
+                    EditText editTextTags = findViewById(R.id.editTags);
+                    String tagsString = editTextTags.getText().toString();
+                    String[] splitTags = tagsString.split(" ");
+                    for(String tagString : splitTags){
+                        Tag newTag = new Tag(hashCode(), "#" + tagString);
+                        tags.add(newTag);
+                    }
+
                     SharedPreferences prefUser = getApplicationContext().getSharedPreferences("userInfo", 0);
                     String json = prefUser.getString("userObject", "");
 

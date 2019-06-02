@@ -18,7 +18,7 @@
         android:id="@+id/editTo"
         android:inputType="text"
         android:hint="To"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="15dp"
@@ -33,7 +33,7 @@
         android:layout_below="@id/editBCC"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textSize="15dp"
+        android:textSize="13dp"
         android:backgroundTint="@color/colorGray"/>
 
     <MultiAutoCompleteTextView
@@ -45,7 +45,7 @@
         android:layout_below="@id/editTo"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textSize="15dp"
+        android:textSize="13dp"
         android:backgroundTint="@color/colorGray"/>
 
     <MultiAutoCompleteTextView
@@ -57,6 +57,21 @@
         android:layout_below="@id/editCC"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:textSize="13dp"
+        android:backgroundTint="@color/colorGray"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTags"
+        android:gravity="left"
+        android:layout_marginTop="8dp"
+        android:hint="Tags (divide by space)"
+        android:inputType="textMultiLine"
+        android:layout_below="@id/editSubject"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@null"
         android:textSize="15dp"
         android:backgroundTint="@color/colorGray"/>
 
@@ -65,10 +80,10 @@
         android:layout_height="fill_parent"
         android:id="@+id/editMessage"
         android:gravity="left"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:hint="Compose Message"
         android:inputType="textMultiLine"
-        android:layout_below="@id/editSubject"
+        android:layout_below="@id/editTags"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@null"

@@ -22,7 +22,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:gravity="center_vertical"
         android:textColor="@color/colorListText"
         android:text="Line 1"
@@ -46,11 +46,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:gravity="right"
         android:layout_marginRight="5dp"
-        android:layout_toRightOf="@id/icon"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@id/subTitle"
+        android:layout_toRightOf="@+id/icon"
+        />
+        <!--android:gravity="right"-->
+        android:layout_marginRight="5dp"
+        android:layout_below="@id/subTitle"
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true" />-->
 
 </RelativeLayout>

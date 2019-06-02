@@ -1,5 +1,6 @@
 package com.example.dopostemail.server;
 
+import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Message;
 
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ import retrofit2.http.Query;
 
 public interface MessagesInterface {
 
-    @GET("messages")
-    Call<ArrayList<Message>> getMessages();
+    @POST("messages")
+    Call<ArrayList<Message>> getMessages(@Body Account acc);
 
     @GET("api/message")
     Call<Message> getMessageById(@Query("id") int id);
@@ -35,6 +36,12 @@ public interface MessagesInterface {
 
     @POST("messages/add")
     Call<Message> addMessage(@Body Message params);
+
+    @POST("send")
+    Call<Message> sendMessage(@Body Message msg);
+
+    @POST("check")
+    Call<Message> checkMessages(@Body Account account);
 
     @POST("messages/draft")
     Call<Message> draftMessage(@Body Message params);

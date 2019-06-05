@@ -1,5 +1,6 @@
 package com.example.dopostemail.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -20,9 +22,11 @@ import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Photo;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.RetrofitClient;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -32,6 +36,7 @@ import retrofit2.Response;
 
 public class ContactActivity extends AppCompatActivity {
 
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -55,11 +60,8 @@ public class ContactActivity extends AppCompatActivity {
         final Contact c = (Contact) bundle.getSerializable("contacts");
 
         ImageView img = findViewById(R.id.contact_icon);
-//        if(c.getPhoto() != null){
-//            img.setImageResource(c.getPhoto().getPath());
-//        }else{
-            img.setImageResource(R.drawable.contacts_icon);
-//        }
+
+        Picasso.get().load("http://192.168.1.45:8080/project/" + c.getPhoto().getPath()).into(img);
 
 
         final EditText tbFirstName = findViewById(R.id.firstNameEdit);
@@ -160,9 +162,7 @@ public class ContactActivity extends AppCompatActivity {
                     tbEmail.requestFocus();
                 }else {
                     ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                   // String params = "";
-//                    params = Integer.toString(c.getId()) + "," + tbFirstName.getText().toString() + "," +
-//                            tbLastName.getText().toString() + "," + tbUsername.getText().toString() + "," + tbEmail.getText().toString() + "," + "HTML";
+
 
                     Contact contact = new Contact(c.getId(), name, lastName, display, email, Format.HTML, new Photo());
                     Call<Contact> call = service.editContact(c.getId(), contact);

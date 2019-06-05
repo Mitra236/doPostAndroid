@@ -167,13 +167,13 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
                 String syncTimeStr = pref.getString("refresh_rate", "1");
                 String[] split = syncTimeStr.split(" ");
                 String syncTime = split[0];
-//                String syncTimeStr = "2";
+
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
 
                 ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
                 Call<ArrayList<Contact>> call = service.getContacts();
 
-//        showProgress();
+
 
                 call.enqueue(new Callback<ArrayList<Contact>>() {
                     @Override

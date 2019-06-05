@@ -106,8 +106,7 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
                 String filteredPattern = constraint.toString().toLowerCase().trim();
 
                 for(Message m : messageFilteredList){
-//                    if(m.getCc() != null || m.getBcc() != null) {
-//                        for(Contact c: m.getCc()) {
+
                             String to="", cc="", bcc="", tags="", attachments="";
                             for(String con : m.getCc()){
                                 cc += con + ", ";
@@ -137,8 +136,6 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
 
                                 filteredMessageList.add(m);
                             }
-//                        }
-//                    }
 
                 }
             }

@@ -265,43 +265,18 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                 Gson gson = new Gson();
                 final Account acc = gson.fromJson(json, Account.class);
 
-
-//                MessagesInterface service2 = RetrofitClient.getClient().create(MessagesInterface.class);
-//                Call<Message> call2 = service2.checkMessages(acc);
-//
-//
-//
-//                call2.enqueue(new Callback<Message>() {
-//                    @Override
-//                    public void onResponse(Call<Message> call, Response<Message> response) {
-//
-//
-//                    }
-//
-//
-//
-//                    @Override
-//                    public void onFailure(Call<Message> call, Throwable t) {
-////                Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened while checking new emails", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("preferences", 0);
                 String syncTimeStr = pref.getString("refresh_rate", "1");
                 String[] split = syncTimeStr.split(" ");
                 String syncTime = split[0];
-//                String syncTimeStr = "2";
+
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
-
-//                Toast.makeText(EmailsActivity.this, Long.toString(mInterval), Toast.LENGTH_SHORT).show();
-
 
 
                 MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-//                Call callCheck = service.checkMessages(acc);
 
                 Call<ArrayList<Message>> call = service.getMessages(acc);
-//        showProgress();
+
 
                 call.enqueue(new Callback<ArrayList<Message>>() {
                     @Override
@@ -330,9 +305,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                         final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-//                                long futureInMillis = SystemClock.elapsedRealtime() + 1000;
-//                                AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-//                                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, intentPending);
+
 
                                         AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
                                         Calendar calendar1Notify = Calendar.getInstance();

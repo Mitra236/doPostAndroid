@@ -83,8 +83,7 @@ public class CreateEmailActivity extends AppCompatActivity {
 
         EditText subjectCreate = findViewById(R.id.editSubject);
         EditText contentCreate = findViewById(R.id.editMessage);
-//        String subject = subjectCreate.getText().toString();
-//        String content = contentCreate.getText().toString();
+
 
         Bundle bundle = getIntent().getExtras();
 

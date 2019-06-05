@@ -85,67 +85,68 @@ public class EmailActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Message m = (Message) bundle.getSerializable("messages");
 
-        subject.setText(m.getSubject());
+        if(m != null) {
+            subject.setText(m.getSubject());
 
-        StringBuilder builder3 = new StringBuilder();
-        builder3.append("To: ");
-        for (String me : m.getTo()) {
-            to.setText(builder3.append(me  + ", "));
-        }
-
-        StringBuilder builder4 = new StringBuilder();
-        builder4.append("Cc: ");
-        if (!m.getCc().isEmpty()) {
-            for (String me : m.getCc()) {
-                cc.setText(builder4.append(me + ", "));
+            StringBuilder builder3 = new StringBuilder();
+            builder3.append("To: ");
+            for (String me : m.getTo()) {
+                to.setText(builder3.append(me + ", "));
             }
 
-        }
-            else{
-                 cc.setText(builder4);
-        }
+            StringBuilder builder4 = new StringBuilder();
+            builder4.append("Cc: ");
+            if (!m.getCc().isEmpty()) {
+                for (String me : m.getCc()) {
+                    cc.setText(builder4.append(me + ", "));
+                }
 
-        StringBuilder builder5 = new StringBuilder();
-        builder5.append("Bcc: ");
-        if(!m.getBcc().isEmpty()) {
-            for(String me: m.getBcc()) {
-
-                bcc.setText(builder5.append(me + ", "));
-
+            } else {
+                cc.setText(builder4);
             }
-        }else{
-            bcc.setText(builder5);
-        }
 
-        StringBuilder builder = new StringBuilder();
-        builder.append("Tags: ");
-        if(m.getTag() != null){
-            for(Tag me: m.getTag()) {
-                tag.setText(builder.append(me.getName() + ", "));
+            StringBuilder builder5 = new StringBuilder();
+            builder5.append("Bcc: ");
+            if (!m.getBcc().isEmpty()) {
+                for (String me : m.getBcc()) {
+
+                    bcc.setText(builder5.append(me + ", "));
+
+                }
+            } else {
+                bcc.setText(builder5);
             }
-        }
 
-
-        StringBuilder builder2 = new StringBuilder();
-        builder2.append("Attachments: ");
-        if(m.getAttachments() != null) {
-            for (Attachment a : m.getAttachments()) {
-
-                attachment.setText(builder2.append(a.getName() + ", "));
+            StringBuilder builder = new StringBuilder();
+            builder.append("Tags: ");
+            if (m.getTag() != null) {
+                for (Tag me : m.getTag()) {
+                    tag.setText(builder.append(me.getName() + ", "));
+                }
             }
-        }
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = fromUTC(m.getDateTime());
 
 
-        dateTime.setText("Date: " + dateFormat.format(date));
-        from.setText("From: " + m.getFrom());
-        message.setText(m.getContent());
-        if(m.getFolder() != null){
-            folder.setText("Folder: " + m.getFolder().getName());
-        }
-        if(m.getAccount() != null) {
-            account.setText(m.getAccount().getUsername());
+            StringBuilder builder2 = new StringBuilder();
+            builder2.append("Attachments: ");
+            if (m.getAttachments() != null) {
+                for (Attachment a : m.getAttachments()) {
+
+                    attachment.setText(builder2.append(a.getName() + ", "));
+                }
+            }
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = fromUTC(m.getDateTime());
+
+
+            dateTime.setText("Date: " + dateFormat.format(date));
+            from.setText("From: " + m.getFrom());
+            message.setText(m.getContent());
+            if (m.getFolder() != null) {
+                folder.setText("Folder: " + m.getFolder().getName());
+            }
+            if (m.getAccount() != null) {
+                account.setText(m.getAccount().getUsername());
+            }
         }
     }
 

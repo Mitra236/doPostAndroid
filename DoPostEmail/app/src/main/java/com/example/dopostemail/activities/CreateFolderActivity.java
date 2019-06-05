@@ -74,63 +74,6 @@ public class CreateFolderActivity extends AppCompatActivity {
         });
 
 
-//        btnCreate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-//
-//                //---------------
-//                RadioButton radioMove = findViewById(R.id.radioMove);
-//                RadioButton radioCopy = findViewById(R.id.radioCopy);
-//                RadioButton radioDelete = findViewById(R.id.radioDelete);
-//
-//                RadioButton radioTo = findViewById(R.id.radioTo);
-//                RadioButton radioFrom = findViewById(R.id.radioFrom);
-//                RadioButton radioCc = findViewById(R.id.radioCc);
-//                RadioButton radioSubject = findViewById(R.id.radioSubject);
-//
-//                Condition condition = Condition.TO;
-//                Operation operation = Operation.MOVE;
-//
-//                if(radioTo.isChecked() == true){
-//                    condition = Condition.TO;
-//                }else if(radioFrom.isChecked() == true){
-//                    condition = Condition.FROM;
-//                }else if(radioCc.isChecked() == true){
-//                    condition = Condition.CC;
-//                }else if(radioSubject.isChecked() == true){
-//                    condition = Condition.SUBJECT;
-//                }
-//
-//                if(radioMove.isChecked() == true){
-//                    operation = Operation.MOVE;
-//                }else if(radioCopy.isChecked() == true){
-//                    operation = Operation.COPY;
-//                }else if(radioDelete.isChecked() == true){
-//                    operation = Operation.DELETE;
-//                }
-//                //-----------------
-//
-//
-//                String content = "";
-//                content = folderName.getText().toString() + "," + operation.toString() + "," + condition.toString();
-//
-//                Call<Folder> call = service.addFolder(content);
-//
-//                call.enqueue(new Callback<Folder>() {
-//                    @Override
-//                    public void onResponse(Call<Folder> call, Response<Folder> response) {
-//                        Toast.makeText(CreateFolderActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Folder> call, Throwable t) {
-////                        Toast.makeText(FolderActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
- //           }
-  //      });
-
 
     }
 
@@ -142,23 +85,6 @@ public class CreateFolderActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-
-//        Button save = (Button)findViewById(R.id.button_save_cf);
-//        save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                String f = folderName.getText().toString().trim();
-//
-//                if(f.equals("")) {
-//                    Toast.makeText(CreateFolderActivity.this, "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    Toast.makeText(CreateFolderActivity.this, "Saved", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
 
         Button cancel = (Button)findViewById(R.id.button_cancel_cf);
         cancel.setOnClickListener(new View.OnClickListener() {

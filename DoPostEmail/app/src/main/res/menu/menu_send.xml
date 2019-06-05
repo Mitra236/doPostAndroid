@@ -14,4 +14,10 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom"/>
 
+    <item android:title="@string/action_attach"
+        android:id="@+id/action_attach"
+        android:icon="@drawable/ic_add_folder"
+        android:orderInCategory="300"
+        app:showAsAction="ifRoom"/>
+
 </menu>

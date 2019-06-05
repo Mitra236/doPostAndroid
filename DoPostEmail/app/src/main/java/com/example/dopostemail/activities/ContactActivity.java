@@ -61,7 +61,11 @@ public class ContactActivity extends AppCompatActivity {
 
         ImageView img = findViewById(R.id.contact_icon);
 
-        Picasso.get().load("http://192.168.1.45:8080/project/" + c.getPhoto().getPath()).into(img);
+        if(c.getPhoto() != null) {
+            Picasso.get().load("http://192.168.65.195:8080/project/" + c.getPhoto().getPath()).into(img);
+        }else if(c.getPhoto() == null) {
+            Picasso.get().load("http://192.168.65.195:8080/project/photo.jpg").into(img);
+        }
 
 
         final EditText tbFirstName = findViewById(R.id.firstNameEdit);

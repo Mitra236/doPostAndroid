@@ -1,11 +1,17 @@
 package com.example.dopostemail.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.support.v4.graphics.PathUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewUtils;
@@ -36,6 +42,7 @@ import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,11 +55,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+
 public class CreateEmailActivity extends AppCompatActivity {
 
     ArrayList<String> to = new ArrayList<>();
     ArrayList<String> cc = new ArrayList<>();
     ArrayList<String> bcc = new ArrayList<>();
+    private static final int PICK_FILE = 100;
+    Uri attachUri;
     public ArrayList<Contact> allContactsUnique = new ArrayList<>();
 
     @Override
@@ -338,11 +351,47 @@ public class CreateEmailActivity extends AppCompatActivity {
 
 //                Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
                 return true;
+
+            case R.id.action_attach:
+                attachFile();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private void attachFile(){
+        Intent intent = new Intent();
+        intent.setType("*/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Choose File to Upload.."),PICK_FILE);
+    }
+
+    String filename;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == PICK_FILE){
+                String filePath = "";
+                if(data == null){
+
+                    return;
+                }
+
+                    Uri returnUri = data.getData();
+                    Cursor returnCursor = getContentResolver().query(returnUri, null, null, null, null);
+                    int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    returnCursor.moveToFirst();
+                    filename = returnCursor.getString(nameIndex);
+                    filePath = returnUri.getPath();
+                    Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
+
+
+            }
+        }
+    }
 
     @Override
     protected void onStart(){

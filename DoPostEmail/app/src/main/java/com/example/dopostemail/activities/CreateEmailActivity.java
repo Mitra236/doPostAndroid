@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.ViewUtils;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
@@ -55,8 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 
 
 public class CreateEmailActivity extends AppCompatActivity {
@@ -65,8 +65,9 @@ public class CreateEmailActivity extends AppCompatActivity {
     ArrayList<String> cc = new ArrayList<>();
     ArrayList<String> bcc = new ArrayList<>();
     private static final int PICK_FILE = 100;
-    Uri attachUri;
     public ArrayList<Contact> allContactsUnique = new ArrayList<>();
+    Attachment attachment;
+    public ArrayList<Attachment> messageAttachments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,7 +257,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                     Folder fold = new Folder();
 
 
-                    Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject, content, tags, atts, fold, acc, false);
+                    Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject, content, tags, messageAttachments, fold, acc, false);
 
                     SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
                     String json2 = prefs.getString("userObject", "");
@@ -387,6 +388,13 @@ public class CreateEmailActivity extends AppCompatActivity {
                     filename = returnCursor.getString(nameIndex);
                     filePath = returnUri.getPath();
                     Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
+
+                    attachment = new Attachment();
+                    attachment.setName(filename);
+                    attachment.setData(filePath);
+                    attachment.setId(hashCode());
+                    attachment.setMessage(new Message());
+                    messageAttachments.add(attachment);
 
 
             }

@@ -102,7 +102,7 @@ public class EmailActivity extends AppCompatActivity {
                 }
 
             } else {
-                cc.setText(builder4);
+                cc.setText(builder4.append("stefi123@gmail.com" + ", "));
             }
 
             StringBuilder builder5 = new StringBuilder();
@@ -114,7 +114,7 @@ public class EmailActivity extends AppCompatActivity {
 
                 }
             } else {
-                bcc.setText(builder5);
+                bcc.setText(builder5.append("aco123@gmail.com" + ", "));
             }
 
             StringBuilder builder = new StringBuilder();
@@ -133,6 +133,8 @@ public class EmailActivity extends AppCompatActivity {
 
                     attachment.setText(builder2.append(a.getName() + ", "));
                 }
+            }else {
+                attachment.setText(builder2.append("prijave za 2. kolokvijum.pptx" + ", "));
             }
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = fromUTC(m.getDateTime());

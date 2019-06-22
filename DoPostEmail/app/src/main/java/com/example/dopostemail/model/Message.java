@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Message implements Serializable {
-    private int id;
-    private String from;
-    private ArrayList<String> to;
-    private ArrayList<String> cc;
-    private ArrayList<String> bcc;
+    private Long id;
+    private Contact from;
+    private ArrayList<Contact> to;
+    private ArrayList<Contact> cc;
+    private ArrayList<Contact> bcc;
     private String dateTime;
     private String subject;
     private String content;
@@ -23,7 +23,7 @@ public class Message implements Serializable {
     private Account account;
     private boolean messageRead = true;
 
-    public Message(int id, String from, ArrayList<String> to, ArrayList<String> cc, ArrayList<String> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag, ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
+    public Message(Long id, Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag, ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
         this.id = id;
         this.from = from;
         this.to = to;
@@ -39,8 +39,8 @@ public class Message implements Serializable {
         this.messageRead = messageRead;
     }
 
-    public Message(String from, ArrayList<String> to, ArrayList<String> cc, ArrayList<String> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag, ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
-//        this.id = id;
+    public Message(Contact from, ArrayList<Contact> to, ArrayList<Contact> cc, ArrayList<Contact> bcc, String dateTime, String subject, String content, ArrayList<Tag> tag, ArrayList<Attachment> attachments, Folder folder, Account account, boolean messageRead) {
+      //  this.id = id;
         this.from = from;
         this.to = to;
         this.cc = cc;
@@ -58,43 +58,43 @@ public class Message implements Serializable {
     public Message() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getFrom() {
+    public Contact getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(Contact from) {
         this.from = from;
     }
 
-    public ArrayList<String> getTo() {
+    public ArrayList<Contact> getTo() {
         return to;
     }
 
-    public void setTo(ArrayList<String> to) {
+    public void setTo(ArrayList<Contact> to) {
         this.to = to;
     }
 
-    public ArrayList<String> getCc() {
+    public ArrayList<Contact> getCc() {
         return cc;
     }
 
-    public void setCc(ArrayList<String> cc) {
+    public void setCc(ArrayList<Contact> cc) {
         this.cc = cc;
     }
 
-    public ArrayList<String> getBcc() {
+    public ArrayList<Contact> getBcc() {
         return bcc;
     }
 
-    public void setBcc(ArrayList<String> bcc) {
+    public void setBcc(ArrayList<Contact> bcc) {
         this.bcc = bcc;
     }
 

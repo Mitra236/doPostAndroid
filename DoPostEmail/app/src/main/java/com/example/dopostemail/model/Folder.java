@@ -6,38 +6,40 @@ import java.util.ArrayList;
 
 public class Folder implements Serializable {
 
-    private int id;
+    private static final long serialVersionUID = 1L;
+
+    private Long id;
     private String name;
-    private ArrayList<Folder> folders;
+    private Folder parentFolder;
     private ArrayList<Message> messages;
     private Rule rule;
 
-    public Folder(int id, String name, ArrayList<Folder> folders, ArrayList<Message> messages, Rule rule) {
+
+    public Folder(Long id, String name, Folder parentFolder, ArrayList<Message> messages, Rule rule) {
+        super();
         this.id = id;
         this.name = name;
-        this.folders = folders;
+        this.parentFolder = parentFolder;
         this.messages = messages;
         this.rule = rule;
     }
 
-    public Folder(String name, ArrayList<Folder> folders, ArrayList<Message> messages, Rule rule) {
+    public Folder(String name, Folder parentFolder, ArrayList<Message> messages, Rule rule) {
+        super();
 
         this.name = name;
-        this.folders = folders;
+        this.parentFolder = parentFolder;
         this.messages = messages;
         this.rule = rule;
     }
 
-    public Folder(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public Folder(){
+        super();
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -45,7 +47,7 @@ public class Folder implements Serializable {
         return name;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -61,8 +63,17 @@ public class Folder implements Serializable {
         this.messages = messages;
     }
 
-    public ArrayList<Folder> getFolders() {
-        return folders;
+
+    public Folder getParentFolder() {
+        return parentFolder;
+    }
+
+    public void setParentFolder(Folder parentFolder) {
+        this.parentFolder = parentFolder;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
     public Rule getRule() {

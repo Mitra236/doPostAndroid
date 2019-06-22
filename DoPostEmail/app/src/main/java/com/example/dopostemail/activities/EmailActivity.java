@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Attachment;
+import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Tag;
 import com.example.dopostemail.server.MessagesInterface;
@@ -90,14 +91,14 @@ public class EmailActivity extends AppCompatActivity {
 
             StringBuilder builder3 = new StringBuilder();
             builder3.append("To: ");
-            for (String me : m.getTo()) {
+            for (Contact me : m.getTo()) {
                 to.setText(builder3.append(me + ", "));
             }
 
             StringBuilder builder4 = new StringBuilder();
             builder4.append("Cc: ");
             if (!m.getCc().isEmpty()) {
-                for (String me : m.getCc()) {
+                for (Contact me : m.getCc()) {
                     cc.setText(builder4.append(me + ", "));
                 }
 
@@ -108,7 +109,7 @@ public class EmailActivity extends AppCompatActivity {
             StringBuilder builder5 = new StringBuilder();
             builder5.append("Bcc: ");
             if (!m.getBcc().isEmpty()) {
-                for (String me : m.getBcc()) {
+                for (Contact me : m.getBcc()) {
 
                     bcc.setText(builder5.append(me + ", "));
 

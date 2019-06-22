@@ -110,26 +110,26 @@ public class CreateEmailActivity extends AppCompatActivity {
 
 
 
-        if(m != null){
-            if(action.equals("reply")){
-                subjectCreate.setText(m.getSubject());
-                contentCreate.setText(m.getContent());
-                to.add(m.getFrom());
-                mTo.setText(m.getFrom().toString() + ", ");
-            }else if(action.equals("replyAll")){
-                subjectCreate.setText(m.getSubject());
-                contentCreate.setText(m.getContent());
-                to.add(m.getFrom());
-                mTo.setText(m.getFrom().toString());
-                for(String con : m.getTo()){
-                    to.add(con);
-                    mTo.setText(mTo.getText() + ", " + con.toString());
-                }
-            }else if(action.equals("Forword")){
-                subjectCreate.setText(m.getSubject());
-                contentCreate.setText(m.getContent());
-            }
-        }
+//        if(m != null){
+//            if(action.equals("reply")){
+//                subjectCreate.setText(m.getSubject());
+//                contentCreate.setText(m.getContent());
+//                to.add(m.getFrom());
+//                mTo.setText(m.getFrom().toString() + ", ");
+//            }else if(action.equals("replyAll")){
+//                subjectCreate.setText(m.getSubject());
+//                contentCreate.setText(m.getContent());
+//                to.add(m.getFrom());
+//                mTo.setText(m.getFrom().toString());
+//                for(String con : m.getTo()){
+//                    to.add(con);
+//                    mTo.setText(mTo.getText() + ", " + con.toString());
+//                }
+//            }else if(action.equals("Forword")){
+//                subjectCreate.setText(m.getSubject());
+//                contentCreate.setText(m.getContent());
+//            }
+//        }
 
 
 
@@ -257,31 +257,31 @@ public class CreateEmailActivity extends AppCompatActivity {
                     Folder fold = new Folder();
 
 
-                    Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject, content, tags, messageAttachments, fold, acc, false);
-
-                    SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
-                    String json2 = prefs.getString("userObject", "");
-
-                    Gson gson2 = new Gson();
-                    final Account acc2 = gson2.fromJson(json2, Account.class);
-
-                    Call<Message> callM = service.sendMessage(msg);
-
-                    callM.enqueue(new Callback<Message>() {
-                        @Override
-                        public void onResponse(Call<Message> call, Response<Message> response) {
-                            Toast.makeText(CreateEmailActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
-                            startActivity(i);
-                        }
-
-                        @Override
-                        public void onFailure(Call<Message> call, Throwable t) {
-                            Toast.makeText(CreateEmailActivity.this, "Message sent (probably)", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
-                            startActivity(i);
-                        }
-                    });
+//                    Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject, content, tags, messageAttachments, fold, acc, false);
+//
+//                    SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+//                    String json2 = prefs.getString("userObject", "");
+//
+//                    Gson gson2 = new Gson();
+//                    final Account acc2 = gson2.fromJson(json2, Account.class);
+//
+//                    Call<Message> callM = service.sendMessage(msg);
+//
+//                    callM.enqueue(new Callback<Message>() {
+//                        @Override
+//                        public void onResponse(Call<Message> call, Response<Message> response) {
+//                            Toast.makeText(CreateEmailActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
+//                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+//                            startActivity(i);
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<Message> call, Throwable t) {
+//                            Toast.makeText(CreateEmailActivity.this, "Message sent (probably)", Toast.LENGTH_SHORT).show();
+//                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+//                            startActivity(i);
+//                        }
+//                    });
                 }
 
 
@@ -331,24 +331,24 @@ public class CreateEmailActivity extends AppCompatActivity {
                         Folder fold = new Folder();
 
 
-                        Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject2, content2, tags, atts, fold, acc, false);
-
-
-                            Call<Message> callM = service.draftMessage(msg);
-
-                            callM.enqueue(new Callback<Message>() {
-                                @Override
-                                public void onResponse(Call<Message> call, Response<Message> response) {
-                                    Toast.makeText(CreateEmailActivity.this, "Message drafted", Toast.LENGTH_SHORT).show();
-                                    Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
-                                    startActivity(i);
-                                }
-
-                                @Override
-                                public void onFailure(Call<Message> call, Throwable t) {
-                                    Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+//                        Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject2, content2, tags, atts, fold, acc, false);
+//
+//
+//                            Call<Message> callM = service.draftMessage(msg);
+//
+//                            callM.enqueue(new Callback<Message>() {
+//                                @Override
+//                                public void onResponse(Call<Message> call, Response<Message> response) {
+//                                    Toast.makeText(CreateEmailActivity.this, "Message drafted", Toast.LENGTH_SHORT).show();
+//                                    Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+//                                    startActivity(i);
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<Message> call, Throwable t) {
+//                                    Toast.makeText(CreateEmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
 
 //                Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
                 return true;

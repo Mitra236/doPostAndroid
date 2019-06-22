@@ -17,20 +17,20 @@ import retrofit2.http.Query;
 
 public interface FoldersInterface {
 
-    @GET("api/service/folders")
+    @GET("api/folders")
     Call<ArrayList<Folder>> getFolders();
 
     @GET("api/folder")
-    Call<Folder> getFolderById(@Query("id") int id);
+    Call<Folder> getFolder(@Query("id") int id);
 
     @POST("api/folders/add")
     Call<Folder> addFolder(@Body Folder folder);
 
     @PUT("api/folders/edit")
-    Call<Folder> updateFolder(@Query("id") int id, @Body Folder folder);
+    Call<Folder> updateFolder(@Query("id") Long id, @Body Folder folder);
 
     @DELETE("api/folder")
-    Call<Folder> deleteFolder(@Query("id") int id);
+    Call<Folder> deleteFolder(@Query("id") Long id);
 
     @GET("foldermesages")
     Call<ArrayList<Message>> getFolderMessageList();

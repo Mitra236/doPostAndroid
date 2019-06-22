@@ -56,7 +56,7 @@ public class CreateFolderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-                Folder folder = new Folder(folderName.getText().toString(), new ArrayList<Folder>(), new ArrayList<Message>(), new Rule());
+                Folder folder = new Folder(folderName.getText().toString(), new Folder(), new ArrayList<Message>(), new Rule());
                 Call<Folder> call = service.addFolder(folder);
 
                 call.enqueue(new Callback<Folder>() {

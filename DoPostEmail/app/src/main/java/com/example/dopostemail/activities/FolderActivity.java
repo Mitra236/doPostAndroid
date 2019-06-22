@@ -125,7 +125,7 @@ public class FolderActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-                    Folder folder = new Folder(f.getId(), tbFolderName.getText().toString(), f.getFolders(), f.getMessages(), f.getRule());
+                    Folder folder = new Folder(f.getId(), tbFolderName.getText().toString(), f.getParentFolder(), f.getMessages(), f.getRule());
                     Call<Folder> call = service.updateFolder(f.getId(), folder);
 
                     call.enqueue(new Callback<Folder>() {
@@ -151,25 +151,25 @@ public class FolderActivity extends AppCompatActivity {
         ListView list_subflders = findViewById(R.id.list_view_subfolders);
         ListView list_emails = findViewById(R.id.list_view_emails);
 
-        FolderAdapter fa = new FolderAdapter(getApplicationContext(), f.getFolders());
-        list_subflders.setAdapter(fa);
-
-        list_subflders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Folder m = f.getFolders().get(position);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("folder", m);
-
-                Intent i = new Intent(FolderActivity.this, FolderActivity.class);
-                i.putExtras(bundle);
-                startActivity(i);
-
-
-            }
-        });
+//        FolderAdapter fa = new FolderAdapter(getApplicationContext(), f.getFolders());
+//        list_subflders.setAdapter(fa);
+//
+//        list_subflders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                Folder m = f.getFolders().get(position);
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("folder", m);
+//
+//                Intent i = new Intent(FolderActivity.this, FolderActivity.class);
+//                i.putExtras(bundle);
+//                startActivity(i);
+//
+//
+//            }
+//        });
 
 
         CustomAdapter ca = new CustomAdapter(getApplicationContext(), f.getMessages());

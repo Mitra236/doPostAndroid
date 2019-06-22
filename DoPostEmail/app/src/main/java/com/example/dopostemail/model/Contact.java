@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Contact implements Serializable {
 
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String display;
@@ -18,7 +18,7 @@ public class Contact implements Serializable {
     private ArrayList<Message> bcc;
 
 
-    public Contact(int id, String firstName, String lastName, String display, String email, Format format, Photo photo, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
+    public Contact(Long id, String firstName, String lastName, String display, String email, Format format, Photo photo, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,7 +55,7 @@ public class Contact implements Serializable {
 //        this.photo = photo;
 //    }
 
-    public Contact(int id, String firstName, String lastName, String display, String email, Format format, Photo photo) {
+    public Contact(Long id, String firstName, String lastName, String display, String email, Format format, Photo photo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -74,7 +74,7 @@ public class Contact implements Serializable {
         this.photo = photo;
     }
 
-    public Contact(int id, String firstName, String lastName, String display, String email, Format format) {
+    public Contact(Long id, String firstName, String lastName, String display, String email, Format format) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -98,11 +98,11 @@ public class Contact implements Serializable {
     public Contact() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

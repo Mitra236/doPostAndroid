@@ -275,7 +275,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
                 MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
 
-                Call<ArrayList<Message>> call = service.getMessages(acc);
+                Call<ArrayList<Message>> call = service.getMessages();
 
 
                 call.enqueue(new Callback<ArrayList<Message>>() {
@@ -291,109 +291,109 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                             messages = messages1;
 
 
-                            final NotificationCompat.Builder builder = new NotificationCompat.Builder(EmailsActivity.this, CHANNEL_ID);
-                            for(Message m1 : messages){
-                                if(!m1.isMessageRead()){
-                                    counter++;
-                                    if(counter <= 1) {
-                                        Intent intent = new Intent(EmailsActivity.this, EmailActivity.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putSerializable("messages", m1);
-                                        intent.removeExtra("messages");
-                                        intent.putExtras(bundle);
-
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                        final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-
-                                        AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                        Calendar calendar1Notify = Calendar.getInstance();
-                                        calendar1Notify.setTimeInMillis(System.currentTimeMillis());
-                                        calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
-                                        calendar1Notify.set(Calendar.MINUTE, 00);
-
-                                        alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
-
-                                        long time24h = 24*60*60*1000;
-
-                                        alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
-
-
-                                        builder.setSmallIcon(R.drawable.ic_sms_notification);
-                                        if(m1.getId() == 1){
-                                            builder.setContentTitle(m1.getFrom()  + "     " + counter);
-                                        }else if(m1.getId() == 2){
-                                            builder.setContentTitle(m1.getFrom()+  "     " + counter);
-                                        }else {
-                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
-                                        }
-
-                                        builder.setContentText(m1.getContent());
-                                        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-                                        builder.setContentIntent(intentPending);
-                                        builder.setAutoCancel(true);
-                                        builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
-
-
-                                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
-                                        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
-                                    }else {
-
-                                        Intent intent = new Intent(EmailsActivity.this, EmailsActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                        final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                                        AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                        Calendar calendar1Notify = Calendar.getInstance();
-                                        calendar1Notify.setTimeInMillis(System.currentTimeMillis());
-                                        calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
-                                        calendar1Notify.set(Calendar.MINUTE, 00);
-
-                                        alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
-
-                                        long time24h = 24*60*60*1000;
-
-                                        alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
-
-
-
-                                        builder.setSmallIcon(R.drawable.ic_sms_notification);
-                                        if(m1.getId() == 1){
-                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
-                                        }else if(m1.getId() == 2){
-                                            builder.setContentTitle(m1.getFrom()+  "     " + counter);
-                                        }else {
-                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
-                                        }
-                                        builder.setContentText(m1.getContent());
-                                        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-                                        builder.setContentIntent(intentPending);
-                                        builder.setAutoCancel(true);
-                                        builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
-
-
-                                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
-                                        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
-
-                                    }
-
-
-                                }
-                            }
-
-                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                                CharSequence name = "Message notification";
-                                String description = "Include all message notifications";
-
-                                int importance = NotificationManager.IMPORTANCE_HIGH;
-                                NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, importance);
-
-                                notificationChannel.setDescription(description);
-
-                                NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-                                notificationManager.createNotificationChannel(notificationChannel);
-                            }
+//                            final NotificationCompat.Builder builder = new NotificationCompat.Builder(EmailsActivity.this, CHANNEL_ID);
+//                            for(Message m1 : messages){
+//                                if(!m1.isMessageRead()){
+//                                    counter++;
+//                                    if(counter <= 1) {
+//                                        Intent intent = new Intent(EmailsActivity.this, EmailActivity.class);
+//                                        Bundle bundle = new Bundle();
+//                                        bundle.putSerializable("messages", m1);
+//                                        intent.removeExtra("messages");
+//                                        intent.putExtras(bundle);
+//
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                                        final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//
+//
+//                                        AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                                        Calendar calendar1Notify = Calendar.getInstance();
+//                                        calendar1Notify.setTimeInMillis(System.currentTimeMillis());
+//                                        calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
+//                                        calendar1Notify.set(Calendar.MINUTE, 00);
+//
+//                                        alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
+//
+//                                        long time24h = 24*60*60*1000;
+//
+//                                        alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
+//
+//
+//                                        builder.setSmallIcon(R.drawable.ic_sms_notification);
+//                                        if(m1.getId() == 1){
+//                                            builder.setContentTitle(m1.getFrom()  + "     " + counter);
+//                                        }else if(m1.getId() == 2){
+//                                            builder.setContentTitle(m1.getFrom()+  "     " + counter);
+//                                        }else {
+//                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
+//                                        }
+//
+//                                        builder.setContentText(m1.getContent());
+//                                        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+//                                        builder.setContentIntent(intentPending);
+//                                        builder.setAutoCancel(true);
+//                                        builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
+//
+//
+//                                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
+//                                        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+//                                    }else {
+//
+//                                        Intent intent = new Intent(EmailsActivity.this, EmailsActivity.class);
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                                        final PendingIntent intentPending = PendingIntent.getActivity(EmailsActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//                                        AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                                        Calendar calendar1Notify = Calendar.getInstance();
+//                                        calendar1Notify.setTimeInMillis(System.currentTimeMillis());
+//                                        calendar1Notify.set(Calendar.HOUR_OF_DAY, 8);
+//                                        calendar1Notify.set(Calendar.MINUTE, 00);
+//
+//                                        alarmManager1.set(AlarmManager.RTC_WAKEUP,calendar1Notify.getTimeInMillis(), intentPending);
+//
+//                                        long time24h = 24*60*60*1000;
+//
+//                                        alarmManager1.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar1Notify.getTimeInMillis(),time24h,intentPending);
+//
+//
+//
+//                                        builder.setSmallIcon(R.drawable.ic_sms_notification);
+//                                        if(m1.getId() == 1){
+//                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
+//                                        }else if(m1.getId() == 2){
+//                                            builder.setContentTitle(m1.getFrom()+  "     " + counter);
+//                                        }else {
+//                                            builder.setContentTitle(m1.getFrom() + "     " + counter);
+//                                        }
+//                                        builder.setContentText(m1.getContent());
+//                                        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+//                                        builder.setContentIntent(intentPending);
+//                                        builder.setAutoCancel(true);
+//                                        builder.build().flags |= Notification.FLAG_AUTO_CANCEL;
+//
+//
+//                                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(EmailsActivity.this);
+//                                        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+//
+//                                    }
+//
+//
+//                                }
+//                            }
+//
+//                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//                                CharSequence name = "Message notification";
+//                                String description = "Include all message notifications";
+//
+//                                int importance = NotificationManager.IMPORTANCE_HIGH;
+//                                NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+//
+//                                notificationChannel.setDescription(description);
+//
+//                                NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+//                                notificationManager.createNotificationChannel(notificationChannel);
+//                            }
 
 
 

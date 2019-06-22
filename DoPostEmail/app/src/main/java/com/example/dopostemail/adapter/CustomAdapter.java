@@ -78,12 +78,12 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
             mDate.setTypeface(null, Typeface.BOLD_ITALIC);
         }
 
-        mTitle.setText(messageList.get(position).getFrom());
+    //    mTitle.setText(messageList.get(position).getFrom());
         mSubTitle.setText(messageList.get(position).getContent());
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = fromUTC(messageList.get(position).getDateTime());
-        mDate.setText(dateFormat.format(date));
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        Date date = fromUTC(messageList.get(position).getDateTime());
+//        mDate.setText(dateFormat.format(date));
 
 
         view.setTag(messageList.get(position).getId());
@@ -107,31 +107,31 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
 
                 for(Message m : messageFilteredList){
 
-                            String to="", cc="", bcc="", tags="", attachments="";
-                            for(String con : m.getCc()){
-                                cc += con + ", ";
-                            }
-                            for(String con : m.getBcc()){
-                                bcc += con + ", ";
-                            }
-                            for(String con : m.getTo()){
-                                to += con + ", ";
-                            }
-                            for(Tag tg : m.getTag()){
-                                tags += tg.getName() + ", ";
-                            }
-                            for(Attachment att : m.getAttachments()){
-                                attachments += att.getName() + ", ";
-                            }
+//                            String to="", cc="", bcc="", tags="", attachments="";
+//                            for(String con : m.getCc()){
+//                                cc += con + ", ";
+//                            }
+//                            for(String con : m.getBcc()){
+//                                bcc += con + ", ";
+//                            }
+//                            for(String con : m.getTo()){
+//                                to += con + ", ";
+//                            }
+//                            for(Tag tg : m.getTag()){
+//                                tags += tg.getName() + ", ";
+//                            }
+//                            for(Attachment att : m.getAttachments()){
+//                                attachments += att.getName() + ", ";
+//                            }
 
                             if (m.getSubject().toLowerCase().contains(filteredPattern)
                                     || m.getContent().toLowerCase().contains(filteredPattern)
-                                    || m.getFrom().toLowerCase().contains(filteredPattern)
-                                    || cc.toLowerCase().contains(filteredPattern)
-                                    || bcc.toLowerCase().contains(filteredPattern)
-                                    || to.toLowerCase().contains(filteredPattern)
-                                    || tags.toLowerCase().contains(filteredPattern)
-                                    || attachments.toLowerCase().contains(filteredPattern)
+//                                    || m.getFrom().toLowerCase().contains(filteredPattern)
+//                                    || cc.toLowerCase().contains(filteredPattern)
+//                                    || bcc.toLowerCase().contains(filteredPattern)
+//                                    || to.toLowerCase().contains(filteredPattern)
+//                                    || tags.toLowerCase().contains(filteredPattern)
+//                                    || attachments.toLowerCase().contains(filteredPattern)
                                     ) {
 
                                 filteredMessageList.add(m);

@@ -20,20 +20,20 @@ import retrofit2.http.Query;
 
 public interface ContactsInterface {
 
-    @GET("contacts")
+    @GET("api/contacts")
     Call<ArrayList<Contact>> getContacts();
 
-    @GET("contacts/id")
-    Call<Contact> getContactById(@Query("id") int id);
+    @GET("contacts/{id}")
+    Call<Contact> getContact(@Path("id") Long id);
 
-    @POST("contacts/add")
-    Call<Contact> addContact(@Body Contact contact);
+    @POST("api/contacts")
+    Call<Contact> saveContact(@Body Contact contact);
 
-    @PUT("contacts/edit")
-    Call<Contact> editContact(@Query("id") int id, @Body Contact contact);
+    @PUT("api/contacts/{id}")
+    Call<Contact> updateContact(@Body Contact contact, @Path("id") Long id);
 
-    @DELETE("contacts/delete")
-    Call<Contact> deleteContact(@Query("id") int id);
+    @DELETE("api/contacts/{id}")
+    Call<Contact> deleteContact(@Path("id") Long id);
 
     @Multipart
     @POST("uploadImage")

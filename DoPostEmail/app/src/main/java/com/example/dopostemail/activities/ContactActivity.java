@@ -62,9 +62,9 @@ public class ContactActivity extends AppCompatActivity {
         ImageView img = findViewById(R.id.contact_icon);
 
         if(c.getPhoto() != null) {
-            Picasso.get().load("http://192.168.65.195:8080/project/" + c.getPhoto().getPath()).into(img);
+            Picasso.get().load("http://192.168.65.195:8080/" + c.getPhoto().getPath()).into(img);
         }else if(c.getPhoto() == null) {
-            Picasso.get().load("http://192.168.65.195:8080/project/photo.jpg").into(img);
+            Picasso.get().load("http://192.168.65.195:8080/photo.jpg").into(img);
         }
 
 
@@ -169,7 +169,7 @@ public class ContactActivity extends AppCompatActivity {
 
 
                     Contact contact = new Contact(c.getId(), name, lastName, display, email, Format.HTML, new Photo());
-                    Call<Contact> call = service.editContact(c.getId(), contact);
+                    Call<Contact> call = service.updateContact(contact, c.getId());
 
                     call.enqueue(new Callback<Contact>() {
                         @Override

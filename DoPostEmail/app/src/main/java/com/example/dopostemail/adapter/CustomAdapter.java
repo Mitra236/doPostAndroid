@@ -78,7 +78,7 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
             mDate.setTypeface(null, Typeface.BOLD_ITALIC);
         }
 
-    //    mTitle.setText(messageList.get(position).getFrom());
+        mTitle.setText(messageList.get(position).getFrom().getFirstName());
         mSubTitle.setText(messageList.get(position).getContent());
 
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

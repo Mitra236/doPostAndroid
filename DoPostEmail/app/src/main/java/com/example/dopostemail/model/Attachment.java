@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class Attachment implements Serializable {
 
-    private int id;
+    private Long id;
     private String data;
     private String type;
     private String name;
     private Message message;
 
-    public Attachment(int id, String data, String type, String name, Message message) {
+    public Attachment(Long id, String data, String type, String name, Message message) {
         this.id = id;
         this.data = data;
         this.type = type;
@@ -21,11 +21,11 @@ public class Attachment implements Serializable {
     public Attachment() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

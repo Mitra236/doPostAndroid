@@ -15,7 +15,7 @@ public class RetrofitClient {
 
 
 //    private static final String BASE_URL = "http://192.168.102.162:8080/doPostREST/api/service/";
-    private static final String BASE_URL = "http://192.168.65.195:8080/";
+    private static final String BASE_URL = "http://192.168.0.13:8080/";
 
 
 

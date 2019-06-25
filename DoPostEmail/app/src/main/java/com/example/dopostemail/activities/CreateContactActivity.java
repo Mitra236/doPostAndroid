@@ -119,7 +119,13 @@ public class CreateContactActivity extends AppCompatActivity {
                         format = "PLAIN";
                     }
                     ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                    Contact contact = new Contact(name, lastNameC, displayC, emailC, Format.HTML, new Photo());
+                    Contact contact = new Contact();
+                    contact.setFirstName(name);
+                    contact.setLastName(lastNameC);
+                    contact.setDisplay(displayC);
+                    contact.setEmail(emailC);
+                    contact.setFormat(Format.HTML);
+                    contact.setPhoto(new Photo());
                     Call<Contact> call = service.saveContact(contact);
 
                     call.enqueue(new Callback<Contact>() {

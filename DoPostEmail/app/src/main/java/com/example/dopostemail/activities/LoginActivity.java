@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("userObject", json);
                         editor.putString("loggedInUser", a.getUsername());
-                        editor.putInt("userId", a.getId());
+                        editor.putLong("userId", a.getId());
                         editor.apply();
                         editor.commit();
                         Toast.makeText(LoginActivity.this, "Good credentials!", Toast.LENGTH_SHORT).show();

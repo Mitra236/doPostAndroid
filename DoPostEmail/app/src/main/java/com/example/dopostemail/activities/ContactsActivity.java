@@ -135,6 +135,10 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
                 Intent l = new Intent(ContactsActivity.this, SettingsActivity.class);
                 startActivity(l);
                 break;
+            case R.id.nav_rules:
+                Intent r = new Intent(ContactsActivity.this, RulesActivity.class);
+                startActivity(r);
+                break;
             case R.id.nav_logout:
                 Intent m = new Intent(ContactsActivity.this, LoginActivity.class);
                 SharedPreferences settings = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);

@@ -21,15 +21,15 @@ public interface FoldersInterface {
     Call<ArrayList<Folder>> getFolders();
 
     @GET("api/folder")
-    Call<Folder> getFolder(@Query("id") int id);
+    Call<Folder> getFolder(@Path("id") int id);
 
-    @POST("api/folders/add")
-    Call<Folder> addFolder(@Body Folder folder);
+    @POST("api/folders")
+    Call<Folder> saveFolder(@Body Folder folder);
 
-    @PUT("api/folders/edit")
-    Call<Folder> updateFolder(@Query("id") Long id, @Body Folder folder);
+    @PUT("api/folders/{id}")
+    Call<Folder> updateFolder(@Body Folder folder, @Path("id") Long id);
 
-    @DELETE("api/folder")
+    @DELETE("api/folders/{id}")
     Call<Folder> deleteFolder(@Query("id") Long id);
 
     @GET("foldermesages")

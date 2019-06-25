@@ -392,7 +392,7 @@ public class CreateEmailActivity extends AppCompatActivity {
                     attachment = new Attachment();
                     attachment.setName(filename);
                     attachment.setData(filePath);
-                    attachment.setId(hashCode());
+                 //   attachment.setId(hashCode());
                     attachment.setMessage(new Message());
                     messageAttachments.add(attachment);
 

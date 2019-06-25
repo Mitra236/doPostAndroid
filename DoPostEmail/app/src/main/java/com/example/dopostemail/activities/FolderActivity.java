@@ -126,7 +126,7 @@ public class FolderActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
                     Folder folder = new Folder(f.getId(), tbFolderName.getText().toString(), f.getParentFolder(), f.getMessages(), f.getRule());
-                    Call<Folder> call = service.updateFolder(f.getId(), folder);
+                    Call<Folder> call = service.updateFolder(folder,f.getId());
 
                     call.enqueue(new Callback<Folder>() {
                         @Override

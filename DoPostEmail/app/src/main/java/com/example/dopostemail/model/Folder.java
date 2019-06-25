@@ -12,11 +12,10 @@ public class Folder implements Serializable {
     private String name;
     private Folder parentFolder;
     private ArrayList<Message> messages;
-    private Rule rule;
+    private ArrayList<Rule> rule;
 
 
-    public Folder(Long id, String name, Folder parentFolder, ArrayList<Message> messages, Rule rule) {
-        super();
+    public Folder(Long id, String name, Folder parentFolder, ArrayList<Message> messages, ArrayList<Rule> rule) {
         this.id = id;
         this.name = name;
         this.parentFolder = parentFolder;
@@ -24,7 +23,7 @@ public class Folder implements Serializable {
         this.rule = rule;
     }
 
-    public Folder(String name, Folder parentFolder, ArrayList<Message> messages, Rule rule) {
+    public Folder(String name, Folder parentFolder, ArrayList<Message> messages, ArrayList<Rule> rule) {
         super();
 
         this.name = name;
@@ -76,12 +75,15 @@ public class Folder implements Serializable {
         return serialVersionUID;
     }
 
-    public Rule getRule() {
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public ArrayList<Rule> getRule() {
         return rule;
     }
 
-
-    public void setRule(Rule rule) {
+    public void setRule(ArrayList<Rule> rule) {
         this.rule = rule;
     }
 }

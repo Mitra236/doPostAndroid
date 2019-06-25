@@ -183,51 +183,39 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
 //                Toast.makeText(FoldersActivity.this, Long.toString(mInterval), Toast.LENGTH_SHORT).show();
 
+                SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                String json = prefs.getString("accObject", "");
 
-                FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-                Call<ArrayList<Folder>> call = service.getFolders();
+                Gson gson = new Gson();
+                final Account acc = gson.fromJson(json, Account.class);
 
-//              showProgress();
 
-                call.enqueue(new Callback<ArrayList<Folder>>() {
+
+                adapter = new FolderAdapter(getApplicationContext(), acc.getFolders());
+                mListView.setAdapter(adapter);
+
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onResponse(Call<ArrayList<Folder>> call, Response<ArrayList<Folder>> response) {
-                        ArrayList<Folder> folders1 = response.body();
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        if(folders1 == null){
-                            Toast.makeText(FoldersActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                        }else {
-                            folders = folders1;
+                        Folder fol = acc.getFolders().get(position);
 
-                            adapter = new FolderAdapter(getApplicationContext(), folders);
-                            mListView.setAdapter(adapter);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("folder", fol);
 
-                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    Folder fol = folders.get(position);
-
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable("folder", fol);
-
-                                    Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
-                                    i.putExtras(bundle);
-                                    startActivity(i);
+                        Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
+                        i.putExtras(bundle);
+                        startActivity(i);
 
 
-                                }
-                            });
-                        }
-                    }
-
-
-
-                    @Override
-                    public void onFailure(Call<ArrayList<Folder>> call, Throwable t) {
-                        Toast.makeText(FoldersActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
+
+
+
+
 
 
             } finally {

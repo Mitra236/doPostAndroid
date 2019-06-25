@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
@@ -40,6 +42,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Button btnRegister = findViewById(R.id.text2);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(i);
+            }
+        });
 
         EditText username = findViewById(R.id.usernameLogin);
         EditText password = findViewById(R.id.passwordLogin);

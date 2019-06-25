@@ -14,11 +14,12 @@ public class User implements Serializable {
     private String lastname;
     private ArrayList<Contact> contacts = new ArrayList<>();
     private ArrayList<Account> accounts = new ArrayList<>();
+    private ArrayList<Tag> tags = new ArrayList<>();
 
     public User() {}
 
     public User(Long id, String username, String password, String firstname, String lastname,
-                   ArrayList<Account> accounts, ArrayList<Contact> contacts) {
+                   ArrayList<Account> accounts, ArrayList<Contact> contacts, ArrayList<Tag> tags) {
         super();
         this.id = id;
         this.username = username;
@@ -27,6 +28,7 @@ public class User implements Serializable {
         this.lastname = lastname;
         this.accounts = accounts;
         this.contacts = contacts;
+        this.tags = tags;
     }
 
 
@@ -79,4 +81,16 @@ public class User implements Serializable {
     public ArrayList<Contact> getContacts() {return contacts;}
 
     public void setContacts(ArrayList<Contact> contacts) {this.contacts = contacts;}
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public ArrayList<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<Tag> tags) {
+        this.tags = tags;
+    }
 }

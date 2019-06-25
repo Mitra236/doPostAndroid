@@ -23,4 +23,7 @@ public interface LoginInterface {
 
     @GET("editAccount")
     Call<Account> editAccount(@Body Account acc);
+
+    @POST("api/login/register")
+    Call<User> register(@Body User user);
 }

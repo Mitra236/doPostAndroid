@@ -1,6 +1,7 @@
 package com.example.dopostemail.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,9 +18,9 @@ public class AccountAdapter  extends BaseAdapter {
     private Context cContext;
     private List<Account> accountList;
 
-    public AccountAdapter(Context cContext, List<Account> accList) {
+    public AccountAdapter(Context cContext, List<Account> accountList) {
         this.cContext = cContext;
-        this.accountList = accList;
+        this.accountList = accountList;
     }
 
     @Override
@@ -40,6 +41,7 @@ public class AccountAdapter  extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        Log.e("Position in adapter", String.valueOf(position));
 
         View view = View.inflate(cContext, R.layout.activity_listview, null);
 

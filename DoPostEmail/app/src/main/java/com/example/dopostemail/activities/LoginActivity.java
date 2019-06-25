@@ -68,6 +68,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 User user = response.body();
 
+//                if(user.getAccounts().isEmpty()){
+//                    Toast.makeText(LoginActivity.this, "Empty in loggin", Toast.LENGTH_SHORT).show();
+//                }
+
                 Intent i = new Intent(LoginActivity.this, PickEmailActivity.class);
                 startActivity(i);
 

@@ -110,10 +110,25 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
+
                     android:background="@android:color/transparent"
                     android:text="CHANGE"
                     android:textColor="@color/colorWhite"
                     android:textSize="17dp" />
+
+                <Button
+                    android:id="@+id/profile_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="90dp"
+                    android:background="@android:color/transparent"
+                    android:layout_toLeftOf="@id/button_logout_nav"
+                    android:text="DELETE"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="17dp" />
+
+
 
             </RelativeLayout>
 

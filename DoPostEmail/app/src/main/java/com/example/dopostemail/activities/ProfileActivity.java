@@ -20,6 +20,14 @@ import android.widget.Toast;
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Folder;
+import com.example.dopostemail.model.User;
+import com.example.dopostemail.server.AccountInterface;
+import com.example.dopostemail.server.LoginInterface;
+import com.example.dopostemail.server.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -38,8 +46,8 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         Bundle bundle = getIntent().getExtras();
         final Account account = (Account) bundle.getSerializable("user");
 
-        TextView txtUsername = findViewById(R.id.textUserName);
-        TextView txtPass = findViewById(R.id.textPass);
+        final TextView txtUsername = findViewById(R.id.textUserName);
+        final TextView txtPass = findViewById(R.id.textPass);
 
         txtUsername.setText(account.getUsername());
         txtPass.setText(account.getPassword());
@@ -59,8 +67,68 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        Button change = (Button)findViewById(R.id.button_logout_nav);
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                String newUsername = "";
+                String newPassword = "";
+                newUsername = txtUsername.getText().toString();
+                newPassword = txtPass.getText().toString();
 
+                account.setUsername(newUsername);
+                account.setPassword(newPassword);
+
+                AccountInterface service = RetrofitClient.getClient().create(AccountInterface.class);
+
+                Call<Account> callLogin = service.editAccount(account, account.getId());
+
+                callLogin.enqueue(new Callback<Account>() {
+                    @Override
+                    public void onResponse(Call<Account> call, Response<Account> response) {
+                        Toast.makeText(ProfileActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(ProfileActivity.this, PickEmailActivity.class);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Account> call, Throwable t) {
+                        Toast.makeText(ProfileActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                Toast.makeText(ProfileActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        Button delete = (Button)findViewById(R.id.profile_delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProfileActivity.this, "Deleting account...", Toast.LENGTH_SHORT).show();
+
+                AccountInterface service = RetrofitClient.getClient().create(AccountInterface.class);
+
+                Call<Void> callLogin = service.deleteAccount(account.getId());
+
+                callLogin.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Toast.makeText(ProfileActivity.this, "Account deleted", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(ProfileActivity.this, LoginActivity.class);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(ProfileActivity.this, "Error", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -153,19 +221,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
 
     protected void onResume(){
         super.onResume();
-
-//        Toast.makeText(ProfileActivity.this, "Nesto", Toast.LENGTH_SHORT).show();
-
-        Button logout = (Button)findViewById(R.id.button_logout_nav);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ProfileActivity.this, "Logout", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
     }
 
     @Override

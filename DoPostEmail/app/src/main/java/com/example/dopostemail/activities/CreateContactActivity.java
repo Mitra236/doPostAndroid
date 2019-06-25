@@ -125,7 +125,7 @@ public class CreateContactActivity extends AppCompatActivity {
                     contact.setDisplay(displayC);
                     contact.setEmail(emailC);
                     contact.setFormat(Format.HTML);
-                    contact.setPhoto(new Photo());
+                    contact.setPhoto(new Photo(contact.getId()));
                     Call<Contact> call = service.saveContact(contact);
 
                     call.enqueue(new Callback<Contact>() {

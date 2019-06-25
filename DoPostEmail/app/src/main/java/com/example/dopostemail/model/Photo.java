@@ -3,29 +3,33 @@ package com.example.dopostemail.model;
 import java.io.Serializable;
 
 public class Photo implements Serializable {
-    private int id;
+    private Long id;
     private String path;
     private Contact contact;
 
     public Photo() {
     }
 
-    public Photo(int id, String path, Contact contact) {
+    public Photo(Long id, String path, Contact contact) {
         this.id = id;
         this.path = path;
         this.contact = contact;
     }
 
-    public Photo(int id, String path) {
+    public Photo(Long id, String path) {
         this.id = id;
         this.path = path;
     }
 
-    public int getId() {
+    public Photo(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

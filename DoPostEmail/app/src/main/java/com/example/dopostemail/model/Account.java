@@ -18,12 +18,13 @@ public class Account implements Serializable {
     private String displayname;
     private ArrayList<Message> messages = new ArrayList<Message>();
     private ArrayList<Folder> folders = new ArrayList<Folder>();
+    private User user;
 
 
 
     public Account(Long id, String smtp_address, Integer smtp_port, Short inserver_type, String inserver_address,
                       Integer inserver_port, String username, String password, String displayname, ArrayList<Message> messages,
-                      ArrayList<Folder> folders) {
+                      ArrayList<Folder> folders, User user) {
         super();
         this.id = id;
         this.smtp_address = smtp_address;
@@ -36,6 +37,7 @@ public class Account implements Serializable {
         this.displayname = displayname;
         this.messages = messages;
         this.folders = folders;
+        this.user = user;
     }
 
 
@@ -148,4 +150,15 @@ public class Account implements Serializable {
         this.folders = folders;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

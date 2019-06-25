@@ -260,7 +260,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         public void run() {
             try {
                 SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
-                String json = prefs.getString("userObject", "");
+                String json = prefs.getString("accObject", "");
 
                 Gson gson = new Gson();
                 final Account acc = gson.fromJson(json, Account.class);
@@ -271,24 +271,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                 String syncTime = split[0];
 
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
-
-
-                MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-
-                Call<ArrayList<Message>> call = service.getMessages();
-
-
-                call.enqueue(new Callback<ArrayList<Message>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
-                        ArrayList<Message> messages1 = response.body();
-
-
-                        if(messages1 == null){
-                            Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                        }else {
-
-                            messages = messages1;
 
 
 //                            final NotificationCompat.Builder builder = new NotificationCompat.Builder(EmailsActivity.this, CHANNEL_ID);
@@ -397,7 +379,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
 
 
-                            adapter = new CustomAdapter(getApplicationContext(), messages);
+                            adapter = new CustomAdapter(getApplicationContext(), acc.getMessages());
                             mListView.setAdapter(adapter);
 
 
@@ -406,7 +388,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                    final Message m = messages.get(position);
+                                    final Message m = acc.getMessages().get(position);
 
                                     if (!m.isMessageRead()) {
                                         MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
@@ -447,16 +429,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                                 }
 
                             });
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
-                        Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened while loading messages", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
 
 
             } finally {

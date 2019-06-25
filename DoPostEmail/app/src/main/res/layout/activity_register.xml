@@ -9,8 +9,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:text="LOGIN"
+        android:layout_marginTop="80dp"
+        android:text="REGISTER"
         android:textSize="28dp"
         android:gravity="center"
         android:textColor="@color/colorAccent"
@@ -20,16 +20,16 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="230dp">
+        android:layout_marginTop="150dp">
 
         <EditText
-            android:id="@+id/usernameLogin"
+            android:id="@+id/firstNameRegister"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
             android:textSize="17dp"
-            android:hint="Enter Your Username"
+            android:hint="Enter Your First Name"
             android:backgroundTint="@color/colorAccent"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
@@ -40,10 +40,10 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp">
+        android:layout_marginTop="220dp">
 
         <EditText
-            android:id="@+id/passwordLogin"
+            android:id="@+id/lastNameRegister"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -53,7 +53,55 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:inputType="textPassword"
-            android:layout_below="@+id/usernameLogin"
+            android:layout_below="@+id/firstNameRegister"
+            android:hint="Enter Your Last Name"
+            android:textColorHint="@color/colorAccent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="290dp">
+
+        <EditText
+            android:id="@+id/usernameRegister"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="17dp"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:inputType="textPassword"
+            android:layout_below="@+id/lastNameRegister"
+            android:hint="Enter Your Username"
+            android:textColorHint="@color/colorAccent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="360dp">
+
+        <EditText
+            android:id="@+id/passwordRegister"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="17dp"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:inputType="textPassword"
+            android:layout_below="@+id/usernameRegister"
             android:hint="Enter Your Password"
             android:textColorHint="@color/colorAccent"
             android:layout_marginTop="10dp"
@@ -61,26 +109,17 @@
             android:text="" />
     </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:id="@+id/text2"
-        android:layout_marginTop="370dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginLeft="100dp"
-        android:text="Don't have account? Register"/>
-
 
     <Button
         android:id="@+id/button_login"
         android:layout_width="290dp"
         android:layout_height="40dp"
-        android:layout_marginTop="410dp"
+        android:layout_marginTop="430dp"
         android:layout_centerHorizontal="true"
         android:background="@color/colorAccent"
         android:gravity="center"
         android:onClick="showProgress"
-        android:text="Login"
+        android:text="REGISTER"
         android:textColor="@color/colorWhite"
         tools:layout_editor_absoluteX="46dp"
         tools:layout_editor_absoluteY="124dp" />

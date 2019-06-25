@@ -89,7 +89,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         mHandler = new Handler();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
-        String json = pref.getString("userObject", "");
+        String json = pref.getString("accObject", "");
 
         Gson gson = new Gson();
         final Account acc = gson.fromJson(json, Account.class);

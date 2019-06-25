@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.ContactsAdapter;
 import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Contact;
+import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
@@ -174,6 +176,35 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
 
+                SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                String json = prefs.getString("userObject", "");
+
+                Gson gson = new Gson();
+                final User loggedInUser = gson.fromJson(json, User.class);
+
+                Log.e("User", loggedInUser.getUsername());
+
+                adapter = new ContactsAdapter(getApplicationContext(), loggedInUser.getContacts());
+                mListView.setAdapter(adapter);
+
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Contact con = loggedInUser.getContacts().get(position);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("contacts", con);
+
+                        Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
+                        i.putExtras(bundle);
+                        startActivity(i);
+
+
+                    }
+                });
+
+                /*
                 ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
                 Call<ArrayList<Contact>> call = service.getContacts();
 
@@ -216,7 +247,7 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
                         Toast.makeText(ContactsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
                     }
                 });
-
+*/
 
 
 

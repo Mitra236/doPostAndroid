@@ -48,10 +48,10 @@ public class RegistrationActivity extends AppCompatActivity {
         String p = password.getText().toString();
 
         User tempUser = new User();
-        tempUser.setFirstname(firstname.getText().toString());
-        tempUser.setLastname(lastname.getText().toString());
-        tempUser.setUsername(username.getText().toString());
-        tempUser.setPassword(password.getText().toString());
+        tempUser.setFirstname("u");
+        tempUser.setLastname("u");
+        tempUser.setUsername("u");
+        tempUser.setPassword("u");
 
         Log.i("USEEEEEEEEEEEEEEEEER", firstname.getText().toString());
 

@@ -5,16 +5,12 @@ import java.io.Serializable;
 public class Photo implements Serializable {
     private Long id;
     private String path;
-    private Contact contact;
+  //  private Contact contact;
 
     public Photo() {
     }
 
-    public Photo(Long id, String path, Contact contact) {
-        this.id = id;
-        this.path = path;
-        this.contact = contact;
-    }
+
 
     public Photo(Long id, String path) {
         this.id = id;
@@ -41,11 +37,5 @@ public class Photo implements Serializable {
         this.path = path;
     }
 
-    public Contact getContact() {
-        return contact;
-    }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
 }

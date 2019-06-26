@@ -40,11 +40,11 @@ public interface MessagesInterface {
     @POST("api/messages")
     Call<Message> saveMessage(@Body Message params);
 
-    @POST("send")
-    Call<Message> sendMessage(@Body Message msg);
+    @POST("api/javaMail/send")
+    Call<Void> send(@Body Message msg);
 
-    @POST("check")
-    Call<Message> checkMessages(@Body Account account);
+    @POST("api/javaMail/check")
+    Call<Void> check(@Body Account account);
 
     @POST("messages/draft")
     Call<Message> draftMessage(@Body Message params);

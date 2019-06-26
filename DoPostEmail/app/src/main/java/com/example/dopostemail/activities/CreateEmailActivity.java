@@ -263,8 +263,9 @@ public class CreateEmailActivity extends AppCompatActivity {
                     String tagsString = editTextTags.getText().toString();
                     String[] splitTags = tagsString.split(" ");
                     for(String tagString : splitTags){
-            //            Tag newTag = new Tag(hashCode(), "#" + tagString);
-              //          tags.add(newTag);
+                        Tag newTag = new Tag();
+                        newTag.setName(tagString);
+                        tags.add(newTag);
                     }
 
 
@@ -283,18 +284,18 @@ public class CreateEmailActivity extends AppCompatActivity {
                     Log.e("msg: ", String.valueOf(msg.getFrom().getId()));
 
 
-                    Call<Message> callM = service.saveMessage(msg);
+                    Call<Void> callM = service.send(msg);
 
-                    callM.enqueue(new Callback<Message>() {
+                    callM.enqueue(new Callback<Void>() {
                         @Override
-                        public void onResponse(Call<Message> call, Response<Message> response) {
+                        public void onResponse(Call<Void> call, Response<Void> response) {
                             Toast.makeText(CreateEmailActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
                             startActivity(i);
                         }
 
                         @Override
-                        public void onFailure(Call<Message> call, Throwable t) {
+                        public void onFailure(Call<Void> call, Throwable t) {
                             Toast.makeText(CreateEmailActivity.this, "Message sent (probably)", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
                             startActivity(i);

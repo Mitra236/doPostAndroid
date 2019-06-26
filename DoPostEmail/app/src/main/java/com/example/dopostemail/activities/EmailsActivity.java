@@ -97,6 +97,10 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         Gson gson = new Gson();
         final Account acc = gson.fromJson(json, Account.class);
 
+        for(Message msg : acc.getMessages()){
+            Log.e("Log", msg.getContent());
+        }
+
 
 
 
@@ -114,9 +118,12 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
         mListView = findViewById(R.id.list_view);
 //        mListView.setTextFilterEnabled(true);
+        adapter = new CustomAdapter(getApplicationContext(), acc.getMessages());
+        mListView.setAdapter(adapter);
 
 
 
+        checkMail(acc);
 
 
 
@@ -245,6 +252,24 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
     }
 
+    public void checkMail(Account account){
+        MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+
+        Call<Void> call = service.check(account);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(EmailsActivity.this, "Checking for new emails", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     protected void onStart(){
         super.onStart();
@@ -253,7 +278,8 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onResume(){
         super.onResume();
-        startRepeatingTask();
+
+        delayHandler.postDelayed(delayedResume, 3000);
 
     }
 
@@ -266,6 +292,8 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
                 Gson gson = new Gson();
                 final Account acc = gson.fromJson(json, Account.class);
+
+                checkMail(acc);
 
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("preferences", 0);
                 String syncTimeStr = pref.getString("refresh_rate", "1");
@@ -295,9 +323,6 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                         if(users1 == null){
                             Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }else {
-
-//                            Toast.makeText(ContactsActivity.this, users1.get(0).getUsername() + users1.get(1).getUsername(), Toast.LENGTH_SHORT).show();
-
                             ArrayList<Message> msgs = new ArrayList<>();
 
                             for(User user1 : users1){
@@ -310,22 +335,13 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                                             }
                                         }
                                     }
-
                                 }
                             }
-
-
-
-
                             for(Message msg : msgs){
                                 loggedInAcc.addMessage(msg);
                             }
-
-
                             adapter = new CustomAdapter(getApplicationContext(), loggedInAcc.getMessages());
                             mListView.setAdapter(adapter);
-
-
 
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
@@ -359,15 +375,11 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                                             }
                                         });
                                     } else {
-
                                         Bundle bundle = new Bundle();
                                         bundle.putSerializable("messages", m);
-
                                         Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
                                         i.putExtras(bundle);
                                         startActivity(i);
-
-
                                     }
                                 }
 
@@ -569,5 +581,14 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     protected void onDestroy(){
         super.onDestroy();
     }
+
+    private Handler delayHandler = new Handler();
+
+    private Runnable delayedResume = new Runnable(){
+        @Override
+        public void run(){
+            startRepeatingTask();
+        }
+    };
 
 }

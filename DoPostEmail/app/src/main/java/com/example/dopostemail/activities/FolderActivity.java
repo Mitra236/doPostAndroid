@@ -2,6 +2,7 @@ package com.example.dopostemail.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,13 @@ import android.widget.Toast;
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.CustomAdapter;
 import com.example.dopostemail.adapter.FolderAdapter;
+import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Rule;
 import com.example.dopostemail.server.FoldersInterface;
 import com.example.dopostemail.server.RetrofitClient;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
@@ -127,8 +130,14 @@ public class FolderActivity extends AppCompatActivity {
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                    String json = prefs.getString("accObject", "");
+
+                    Gson gson = new Gson();
+                    final Account acc = gson.fromJson(json, Account.class);
+
                     FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-                    Folder folder = new Folder(f.getId(), tbFolderName.getText().toString(), f.getParentFolder(), f.getMessages(), f.getRule());
+                    Folder folder = new Folder(f.getId(), tbFolderName.getText().toString(), f.getParentFolder(), f.getMessages(), f.getRule(), acc);
                     Call<Folder> call = service.updateFolder(folder,f.getId());
 
                     call.enqueue(new Callback<Folder>() {

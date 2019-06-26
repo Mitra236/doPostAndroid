@@ -13,14 +13,16 @@ public class Folder implements Serializable {
     private Folder parentFolder;
     private ArrayList<Message> messages;
     private ArrayList<Rule> rule;
+    private Account account;
 
 
-    public Folder(Long id, String name, Folder parentFolder, ArrayList<Message> messages, ArrayList<Rule> rule) {
+    public Folder(Long id, String name, Folder parentFolder, ArrayList<Message> messages, ArrayList<Rule> rule, Account account) {
         this.id = id;
         this.name = name;
         this.parentFolder = parentFolder;
         this.messages = messages;
         this.rule = rule;
+        this.account = account;
     }
 
     public Folder(String name, Folder parentFolder, ArrayList<Message> messages, ArrayList<Rule> rule) {
@@ -36,6 +38,14 @@ public class Folder implements Serializable {
     public Folder(){
         super();
 
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Long getId() {

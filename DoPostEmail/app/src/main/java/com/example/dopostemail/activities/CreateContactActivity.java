@@ -1,6 +1,7 @@
 package com.example.dopostemail.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.icu.util.LocaleData;
 import android.net.Uri;
@@ -25,13 +26,16 @@ import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Format;
 import com.example.dopostemail.model.Photo;
+import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.FoldersInterface;
+import com.example.dopostemail.server.PhotoInterface;
 import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -47,6 +51,8 @@ public class CreateContactActivity extends AppCompatActivity {
     private EditText lastName;
     private EditText display;
     private EditText email;
+    Photo photo = new Photo();
+    Photo contactPhoto = new Photo();
 
     private static final int PICK_IMAGE = 100;
     ImageView contactImage;
@@ -85,6 +91,31 @@ public class CreateContactActivity extends AppCompatActivity {
             }
         });
 
+        PhotoInterface servicePhoto = RetrofitClient.getClient().create(PhotoInterface.class);
+
+        Call<ArrayList<Photo>> callPhoto = servicePhoto.getPhotos();
+
+
+
+        callPhoto.enqueue(new Callback<ArrayList<Photo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Photo>> call, Response<ArrayList<Photo>> response) {
+                ArrayList<Photo> photos = response.body();
+
+                for(Photo p: photos){
+                    if(p.getPath().equals(photo.getPath())){
+                        contactPhoto = p;
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Photo>> call, Throwable t) {
+
+            }
+        });
+
 
 
         Button btnCreate = findViewById(R.id.button_save_cc);
@@ -120,6 +151,41 @@ public class CreateContactActivity extends AppCompatActivity {
                     } else {
                         format = "PLAIN";
                     }
+
+                    PhotoInterface servicePhoto = RetrofitClient.getClient().create(PhotoInterface.class);
+
+                    Call<ArrayList<Photo>> callPhoto = servicePhoto.getPhotos();
+
+
+
+                    callPhoto.enqueue(new Callback<ArrayList<Photo>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<Photo>> call, Response<ArrayList<Photo>> response) {
+                            ArrayList<Photo> photos = response.body();
+
+                            for(Photo p: photos){
+                                if(p.getPath().equals(photo.getPath())){
+                                    contactPhoto = p;
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<Photo>> call, Throwable t) {
+
+                        }
+                    });
+
+
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
+                    String json = pref.getString("userObject", "");
+
+                    long lon = 5;
+
+                    Gson gson = new Gson();
+                    final User loggedInUser = gson.fromJson(json, User.class);
+
                     ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
                     Contact contact = new Contact();
                     contact.setFirstName(name);
@@ -127,7 +193,10 @@ public class CreateContactActivity extends AppCompatActivity {
                     contact.setDisplay(displayC);
                     contact.setEmail(emailC);
                     contact.setFormat(Format.HTML);
-                    contact.setPhoto(new Photo(contact.getId()));
+                    contact.setPhoto(contactPhoto);
+                //    contact.setPhoto(new Photo(lon, photo.getPath()));
+                    contact.setUser(loggedInUser);
+
                     Call<Contact> call = service.saveContact(contact);
 
                     call.enqueue(new Callback<Contact>() {
@@ -162,20 +231,16 @@ public class CreateContactActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            Log.i("WHAAAAAAAAAAAAAAT", "THEEEEEEEEEEE HELL");
             imageUri = data.getData();
-            Log.i("IMAAGE", imageUri.getPath());
 
             ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
             File file = new File( getRealPathFromURI(imageUri));
             String imageName = file.getName();
-            Log.e("FUCKING IMAGE NAME MAY", getRealPathFromURI(imageUri) );
 
             RequestBody reqFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
             MultipartBody.Part body =
                     MultipartBody.Part.createFormData("img", imageName, reqFile);
-
 
 
             Call<Void> call = service.uploadImage(body);
@@ -189,12 +254,53 @@ public class CreateContactActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
-                    Log.e("WHY THE FUCK", t.getMessage());
                     Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                 }
             });
 
             contactImage.setImageURI(imageUri);
+
+            PhotoInterface servicePhoto = RetrofitClient.getClient().create(PhotoInterface.class);
+
+            photo.setPath(imageName);
+
+            Call<Photo> callPhoto = servicePhoto.savePhoto(photo);
+            callPhoto.enqueue(new Callback<Photo>() {
+                @Override
+                public void onResponse(Call<Photo> call, Response<Photo> response) {
+                    Toast.makeText(CreateContactActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Photo> call, Throwable t) {
+                    Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            PhotoInterface servicePhotom = RetrofitClient.getClient().create(PhotoInterface.class);
+
+            Call<ArrayList<Photo>> callPhotmo = servicePhotom.getPhotos();
+
+
+
+            callPhotmo.enqueue(new Callback<ArrayList<Photo>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Photo>> call, Response<ArrayList<Photo>> response) {
+                    ArrayList<Photo> photos = response.body();
+
+                    for(Photo p: photos){
+                        if(p.getPath().equals(photo.getPath())){
+                            contactPhoto = p;
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Photo>> call, Throwable t) {
+
+                }
+            });
         }
     }
 

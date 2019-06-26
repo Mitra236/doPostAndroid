@@ -12,11 +12,26 @@ public class Contact implements Serializable, Cloneable {
     private String email;
     private Format format;
     private Photo photo;
+    private User user;
     private ArrayList<Message> from;
     private ArrayList<Message> to;
     private ArrayList<Message> cc;
     private ArrayList<Message> bcc;
 
+    public Contact(Long id, String firstName, String lastName, String display, String email, Format format, Photo photo, User user, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.display = display;
+        this.email = email;
+        this.format = format;
+        this.photo = photo;
+        this.user = user;
+        this.from = from;
+        this.to = to;
+        this.cc = cc;
+        this.bcc = bcc;
+    }
 
     public Contact(Long id, String firstName, String lastName, String display, String email, Format format, Photo photo, ArrayList<Message> from, ArrayList<Message> to, ArrayList<Message> cc, ArrayList<Message> bcc) {
         this.id = id;
@@ -178,8 +193,16 @@ public class Contact implements Serializable, Cloneable {
         this.bcc = bcc;
     }
 
-    public Object clone()throws CloneNotSupportedException{
-        return (Contact)super.clone();
+
+    public Object clone()throws CloneNotSupportedException {
+        return (Contact) super.clone();
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.example.dopostemail.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.icu.util.LocaleData;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -160,32 +162,54 @@ public class CreateContactActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+            Log.i("WHAAAAAAAAAAAAAAT", "THEEEEEEEEEEE HELL");
             imageUri = data.getData();
             Log.i("IMAAGE", imageUri.getPath());
 
             ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-            File file = new File(imageUri.getPath());
+            File file = new File( getRealPathFromURI(imageUri));
+            String imageName = file.getName();
+            Log.e("FUCKING IMAGE NAME MAY", getRealPathFromURI(imageUri) );
 
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            RequestBody reqFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
             MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("images", file.getName(), reqFile);
+                    MultipartBody.Part.createFormData("img", imageName, reqFile);
+
+
 
             Call<Void> call = service.uploadImage(body);
             call.enqueue(new Callback<Void>() {
+
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     Toast.makeText(CreateContactActivity.this, "Successfully added", Toast.LENGTH_SHORT).show();
                 }
 
+
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(CreateContactActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    Log.e("WHY THE FUCK", t.getMessage());
+                    Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                 }
             });
 
             contactImage.setImageURI(imageUri);
         }
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+
+        // can post image
+        String[] projection = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = managedQuery(contentUri, projection, null, null, null);
+
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+
+        return cursor.getString(column_index);
     }
 
     @Override

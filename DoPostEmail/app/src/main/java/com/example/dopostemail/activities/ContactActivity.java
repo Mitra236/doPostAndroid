@@ -62,7 +62,7 @@ public class ContactActivity extends AppCompatActivity {
         ImageView img = findViewById(R.id.contact_icon);
 
         if(c.getPhoto() != null) {
-            Picasso.get().load("http://192.168.65.195:8080/" + c.getPhoto().getPath()).into(img);
+            Picasso.get().load("http://192.168.0.13:8080/" + c.getPhoto().getPath()).resize(200, 200).into(img);
         }else if(c.getPhoto() == null) {
             Picasso.get().load("http://192.168.65.195:8080/photo.jpg").into(img);
         }
@@ -174,7 +174,7 @@ public class ContactActivity extends AppCompatActivity {
                     ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
 
 
-                    Contact contact = new Contact(c.getId(), name, lastName, display, email, Format.HTML, new Photo());
+                    Contact contact = new Contact(c.getId(), name, lastName, display, email, Format.HTML, c.getPhoto());
                     Call<Contact> call = service.updateContact(contact, c.getId());
 
                     call.enqueue(new Callback<Contact>() {

@@ -5,16 +5,16 @@ import java.util.ArrayList;
 
 public class Tag implements Serializable {
 
-    private int id;
+    private Long id;
     private String name;
     private ArrayList<Message> messages;
 
-    public Tag(int id, String name, ArrayList<Message> messages) {
+    public Tag(Long id, String name, ArrayList<Message> messages) {
         this.id = id;
         this.name = name;
         this.messages = messages;
     }
-    public Tag(int id, String name) {
+    public Tag(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -22,11 +22,11 @@ public class Tag implements Serializable {
     public Tag() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

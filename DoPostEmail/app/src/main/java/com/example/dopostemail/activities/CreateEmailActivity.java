@@ -244,8 +244,8 @@ public class CreateEmailActivity extends AppCompatActivity {
                     String tagsString = editTextTags.getText().toString();
                     String[] splitTags = tagsString.split(" ");
                     for(String tagString : splitTags){
-                        Tag newTag = new Tag(hashCode(), "#" + tagString);
-                        tags.add(newTag);
+            //            Tag newTag = new Tag(hashCode(), "#" + tagString);
+              //          tags.add(newTag);
                     }
 
                     SharedPreferences prefUser = getApplicationContext().getSharedPreferences("userInfo", 0);

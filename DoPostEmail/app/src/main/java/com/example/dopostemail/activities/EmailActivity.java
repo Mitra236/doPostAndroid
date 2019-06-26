@@ -251,6 +251,10 @@ public class EmailActivity extends AppCompatActivity {
                 startActivity(intentForword);
 
                 return true;
+            case R.id.action_move_to:
+
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

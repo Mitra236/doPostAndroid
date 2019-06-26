@@ -43,6 +43,9 @@ public class User implements Serializable {
     public void addContact(Contact con){
         contacts.add(con);
     }
+    public void addAccount(Account acc){
+        accounts.add(acc);
+    }
 
     public Long getId() {
         return id;

@@ -70,7 +70,9 @@ public class RegistrationActivity extends AppCompatActivity {
                         User user = response.body();
 
                         if(user != null) {
-                            Toast.makeText(RegistrationActivity.this, "Successful regiistration", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, "Successful registration", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(RegistrationActivity.this, LoginActivity.class);
+                            startActivity(i);
                         }
                     }
 

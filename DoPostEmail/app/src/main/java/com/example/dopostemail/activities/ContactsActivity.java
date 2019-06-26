@@ -28,9 +28,11 @@ import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.ContactsInterface;
+import com.example.dopostemail.server.LoginInterface;
 import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -46,6 +48,7 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
     ListView mListView;
     private ContactsAdapter adapter;
     private List<Contact> contacts;
+//    private List<User> users;
     private long mInterval = 0;
     private Handler mHandler;
 
@@ -176,58 +179,65 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
 
-                SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
-                String json = prefs.getString("userObject", "");
 
-                Gson gson = new Gson();
-                final User loggedInUser = gson.fromJson(json, User.class);
 
-                Log.e("User", loggedInUser.getUsername());
+//                Log.e("User", loggedInUser.getUsername());
 
-                adapter = new ContactsAdapter(getApplicationContext(), loggedInUser.getContacts());
-                mListView.setAdapter(adapter);
+//                Toast.makeText(ContactsActivity.this, loggedInUser.getContacts().get(0).getDisplay(), Toast.LENGTH_SHORT).show();
 
-                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                LoginInterface loginService = RetrofitClient.getClient().create(LoginInterface.class);
+                Call<ArrayList<User>> call = loginService.getUsers();
+
+
+
+                call.enqueue(new Callback<ArrayList<User>>() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Contact con = loggedInUser.getContacts().get(position);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("contacts", con);
-
-                        Intent i = new Intent(ContactsActivity.this, ContactActivity.class);
-                        i.putExtras(bundle);
-                        startActivity(i);
-
-
-                    }
-                });
-
-                /*
-                ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                Call<ArrayList<Contact>> call = service.getContacts();
+                    public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                        ArrayList<User> users1 = response.body();
 
 
 
-                call.enqueue(new Callback<ArrayList<Contact>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
-                        ArrayList<Contact> contacts1 = response.body();
+                        SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                        String json = prefs.getString("userObject", "");
 
-                        if(contacts1 == null){
+                        Gson gson = new Gson();
+                        final User loggedInUser = gson.fromJson(json, User.class);
+
+                        if(users1 == null){
                             Toast.makeText(ContactsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         }else {
-                            contacts = contacts1;
 
-                            adapter = new ContactsAdapter(getApplicationContext(), contacts);
+//                            Toast.makeText(ContactsActivity.this, users1.get(0).getUsername() + users1.get(1).getUsername(), Toast.LENGTH_SHORT).show();
+
+                            ArrayList<Contact> contactsTemp = new ArrayList<>();
+
+                            for(User user1 : users1){
+
+                                if(user1.getId() == loggedInUser.getId()){
+                                    loggedInUser.getContacts().clear();
+                                    for(Contact con : user1.getContacts()){
+                                        contactsTemp.add(con);
+                                    }
+
+                                }
+                            }
+
+
+
+
+                            for(Contact con : contactsTemp){
+                                loggedInUser.addContact(con);
+                            }
+
+
+                            adapter = new ContactsAdapter(getApplicationContext(), loggedInUser.getContacts());
                             mListView.setAdapter(adapter);
 
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                    Contact con = contacts.get(position);
+                                    Contact con = loggedInUser.getContacts().get(position);
 
                                     Bundle bundle = new Bundle();
                                     bundle.putSerializable("contacts", con);
@@ -239,15 +249,17 @@ public class ContactsActivity extends AppCompatActivity implements NavigationVie
 
                                 }
                             });
+
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<ArrayList<Contact>> call, Throwable t) {
+                    public void onFailure(Call<ArrayList<User>> call, Throwable t) {
                         Toast.makeText(ContactsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
                     }
                 });
-*/
+
+
 
 
 

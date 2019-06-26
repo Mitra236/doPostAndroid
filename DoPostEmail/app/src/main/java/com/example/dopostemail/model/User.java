@@ -40,6 +40,9 @@ public class User implements Serializable {
         this.accounts = accounts;
     }
 
+    public void addContact(Contact con){
+        contacts.add(con);
+    }
 
     public Long getId() {
         return id;

@@ -101,18 +101,24 @@ public class ContactActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                        Call<Contact> call = service.deleteContact(c.getId());
+                        Call<Void> call = service.deleteContact(c.getId());
 
-                        call.enqueue(new Callback<Contact>() {
+                        call.enqueue(new Callback<Void>() {
+
+
+
                             @Override
-                            public void onResponse(Call<Contact> call, Response<Contact> response) {
-                                Toast.makeText(ContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+
+
+
+                                Toast.makeText(ContactActivity.this, "Success", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
                                 startActivity(i);
                             }
 
                             @Override
-                            public void onFailure(Call<Contact> call, Throwable t) {
+                            public void onFailure(Call<Void> call, Throwable t) {
                                 Toast.makeText(ContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(ContactActivity.this, ContactsActivity.class);
                                 startActivity(i);

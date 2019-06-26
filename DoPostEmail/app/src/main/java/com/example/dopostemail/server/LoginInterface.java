@@ -15,6 +15,9 @@ public interface LoginInterface {
     @POST("api/login")
     Call<User> doLogin(@Body User user);
 
+    @GET("api/login")
+    Call<ArrayList<User>> getUsers();
+
     @GET("api/accounts")
     Call<ArrayList<Account>> getAccounts();
 

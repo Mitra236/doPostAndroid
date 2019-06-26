@@ -33,7 +33,7 @@ public interface ContactsInterface {
     Call<Contact> updateContact(@Body Contact contact, @Path("id") Long id);
 
     @DELETE("api/contacts/{id}")
-    Call<Contact> deleteContact(@Path("id") Long id);
+    Call<Void> deleteContact(@Path("id") Long id);
 
 
     @POST("api/photos/uploadImage")

@@ -97,11 +97,6 @@ public class LoginActivity extends AppCompatActivity {
                 editor.commit();
                 Toast.makeText(LoginActivity.this, "Good credentials!", Toast.LENGTH_SHORT).show();
 
-
-
-
-
-
             }
 
             @Override

@@ -54,6 +54,9 @@ public class Account implements Serializable {
         this.id = id;
     }
 
+    public void addFolder(Folder fol){
+        folders.add(fol);
+    }
 
 
     public String getUsername() {

@@ -30,7 +30,7 @@ public interface FoldersInterface {
     Call<Folder> updateFolder(@Body Folder folder, @Path("id") Long id);
 
     @DELETE("api/folders/{id}")
-    Call<Folder> deleteFolder(@Query("id") Long id);
+    Call<Void> deleteFolder(@Path("id") Long id);
 
     @GET("foldermesages")
     Call<ArrayList<Message>> getFolderMessageList();

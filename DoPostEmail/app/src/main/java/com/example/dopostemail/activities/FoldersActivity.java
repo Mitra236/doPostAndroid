@@ -23,12 +23,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.dopostemail.R;
+import com.example.dopostemail.adapter.ContactsAdapter;
 import com.example.dopostemail.adapter.FolderAdapter;
 import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.FoldersInterface;
+import com.example.dopostemail.server.LoginInterface;
 import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
 
@@ -191,6 +194,90 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
 
 
+                LoginInterface loginService = RetrofitClient.getClient().create(LoginInterface.class);
+                Call<ArrayList<User>> call = loginService.getUsers();
+
+
+
+                call.enqueue(new Callback<ArrayList<User>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                        ArrayList<User> users1 = response.body();
+
+
+
+                        SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                        String json = prefs.getString("userObject", "");
+                        Gson gson = new Gson();
+                        final User loggedInUser = gson.fromJson(json, User.class);
+
+                        SharedPreferences pref2 = getApplicationContext().getSharedPreferences("userInfo", 0);
+                        String json2 = prefs.getString("accObject", "");
+                        Gson gson2 = new Gson();
+                        final Account loggedInAcc = gson.fromJson(json2, Account.class);
+
+                        if(users1 == null){
+                            Toast.makeText(FoldersActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }else {
+
+//                            Toast.makeText(ContactsActivity.this, users1.get(0).getUsername() + users1.get(1).getUsername(), Toast.LENGTH_SHORT).show();
+
+                            ArrayList<Folder> tempFolders = new ArrayList<>();
+
+                            for(User user1 : users1){
+                                if(user1.getId() == loggedInUser.getId()){
+                                    for(Account acc : user1.getAccounts()){
+                                        if(acc.getId() == loggedInAcc.getId()){
+                                            loggedInAcc.getFolders().clear();
+                                            for(Folder fol : acc.getFolders()){
+                                                tempFolders.add(fol);
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+
+
+
+                            for(Folder fol : tempFolders){
+                                loggedInAcc.addFolder(fol);
+                            }
+
+
+                            adapter = new FolderAdapter(getApplicationContext(), loggedInAcc.getFolders());
+                            mListView.setAdapter(adapter);
+
+                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    Folder fol = acc.getFolders().get(position);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("folder", fol);
+
+                                    Intent i = new Intent(FoldersActivity.this, FolderActivity.class);
+                                    i.putExtras(bundle);
+                                    startActivity(i);
+
+
+                                }
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+                        Toast.makeText(FoldersActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+/*
                 adapter = new FolderAdapter(getApplicationContext(), acc.getFolders());
                 mListView.setAdapter(adapter);
 
@@ -210,7 +297,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
 
                     }
                 });
-
+*/
 
 
 

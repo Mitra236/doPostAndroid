@@ -27,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 
 import android.view.Menu;
@@ -48,8 +49,10 @@ import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.FoldersInterface;
+import com.example.dopostemail.server.LoginInterface;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
 import com.google.gson.Gson;
@@ -114,7 +117,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
 
 
-        startRepeatingTask();
+
 
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
@@ -250,8 +253,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onResume(){
         super.onResume();
-
-
+        startRepeatingTask();
 
     }
 
@@ -271,6 +273,114 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                 String syncTime = split[0];
 
                 mInterval = TimeUnit.MINUTES.toMillis(Integer.parseInt(syncTime));
+
+
+                LoginInterface loginService = RetrofitClient.getClient().create(LoginInterface.class);
+                Call<ArrayList<User>> call = loginService.getUsers();
+
+                call.enqueue(new Callback<ArrayList<User>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+                        ArrayList<User> users1 = response.body();
+                        SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                        String json = prefs.getString("userObject", "");
+                        Gson gson = new Gson();
+                        final User loggedInUser = gson.fromJson(json, User.class);
+
+                        SharedPreferences pref2 = getApplicationContext().getSharedPreferences("userInfo", 0);
+                        String json2 = prefs.getString("accObject", "");
+                        Gson gson2 = new Gson();
+                        final Account loggedInAcc = gson2.fromJson(json2, Account.class);
+
+                        if(users1 == null){
+                            Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }else {
+
+//                            Toast.makeText(ContactsActivity.this, users1.get(0).getUsername() + users1.get(1).getUsername(), Toast.LENGTH_SHORT).show();
+
+                            ArrayList<Message> msgs = new ArrayList<>();
+
+                            for(User user1 : users1){
+                                if(user1.getId() == loggedInUser.getId()){
+                                    for(Account acc : user1.getAccounts()){
+                                        if(acc.getId() == loggedInAcc.getId()){
+                                            loggedInAcc.getMessages().clear();
+                                            for(Message msg : acc.getMessages()){
+                                                msgs.add(msg);
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+
+
+
+                            for(Message msg : msgs){
+                                loggedInAcc.addMessage(msg);
+                            }
+
+
+                            adapter = new CustomAdapter(getApplicationContext(), loggedInAcc.getMessages());
+                            mListView.setAdapter(adapter);
+
+
+
+                            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    final Message m = acc.getMessages().get(position);
+
+                                    if (!m.isMessageRead()) {
+                                        MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+
+                                        Message mess = new Message(m.getId(), m.getFrom(), m.getTo(), m.getCc(), m.getBcc(), m.getDateTime(), m.getSubject(), m.getContent(), m.getTag(), m.getAttachments(), m.getFolder(), m.getAccount(), true);
+
+                                        Call<Message> call = service.updateMessage(m.getId(), mess );
+
+                                        call.enqueue(new Callback<Message>() {
+                                            @Override
+                                            public void onResponse(Call<Message> call, Response<Message> response) {
+                                                Bundle bundle = new Bundle();
+                                                bundle.putSerializable("messages", m);
+
+                                                Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                                                i.removeExtra("messages");
+                                                i.putExtras(bundle);
+                                                startActivity(i);
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Message> call, Throwable t) {
+
+                                            }
+                                        });
+                                    } else {
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("messages", m);
+
+                                        Intent i = new Intent(EmailsActivity.this, EmailActivity.class);
+                                        i.putExtras(bundle);
+                                        startActivity(i);
+
+
+                                    }
+                                }
+
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<User>> call, Throwable t) {
+                        Toast.makeText(EmailsActivity.this, "Something unexpectedly expected happened", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
 //                            final NotificationCompat.Builder builder = new NotificationCompat.Builder(EmailsActivity.this, CHANNEL_ID);
@@ -395,7 +505,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
                                         Message mess = new Message(m.getId(), m.getFrom(), m.getTo(), m.getCc(), m.getBcc(), m.getDateTime(), m.getSubject(), m.getContent(), m.getTag(), m.getAttachments(), m.getFolder(), m.getAccount(), true);
 
-                                        Call<Message> call = service.editMessage(m.getId(), mess );
+                                        Call<Message> call = service.updateMessage(m.getId(), mess );
 
                                         call.enqueue(new Callback<Message>() {
                                             @Override

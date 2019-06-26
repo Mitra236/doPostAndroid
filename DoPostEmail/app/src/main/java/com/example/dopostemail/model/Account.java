@@ -57,7 +57,9 @@ public class Account implements Serializable {
     public void addFolder(Folder fol){
         folders.add(fol);
     }
-
+    public void addMessage(Message msg){
+        messages.add(msg);
+    }
 
     public String getUsername() {
         return username;

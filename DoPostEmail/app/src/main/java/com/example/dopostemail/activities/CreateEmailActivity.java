@@ -38,6 +38,7 @@ import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Tag;
+import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
@@ -61,9 +62,9 @@ import retrofit2.Response;
 
 public class CreateEmailActivity extends AppCompatActivity {
 
-    ArrayList<String> to = new ArrayList<>();
-    ArrayList<String> cc = new ArrayList<>();
-    ArrayList<String> bcc = new ArrayList<>();
+    ArrayList<Contact> to = new ArrayList<>();
+    ArrayList<Contact> cc = new ArrayList<>();
+    ArrayList<Contact> bcc = new ArrayList<>();
     private static final int PICK_FILE = 100;
     public ArrayList<Contact> allContactsUnique = new ArrayList<>();
     Attachment attachment;
@@ -141,12 +142,12 @@ public class CreateEmailActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Contact>> call, Response<ArrayList<Contact>> response) {
 //                ArrayList<Contact> contacts1 = response.body();
                 allContactsUnique = response.body();
-                ArrayList<String> stringyContacts = new ArrayList<>();
-                for(Contact con : allContactsUnique){
-                    stringyContacts.add(con.getEmail());
-                }
+//                ArrayList<String> stringyContacts = new ArrayList<>();
+//                for(Contact con : allContactsUnique){
+//                    stringyContacts.add(con.getEmail());
+//                }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateEmailActivity.this, android.R.layout.simple_dropdown_item_1line, stringyContacts);
+                ArrayAdapter<Contact> adapter = new ArrayAdapter<Contact>(CreateEmailActivity.this, android.R.layout.simple_dropdown_item_1line, allContactsUnique);
                 mTo.setAdapter(adapter);
                 mTo.setThreshold(1);
                 mTo.setTextColor(Color.GRAY);
@@ -165,7 +166,8 @@ public class CreateEmailActivity extends AppCompatActivity {
                 mTo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String selected = (String) parent.getAdapter().getItem(position);
+//                        String selected = (String) parent.getAdapter().getItem(position);
+                        Contact selected = (Contact) parent.getAdapter().getItem(position);
                         to.add(selected);
                     }
                 });
@@ -173,7 +175,8 @@ public class CreateEmailActivity extends AppCompatActivity {
                 mCc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String selected = (String) parent.getAdapter().getItem(position);
+//                        String selected = (String) parent.getAdapter().getItem(position);
+                        Contact selected = (Contact) parent.getAdapter().getItem(position);
                         cc.add(selected);
                     }
                 });
@@ -181,7 +184,8 @@ public class CreateEmailActivity extends AppCompatActivity {
                 mBcc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String selected = (String) parent.getAdapter().getItem(position);
+//                        String selected = (String) parent.getAdapter().getItem(position);
+                        Contact selected = (Contact) parent.getAdapter().getItem(position);
                         bcc.add(selected);
                     }
                 });
@@ -223,18 +227,33 @@ public class CreateEmailActivity extends AppCompatActivity {
                     MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
 
 
-                    SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
-                    String currentUser = pref.getString("loggedInUser", "");
-                    int userId = pref.getInt("userId", 0);
+                    SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+                    String json = prefs.getString("userObject", "");
+                    String json2 = prefs.getString("accObject", "");
+                    Gson gson = new Gson();
+                    final User loggedInUser = gson.fromJson(json, User.class);
+                    final Account loggedInAcc = gson.fromJson(json2, Account.class);
 
-//                    Contact sender = new Contact();
+                    if(allContactsUnique.isEmpty()){
+                        Log.e("all contacts", "empty");
+                    }
+                    if(loggedInAcc == null){
+                        Log.e("acc", "empty");
+                    }
 
-//                    for(Contact con : allContactsUnique){
-//
-//                        if(currentUser.equals(con.getEmail())){
-//                            sender = con;
-//                        }
-//                    }
+
+                    Contact sender = new Contact();
+
+                    for(Contact con : allContactsUnique){
+                        Log.e("Con: ", con.getEmail());
+                        if(loggedInAcc.getUsername().equals(con.getEmail())){
+                            try{
+                                sender = (Contact) con.clone();
+                            }catch(CloneNotSupportedException c){}
+
+                        }
+                    }
+
                     Date date = new Date();
                     String dateStr = toUTC(date);
                     ArrayList<Attachment> atts = new ArrayList<>();
@@ -248,40 +267,39 @@ public class CreateEmailActivity extends AppCompatActivity {
               //          tags.add(newTag);
                     }
 
-                    SharedPreferences prefUser = getApplicationContext().getSharedPreferences("userInfo", 0);
-                    String json = prefUser.getString("userObject", "");
 
-                    Gson gson = new Gson();
-                    Account acc = gson.fromJson(json, Account.class);
 
                     Folder fold = new Folder();
 
+                    ArrayList<Folder> accountFolders = loggedInAcc.getFolders();
+                    for(Folder fol : accountFolders){
+                        if(fol.getName().equals("INBOX")){
+                            fold = fol;
+                        }
+                    }
 
-//                    Message msg = new Message(currentUser, to, cc, bcc, dateStr, subject, content, tags, messageAttachments, fold, acc, false);
-//
-//                    SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
-//                    String json2 = prefs.getString("userObject", "");
-//
-//                    Gson gson2 = new Gson();
-//                    final Account acc2 = gson2.fromJson(json2, Account.class);
-//
-//                    Call<Message> callM = service.sendMessage(msg);
-//
-//                    callM.enqueue(new Callback<Message>() {
-//                        @Override
-//                        public void onResponse(Call<Message> call, Response<Message> response) {
-//                            Toast.makeText(CreateEmailActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
-//                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
-//                            startActivity(i);
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<Message> call, Throwable t) {
-//                            Toast.makeText(CreateEmailActivity.this, "Message sent (probably)", Toast.LENGTH_SHORT).show();
-//                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
-//                            startActivity(i);
-//                        }
-//                    });
+
+                    Message msg = new Message(sender, to, cc, bcc, dateStr, subject, content, tags, messageAttachments, fold, loggedInAcc, false);
+                    Log.e("msg: ", String.valueOf(msg.getFrom().getId()));
+
+
+                    Call<Message> callM = service.saveMessage(msg);
+
+                    callM.enqueue(new Callback<Message>() {
+                        @Override
+                        public void onResponse(Call<Message> call, Response<Message> response) {
+                            Toast.makeText(CreateEmailActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+                            startActivity(i);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Message> call, Throwable t) {
+                            Toast.makeText(CreateEmailActivity.this, "Message sent (probably)", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(CreateEmailActivity.this, EmailsActivity.class);
+                            startActivity(i);
+                        }
+                    });
                 }
 
 

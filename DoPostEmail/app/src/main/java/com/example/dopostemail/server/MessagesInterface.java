@@ -31,14 +31,14 @@ public interface MessagesInterface {
     @GET("sortAsc")
     Call<ArrayList<Message>> getAllMessagesAsc();
 
-    @DELETE("api/messages")
-    Call<Message> deleteMessage(@Query("id") Long id);
+    @DELETE("api/messages/{id}")
+    Call<Void> deleteMessage(@Path("id") Long id);
 
-    @PUT("messages/edit")
-    Call<Message> editMessage(@Query ("id") Long id, @Body Message message);
+    @PUT("api/messages/{id}")
+    Call<Message> updateMessage(@Path ("id") Long id, @Body Message message);
 
-    @POST("messages/add")
-    Call<Message> addMessage(@Body Message params);
+    @POST("api/messages")
+    Call<Message> saveMessage(@Body Message params);
 
     @POST("send")
     Call<Message> sendMessage(@Body Message msg);

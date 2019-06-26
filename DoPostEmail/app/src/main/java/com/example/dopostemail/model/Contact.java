@@ -3,7 +3,7 @@ package com.example.dopostemail.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Contact implements Serializable {
+public class Contact implements Serializable, Cloneable {
 
     private Long id;
     private String firstName;
@@ -176,6 +176,10 @@ public class Contact implements Serializable {
 
     public void setBcc(ArrayList<Message> bcc) {
         this.bcc = bcc;
+    }
+
+    public Object clone()throws CloneNotSupportedException{
+        return (Contact)super.clone();
     }
 
     @Override

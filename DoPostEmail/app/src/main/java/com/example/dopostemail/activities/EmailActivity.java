@@ -194,18 +194,18 @@ public class EmailActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-                        Call<Message> call = service.deleteMessage(m.getId());
+                        Call<Void> call = service.deleteMessage(m.getId());
 
-                        call.enqueue(new Callback<Message>() {
+                        call.enqueue(new Callback<Void>() {
                             @Override
-                            public void onResponse(Call<Message> call, Response<Message> response) {
+                            public void onResponse(Call<Void> call, Response<Void> response) {
                                 Toast.makeText(EmailActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(EmailActivity.this, EmailsActivity.class);
                                 startActivity(i);
                             }
 
                             @Override
-                            public void onFailure(Call<Message> call, Throwable t) {
+                            public void onFailure(Call<Void> call, Throwable t) {
                                 Toast.makeText(EmailActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(EmailActivity.this, EmailsActivity.class);
                                 startActivity(i);

@@ -121,9 +121,11 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         setSupportActionBar(toolbar);
 
         mListView = findViewById(R.id.list_view);
-//        mListView.setTextFilterEnabled(true);
+        mListView.setTextFilterEnabled(true);
+
         adapter = new CustomAdapter(getApplicationContext(), acc.getMessages());
         mListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
 
         Log.e("Message length", String.valueOf(acc.getMessages().size()));
@@ -252,7 +254,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         adapter.getFilter().filter(newText);
-
+                        adapter.notifyDataSetChanged();
                         return true;
                     }
                 });

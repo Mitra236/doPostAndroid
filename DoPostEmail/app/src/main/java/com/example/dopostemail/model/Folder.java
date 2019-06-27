@@ -51,6 +51,10 @@ public class Folder implements Serializable {
 
     }
 
+    public void addMessage(Message msg){
+        messages.add(msg);
+    }
+
     public Account getAccount() {
         return account;
     }

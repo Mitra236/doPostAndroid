@@ -178,7 +178,12 @@ public class EmailActivity extends AppCompatActivity {
 
                 return true;
             case R.id.action_move_to:
-
+                Intent intenty = new Intent(EmailActivity.this, PickFolderActivity.class);
+                Bundle bundleMove = new Bundle();
+                bundleMove.putSerializable("msg", m1);
+                intenty.removeExtra("msg");
+                intenty.putExtras(bundleMove);
+                startActivity(intenty);
 
                 return true;
             default:

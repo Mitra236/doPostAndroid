@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,13 +18,16 @@ import com.example.dopostemail.model.Attachment;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Tag;
+import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
+import com.example.dopostemail.server.TagInterface;
 
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -71,86 +75,9 @@ public class EmailActivity extends AppCompatActivity {
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
-        TextView subject = findViewById(R.id.textSubject);
-        TextView dateTime = findViewById(R.id.textDate);
-        TextView from = findViewById(R.id.textFrom);
-        TextView message = findViewById(R.id.textMessage);
-        TextView tag = findViewById(R.id.textTag);
-        TextView attachment = findViewById(R.id.textAttachment);
-        TextView to = findViewById(R.id.textTo);
-        TextView cc = findViewById(R.id.textCC);
-        TextView bcc = findViewById(R.id.textBcc);
-        TextView folder = findViewById(R.id.textFolder);
-        TextView account = findViewById(R.id.textAccount);
-
-        Bundle bundle = getIntent().getExtras();
-        Message m = (Message) bundle.getSerializable("messages");
-
-        if(m != null) {
-            subject.setText(m.getSubject());
-
-            StringBuilder builder3 = new StringBuilder();
-            builder3.append("To: ");
-            for (Contact me : m.getTo()) {
-                to.setText(builder3.append(me + ", "));
-            }
-
-            StringBuilder builder4 = new StringBuilder();
-            builder4.append("Cc: ");
-            if (!m.getCc().isEmpty()) {
-                for (Contact me : m.getCc()) {
-                    cc.setText(builder4.append(me + ", "));
-                }
-
-            } else {
-                cc.setText(builder4.append("stefi123@gmail.com" + ", "));
-            }
-
-            StringBuilder builder5 = new StringBuilder();
-            builder5.append("Bcc: ");
-            if (!m.getBcc().isEmpty()) {
-                for (Contact me : m.getBcc()) {
-
-                    bcc.setText(builder5.append(me + ", "));
-
-                }
-            } else {
-                bcc.setText(builder5.append("aco123@gmail.com" + ", "));
-            }
-
-            StringBuilder builder = new StringBuilder();
-            builder.append("Tags: ");
-            if (m.getTag() != null) {
-                for (Tag me : m.getTag()) {
-                    tag.setText(builder.append(me.getName() + ", "));
-                }
-            }
 
 
-            StringBuilder builder2 = new StringBuilder();
-            builder2.append("Attachments: ");
-            if (m.getAttachments() != null) {
-                for (Attachment a : m.getAttachments()) {
 
-                    attachment.setText(builder2.append(a.getName() + ", "));
-                }
-            }else {
-                attachment.setText(builder2.append("prijave za 2. kolokvijum.pptx" + ", "));
-            }
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date date = fromUTC(m.getDateTime());
-
-
-            dateTime.setText("Date: " + dateFormat.format(date));
-            from.setText("From: " + m.getFrom());
-            message.setText(m.getContent());
-            if (m.getFolder() != null) {
-                folder.setText("Folder: " + m.getFolder().getName());
-            }
-            if (m.getAccount() != null) {
-                account.setText(m.getAccount().getUsername());
-            }
-        }
     }
 
     @Override
@@ -268,6 +195,120 @@ public class EmailActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+
+
+        Bundle bundle = getIntent().getExtras();
+        Message m1 = (Message) bundle.getSerializable("messages");
+
+
+        TagInterface service = RetrofitClient.getClient().create(TagInterface.class);
+        Call<ArrayList<Tag>> call = service.findTags(m1);
+
+        call.enqueue(new Callback<ArrayList<Tag>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Tag>> call, Response<ArrayList<Tag>> response) {
+                ArrayList<Tag> tags = response.body();
+
+                Bundle bundle = getIntent().getExtras();
+                Message m = (Message) bundle.getSerializable("messages");
+
+                m.setTag(tags);
+
+                TextView subject = findViewById(R.id.textSubject);
+                TextView dateTime = findViewById(R.id.textDate);
+                TextView from = findViewById(R.id.textFrom);
+                TextView message = findViewById(R.id.textMessage);
+                TextView tag = findViewById(R.id.textTag);
+                TextView attachment = findViewById(R.id.textAttachment);
+                TextView to = findViewById(R.id.textTo);
+                TextView cc = findViewById(R.id.textCC);
+                TextView bcc = findViewById(R.id.textBcc);
+                TextView folder = findViewById(R.id.textFolder);
+                TextView account = findViewById(R.id.textAccount);
+
+                if(m != null) {
+                    if(m.getSubject().length() > 9){
+                        subject.setText(m.getSubject().substring(0, 10) + "...");
+                    }else{
+                        subject.setText(m.getSubject());
+                    }
+
+
+                    StringBuilder builder3 = new StringBuilder();
+                    builder3.append("To: ");
+                    for (Contact me : m.getTo()) {
+                        to.setText(builder3.append(me + ", "));
+                    }
+
+                    StringBuilder builder4 = new StringBuilder();
+                    builder4.append("Cc: ");
+                    if (!m.getCc().isEmpty()) {
+                        for (Contact me : m.getCc()) {
+                            cc.setText(builder4.append(me + ", "));
+                        }
+
+                    } else {
+                        cc.setText(builder4.append("stefi123@gmail.com" + ", "));
+                    }
+
+                    StringBuilder builder5 = new StringBuilder();
+                    builder5.append("Bcc: ");
+                    if (!m.getBcc().isEmpty()) {
+                        for (Contact me : m.getBcc()) {
+
+                            bcc.setText(builder5.append(me + ", "));
+
+                        }
+                    } else {
+                        bcc.setText(builder5.append("aco123@gmail.com" + ", "));
+                    }
+
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("Tags: ");
+                    if (m.getTag() != null) {
+                        Log.e("Tags: ", String.valueOf(m.getTag().size()));
+                        for (Tag me : m.getTag()) {
+
+                            tag.setText(builder.append(me.getName() + ", "));
+                        }
+                    }
+
+
+                    StringBuilder builder2 = new StringBuilder();
+                    builder2.append("Attachments: ");
+                    if (m.getAttachments() != null) {
+                        for (Attachment a : m.getAttachments()) {
+
+                            attachment.setText(builder2.append(a.getName() + ", "));
+                        }
+                    }else {
+                        attachment.setText(builder2.append("prijave za 2. kolokvijum.pptx" + ", "));
+                    }
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date date = fromUTC(m.getDateTime());
+
+
+                    dateTime.setText("Date: " + dateFormat.format(date));
+                    from.setText("From: " + m.getFrom());
+                    message.setText(m.getContent());
+                    if (m.getFolder() != null) {
+                        folder.setText("Folder: " + m.getFolder().getName());
+                    }
+//            if (m.getAccount() != null) {
+//                account.setText(m.getAccount().getUsername());
+//            }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Tag>> call, Throwable t) {
+            }
+        });
+
+
+
+
+
     }
 
     @Override

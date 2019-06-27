@@ -58,6 +58,15 @@ public class CreateFolderActivity extends AppCompatActivity {
         Gson gson = new Gson();
         final Account acc = gson.fromJson(json, Account.class);
 
+        Button btnCreateRule = findViewById(R.id.addRules);
+
+        btnCreateRule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CreateFolderActivity.this, RulesActivity.class));
+            }
+        });
+
         Button btnCreate = findViewById(R.id.button_save_cf);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {

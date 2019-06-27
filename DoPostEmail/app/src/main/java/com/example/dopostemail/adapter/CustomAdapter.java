@@ -112,15 +112,16 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
 
             MessagesInterface messagesInterface = RetrofitClient.getClient().create(MessagesInterface.class);
 
+            Toast.makeText(mContext, constraint, Toast.LENGTH_SHORT).show();
             Call<ArrayList<Message>> call = messagesInterface.filterMessages(constraint);
 
             call.enqueue(new Callback<ArrayList<Message>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
                     filteredMessageList = response.body();
-//                    for(Message m: filteredMessageList){
-//                        Log.e(m.getSubject(), "SUUUUUUUUUUUUBJECT");
-//                    }
+                    for(Message m: filteredMessageList){
+                        Log.e(m.getSubject(), "SUUUUUUUUUUUUBJECT");
+                    }
                 }
 
                 @Override
@@ -129,43 +130,46 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
                 }
             });
 
-            if(constraint == null || constraint.length() == 0) {
-                filteredMessageList.addAll(messageFilteredList);
-            }else {
-                String filteredPattern = constraint.toString().toLowerCase().trim();
-
-                for(Message m : messageFilteredList){
-
-//                            String to="", cc="", bcc="", tags="", attachments="";
-//                            for(String con : m.getCc()){
-//                                cc += con + ", ";
+//            if(constraint == null || constraint.length() == 0) {
+//                filteredMessageList.addAll(messageFilteredList);
+//            }else {
+//                String filteredPattern = constraint.toString().toLowerCase().trim();
+//
+//                for(Message m : messageFilteredList){
+//
+////                            String to="", cc="", bcc="", tags="", attachments="";
+////                            for(String con : m.getCc()){
+////                                cc += con + ", ";
+////                            }
+////                            for(String con : m.getBcc()){
+////                                bcc += con + ", ";
+////                            }
+////                            for(String con : m.getTo()){
+////                                to += con + ", ";
+////                            }
+////                            for(Tag tg : m.getTag()){
+////                                tags += tg.getName() + ", ";
+////                            }
+////                            for(Attachment att : m.getAttachments()){
+////                                attachments += att.getName() + ", ";
+////                            }
+//
+//                            if (m.getSubject().toLowerCase().contains(filteredPattern)
+//                                    || m.getContent().toLowerCase().contains(filteredPattern)
+//
+//                                    ) {
+//
+//                                filteredMessageList.add(m);
 //                            }
-//                            for(String con : m.getBcc()){
-//                                bcc += con + ", ";
-//                            }
-//                            for(String con : m.getTo()){
-//                                to += con + ", ";
-//                            }
-//                            for(Tag tg : m.getTag()){
-//                                tags += tg.getName() + ", ";
-//                            }
-//                            for(Attachment att : m.getAttachments()){
-//                                attachments += att.getName() + ", ";
-//                            }
-
-                            if (m.getSubject().toLowerCase().contains(filteredPattern)
-                                    || m.getContent().toLowerCase().contains(filteredPattern)
-
-                                    ) {
-
-                                filteredMessageList.add(m);
-                            }
-
-                }
-            }
+//
+//                }
+//            }
 
             FilterResults results = new FilterResults();
             results.values = filteredMessageList;
+            for(Message m: filteredMessageList){
+                Log.e("IS IT RIGHT", m.getSubject());
+            }
             return results;
         }
 

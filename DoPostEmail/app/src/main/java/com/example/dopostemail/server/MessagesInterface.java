@@ -27,12 +27,6 @@ public interface MessagesInterface {
     @GET("api/message")
     Call<Message> getMessage(@Query("id") Long id);
 
-    @GET("sortDesc")
-    Call<ArrayList<Message>> getAllMessagesDesc();
-
-    @GET("sortAsc")
-    Call<ArrayList<Message>> getAllMessagesAsc();
-
     @DELETE("api/messages/{id}")
     Call<Void> deleteMessage(@Path("id") Long id);
 
@@ -62,6 +56,17 @@ public interface MessagesInterface {
     @POST("api/messages/setFolderMessage/{accId}/{folderId}")
     Call<Message> setFolderMessage(@Body Message msg, @Path("accId") Long id1, @Path("folderId") Long id2);
 
+    @GET("api/messages/sortByDateAsc")
+    Call<ArrayList<Message>> getSortByDateAsc();
+
+    @GET("api/messages/sortByDateDesc")
+    Call<ArrayList<Message>> getSortByDateDesc();
+
+    @GET("api/messages/sortBySubjectAsc")
+    Call<ArrayList<Message>> getSortBySubjectAsc();
+
+    @GET("api/messages/sortBySubjectDesc")
+    Call<ArrayList<Message>> getSortBySubjectDesc();
 
 
 }

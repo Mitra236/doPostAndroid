@@ -360,7 +360,32 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 //                                Log.e("MSG", msg.getSubject());
 //                            }
 
-                            adapter2 = new CustomAdapter(getApplicationContext(), loggedInAcc.getMessages());
+                            Bundle bundle = getIntent().getExtras();
+                            ArrayList<Message> messy = new ArrayList<>();
+                            try{
+                                messy = (ArrayList<Message>) bundle.getSerializable("messy");
+                            }catch(Exception e){}
+
+                            ArrayList<Message> tempMessages;
+
+                            if(messy != null && messy.size() > 1){
+                                tempMessages = new ArrayList<>();
+
+                                for(Message msg : messy){
+                                    Log.e("MSG1", loggedInAcc.getId() + " " + msg.getAccount().getId());
+                                    if(loggedInAcc.getId().equals(msg.getAccount().getId())){
+                                        Log.e("MSG2", "<Matched>");
+                                        tempMessages.add(msg);
+                                    }
+                                }
+
+                                adapter2 = new CustomAdapter(getApplicationContext(), tempMessages);
+                            }else{
+                                adapter2 = new CustomAdapter(getApplicationContext(), loggedInAcc.getMessages());
+                            }
+
+
+
                             mListView.setAdapter(adapter2);
 
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

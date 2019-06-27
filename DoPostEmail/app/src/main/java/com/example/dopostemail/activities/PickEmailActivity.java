@@ -207,6 +207,8 @@ public class PickEmailActivity extends AppCompatActivity {
                 startActivity(i);
                 return true;
             case R.id.action_change_personal_data:
+                Intent c = new Intent(PickEmailActivity.this, ChangePersonalDataActivity.class);
+                startActivity(c);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -21,9 +21,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChangePassActivity extends AppCompatActivity {
+public class ChangePersonalDataActivity extends AppCompatActivity {
 
-    EditText currentPassword;
     User user;
 
     @Override
@@ -32,7 +31,7 @@ public class ChangePassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setTitle("Change Password");
-        setContentView(R.layout.activity_change_password);
+        setContentView(R.layout.activity_change_personal_data);
 
         Toolbar toolbar = findViewById(R.id.toolbar_account);
         setSupportActionBar(toolbar);
@@ -45,9 +44,14 @@ public class ChangePassActivity extends AppCompatActivity {
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
-        currentPassword = findViewById(R.id.currentPass);
+        final EditText firstName = findViewById(R.id.firstName);
+        final EditText lastName = findViewById(R.id.lastName);
+        final EditText username = findViewById(R.id.username);
 
-        currentPassword.setText(loggedInUser.getPassword());
+        firstName.setText(loggedInUser.getFirstname());
+        lastName.setText(loggedInUser.getLastname());
+        username.setText(loggedInUser.getUsername());
+
 
         Button btnSave = findViewById(R.id.btn_change_pass);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -55,41 +59,39 @@ public class ChangePassActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText newPassword = findViewById(R.id.newPassword);
-                EditText repeatedPassword = findViewById(R.id.repeatPassword);
-                String np = newPassword.getText().toString();
-                String rp = repeatedPassword.getText().toString();
 
-                Log.e(np , "Passs");
-                if(rp.equals(np)) {
-                    Log.e(np, "PASSS");
+                String np = firstName.getText().toString();
+                String rp = lastName.getText().toString();
+                String u  = username.getText().toString();
+
+
                     user = new User();
-                    user.setFirstname(loggedInUser.getFirstname());
-                    user.setLastname(loggedInUser.getLastname());
-                    user.setUsername(loggedInUser.getUsername());
-                    user.setPassword(rp);
+                    user.setFirstname(np);
+                    user.setLastname(rp);
+                    user.setUsername(u);
+                    user.setPassword(loggedInUser.getPassword());
 
                     LoginInterface service = RetrofitClient.getClient().create(LoginInterface.class);
 
-                    Call<User> callLogin = service.changePassword(user, loggedInUser.getId());
+                    Call<User> callLogin = service.changePersonalData(user, loggedInUser.getId());
 
                     callLogin.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
-                            Toast.makeText(ChangePassActivity.this, "Successfully changed", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(ChangePassActivity.this, LoginActivity.class);
+                            Toast.makeText(ChangePersonalDataActivity.this, "Successfully changed", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(ChangePersonalDataActivity.this, LoginActivity.class);
                             startActivity(i);
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
                             Log.e("WHYYY THE FUCK", t.getMessage());
-                            Toast.makeText(ChangePassActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ChangePersonalDataActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
 
-            }
+
         });
     }
 

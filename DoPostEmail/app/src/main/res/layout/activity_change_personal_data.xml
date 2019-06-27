@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/toolbar_account"
+        layout="@layout/toolbar_account">
+
+    </include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_firstName"
+        android:layout_marginTop="190dp"
+        android:layout_marginLeft="30dp"
+        android:text="First Name: "/>
+
+    <EditText
+        android:id="@+id/firstName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="17dp"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="200dp"
+        android:text=""
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_lastName"
+        android:layout_marginTop="260dp"
+        android:layout_marginLeft="30dp"
+        android:text="Last Name: "/>
+
+    <EditText
+        android:id="@+id/lastName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="17dp"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/colorAccent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@+id/firstName"
+        android:textColorHint="@color/colorAccent"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_username"
+        android:layout_marginTop="340dp"
+        android:layout_marginLeft="30dp"
+        android:text="Username: "/>
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="17dp"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/colorAccent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@+id/lastName"
+        android:textColorHint="@color/colorAccent"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        />
+
+</RelativeLayout>

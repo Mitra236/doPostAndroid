@@ -31,4 +31,7 @@ public interface LoginInterface {
 
     @PUT("api/login/changePassword/{id}")
     Call<User> changePassword(@Body User user, @Path("id") Long id);
+
+    @PUT("api/login/changePersonalDara/{id}")
+    Call<User> changePersonalData(@Body User user, @Path("id") Long id);
 }

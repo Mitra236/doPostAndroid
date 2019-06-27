@@ -49,6 +49,7 @@ import com.example.dopostemail.model.Account;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.Tag;
 import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.ContactsInterface;
 import com.example.dopostemail.server.FoldersInterface;
@@ -75,6 +76,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
 
     private ListView mListView;
     private CustomAdapter adapter;
+    private CustomAdapter adapter2;
     private List<Message> messages;
 
     private final String CHANNEL_ID = "my_channel";
@@ -91,15 +93,17 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_posts);
         mHandler = new Handler();
 
+        delayHandler.postDelayed(delayedResume, 2000);
+
         SharedPreferences pref = getApplicationContext().getSharedPreferences("userInfo", 0);
         String json = pref.getString("accObject", "");
 
         Gson gson = new Gson();
         final Account acc = gson.fromJson(json, Account.class);
 
-        for(Message msg : acc.getMessages()){
-            Log.e("Log", msg.getContent());
-        }
+//        for(Message msg : acc.getMessages()){
+//            Log.e("Log", msg.getContent());
+//        }
 
 
 
@@ -122,6 +126,12 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         mListView.setAdapter(adapter);
 
 
+        Log.e("Message length", String.valueOf(acc.getMessages().size()));
+        for(Message msg : acc.getMessages()){
+            if(msg.getTag() != null){
+                Log.e("Message length", String.valueOf(msg.getTag().size()));
+            }
+        }
 
         checkMail(acc);
 
@@ -264,12 +274,12 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(EmailsActivity.this, "Checking for new emails", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EmailsActivity.this, "Checking for new emails", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EmailsActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -283,7 +293,7 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
     protected void onResume(){
         super.onResume();
 
-        delayHandler.postDelayed(delayedResume, 3000);
+
 
     }
 
@@ -344,14 +354,18 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                             for(Message msg : msgs){
                                 loggedInAcc.addMessage(msg);
                             }
-                            adapter = new CustomAdapter(getApplicationContext(), loggedInAcc.getMessages());
-                            mListView.setAdapter(adapter);
+//                            for(Message msg : loggedInAcc.getMessages()){
+//                                Log.e("MSG", msg.getSubject());
+//                            }
+
+                            adapter2 = new CustomAdapter(getApplicationContext(), loggedInAcc.getMessages());
+                            mListView.setAdapter(adapter2);
 
                             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                    final Message m = acc.getMessages().get(position);
+                                    final Message m = loggedInAcc.getMessages().get(position);
 
                                     if (!m.isMessageRead()) {
                                         MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);

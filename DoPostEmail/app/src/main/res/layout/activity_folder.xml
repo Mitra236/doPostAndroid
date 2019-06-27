@@ -14,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/folder_name"
-        android:paddingTop="100dp"/>
+        android:paddingTop="15dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/text"
         android:text="Messages"
-        android:paddingTop="90dp"
+        android:paddingTop="15dp"
         android:layout_marginLeft="4dp"
         android:layout_below="@id/list_view_subfolders"/>
 
@@ -36,7 +36,7 @@
         android:id="@+id/folder_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Folder name"
         android:layout_marginLeft="9dp"

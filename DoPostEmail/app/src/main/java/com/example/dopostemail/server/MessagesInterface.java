@@ -1,7 +1,9 @@
 package com.example.dopostemail.server;
 
 import com.example.dopostemail.model.Account;
+import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.Tag;
 
 import java.util.ArrayList;
 
@@ -48,4 +50,7 @@ public interface MessagesInterface {
 
     @POST("messages/draft")
     Call<Message> draftMessage(@Body Message params);
+
+    @POST("api/messages/findFolderMessages")
+    Call<ArrayList<Message>> findFolderMessages(@Body Folder folder);
 }

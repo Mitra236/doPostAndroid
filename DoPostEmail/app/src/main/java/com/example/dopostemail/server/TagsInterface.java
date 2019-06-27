@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -25,5 +26,8 @@ public interface TagsInterface {
 
     @PUT("api/tags/{id}")
     Call<Tag> updateTag(@Body Tag tag, @Path ("id") Long id);
+
+    @POST("api/tags/findTags")
+    Call<ArrayList<Tag>> findTags(@Body Message msg);
 
 }

@@ -48,4 +48,7 @@ public interface MessagesInterface {
 
     @POST("messages/draft")
     Call<Message> draftMessage(@Body Message params);
+
+    @POST("api/messages/filterList")
+    Call<ArrayList<Message>> filterMessages(@Body CharSequence constraint);
 }

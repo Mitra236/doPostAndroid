@@ -7,6 +7,7 @@ import android.icu.util.LocaleData;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -105,6 +106,7 @@ public class CreateContactActivity extends AppCompatActivity {
                 for(Photo p: photos){
                     if(p.getPath().equals(photo.getPath())){
                         contactPhoto = p;
+                        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                     }
                 }
 
@@ -186,32 +188,50 @@ public class CreateContactActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     final User loggedInUser = gson.fromJson(json, User.class);
 
-                    ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
-                    Contact contact = new Contact();
-                    contact.setFirstName(name);
-                    contact.setLastName(lastNameC);
-                    contact.setDisplay(displayC);
-                    contact.setEmail(emailC);
-                    contact.setFormat(Format.HTML);
-                    contact.setPhoto(contactPhoto);
-                //    contact.setPhoto(new Photo(lon, photo.getPath()));
-                    contact.setUser(loggedInUser);
 
-                    Call<Contact> call = service.saveContact(contact);
 
-                    call.enqueue(new Callback<Contact>() {
+                    Handler delayHandler = new Handler();
+
+                    Runnable delayedResume = new Runnable(){
                         @Override
-                        public void onResponse(Call<Contact> call, Response<Contact> response) {
-                            Toast.makeText(CreateContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(CreateContactActivity.this, ContactsActivity.class);
-                            startActivity(i);
-                        }
+                        public void run(){
+                            String name = firstName.getText().toString();
+                            String lastNameC = lastName.getText().toString();
+                            String displayC = display.getText().toString();
+                            String emailC = email.getText().toString();
+                            ContactsInterface service = RetrofitClient.getClient().create(ContactsInterface.class);
+                            Contact contact = new Contact();
+                            contact.setFirstName(name);
+                            contact.setLastName(lastNameC);
+                            contact.setDisplay(displayC);
+                            contact.setEmail(emailC);
+                            contact.setFormat(Format.HTML);
 
-                        @Override
-                        public void onFailure(Call<Contact> call, Throwable t) {
-                            Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                            contact.setPhoto(contactPhoto);
+//                    contact.setPhoto(new Photo(lon, photo.getPath()));
+                            contact.setUser(loggedInUser);
+
+                            Call<Contact> call = service.saveContact(contact);
+
+                            call.enqueue(new Callback<Contact>() {
+                                @Override
+                                public void onResponse(Call<Contact> call, Response<Contact> response) {
+                                    Toast.makeText(CreateContactActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(CreateContactActivity.this, ContactsActivity.class);
+                                    startActivity(i);
+                                }
+
+                                @Override
+                                public void onFailure(Call<Contact> call, Throwable t) {
+                                    Toast.makeText(CreateContactActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                         }
-                    });
+                    };
+                    delayHandler.postDelayed(delayedResume, 5000);
+
+
                 }
 
 
@@ -342,5 +362,8 @@ public class CreateContactActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
     }
+
+
+
 
 }

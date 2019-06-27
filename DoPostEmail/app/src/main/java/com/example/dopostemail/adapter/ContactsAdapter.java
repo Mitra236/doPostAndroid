@@ -51,7 +51,13 @@ public class ContactsAdapter extends BaseAdapter {
 
         mTitle.setText(contactList.get(position).getDisplay());
         mSubTitle.setText(contactList.get(position).getEmail());
-        img.setImageResource(R.drawable.contacts_icon);
+        if(contactList.get(position).getPhoto() != null){
+//            img.setImageResource(contactList.get(position).getPhoto().get);
+            Picasso.get().load("http://192.168.0.18:8080/" + contactList.get(position).getPhoto().getPath()).resize(100, 100).into(img);
+        }else{
+            img.setImageResource(R.drawable.contacts_icon);
+        }
+
 //        img.setImageResource(contactList.get(position).getPhoto().getPath());
 
 //        String imgPath = contactList.get(position).getPhoto().getPath();

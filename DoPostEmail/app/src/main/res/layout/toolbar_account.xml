@@ -14,7 +14,7 @@
         android:id="@+id/btn_change_pass"
         android:background="@color/colorToolbar"
         android:textColor="@color/colorWhite"
-        android:text="Change"
+        android:text="SAVE"
         android:layout_marginLeft="180dp"/>
 
 </android.support.v7.widget.Toolbar>

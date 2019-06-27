@@ -257,7 +257,7 @@ public class FoldersActivity extends AppCompatActivity implements NavigationView
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                    Folder fol = acc.getFolders().get(position);
+                                    Folder fol = loggedInAcc.getFolders().get(position);
 
                                     Bundle bundle = new Bundle();
                                     bundle.putSerializable("folder", fol);

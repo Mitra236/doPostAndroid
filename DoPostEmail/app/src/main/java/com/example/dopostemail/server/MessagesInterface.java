@@ -51,9 +51,17 @@ public interface MessagesInterface {
     @POST("messages/draft")
     Call<Message> draftMessage(@Body Message params);
 
+
     @GET("api/messages/filterList/{constraint}")
     Call<ArrayList<Message>> filterMessages(@Path("constraint") CharSequence constraint);
 
-    @POST("api/messages/findFolderMessages")
-    Call<ArrayList<Message>> findFolderMessages(@Body Folder folder);
+
+    @POST("api/messages/findFolderMessages/{id}")
+    Call<ArrayList<Message>> findFolderMessages(@Body Folder folder, @Path("id") Long id);
+
+    @POST("api/messages/setFolderMessage/{accId}/{folderId}")
+    Call<Message> setFolderMessage(@Body Message msg, @Path("accId") Long id1, @Path("folderId") Long id2);
+
+
+
 }

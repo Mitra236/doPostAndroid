@@ -15,11 +15,6 @@ public class RetrofitClient {
   //      private static final String BASE_URL = "http://192.168.65.195:8080/";
 
 
-
-
-//    "http://192.168.102.166:8080/postDoREST/api/service/";
-
-
     public static OkHttpClient test(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

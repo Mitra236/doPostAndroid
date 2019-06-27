@@ -170,10 +170,10 @@ public class FolderActivity extends AppCompatActivity {
 
         Utils.darkenStatusBar(this, R.color.colorToolbar);
 
-        FoldersInterface service = RetrofitClient.getClient().create(FoldersInterface.class);
-        Call<ArrayList<Folder>> call = service.findSubFolders(f);
+        FoldersInterface serviceF = RetrofitClient.getClient().create(FoldersInterface.class);
+        Call<ArrayList<Folder>> callF = serviceF.findSubFolders(f);
 
-        call.enqueue(new Callback<ArrayList<Folder>>() {
+        callF.enqueue(new Callback<ArrayList<Folder>>() {
             @Override
             public void onResponse(Call<ArrayList<Folder>> call, Response<ArrayList<Folder>> response) {
                 ArrayList<Folder> folders = response.body();
@@ -183,26 +183,30 @@ public class FolderActivity extends AppCompatActivity {
                 ListView list_subflders = findViewById(R.id.list_view_subfolders);
                 FolderAdapter fa = new FolderAdapter(getApplicationContext(), f.getFolders());
 
-                Log.e("Number of subfolders is" , String.valueOf(f.getFolders().size()));
+//                Log.e("Number of subfolders is" , String.valueOf(f.getFolders().size()));
 
-                list_subflders.setAdapter(fa);
+                if(f.getFolders() != null){
+                    list_subflders.setAdapter(fa);
 
-                list_subflders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    list_subflders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        Folder m = f.getFolders().get(position);
+                            Folder m = f.getFolders().get(position);
 
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("folder", m);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("folder", m);
 
-                        Intent i = new Intent(FolderActivity.this, FolderActivity.class);
-                        i.putExtras(bundle);
-                        startActivity(i);
+                            Intent i = new Intent(FolderActivity.this, FolderActivity.class);
+                            i.putExtras(bundle);
+                            startActivity(i);
 
 
-                    }
-                });
+                        }
+                    });
+                }
+
+
             }
 
             @Override
@@ -210,8 +214,14 @@ public class FolderActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("userInfo", 0);
+        String json = prefs.getString("accObject", "");
+
+        Gson gson = new Gson();
+        final Account acc = gson.fromJson(json, Account.class);
+
         MessagesInterface service2 = RetrofitClient.getClient().create(MessagesInterface.class);
-        Call<ArrayList<Message>> call2 = service2.findFolderMessages(f);
+        Call<ArrayList<Message>> call2 = service2.findFolderMessages(f, acc.getId());
 
         call2.enqueue(new Callback<ArrayList<Message>>() {
             @Override
@@ -221,24 +231,27 @@ public class FolderActivity extends AppCompatActivity {
                 f.setMessages(msgs);
 
                 ListView list_emails = findViewById(R.id.list_view_emails);
-                CustomAdapter ca = new CustomAdapter(getApplicationContext(), f.getMessages());
-                list_emails.setAdapter(ca);
-                list_emails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(f.getMessages() != null){
+                    CustomAdapter ca = new CustomAdapter(getApplicationContext(), f.getMessages());
+                    list_emails.setAdapter(ca);
+                    list_emails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        Message m = f.getMessages().get(position);
+                            Message m = f.getMessages().get(position);
 
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("messages", m);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("messages", m);
 
-                        Intent i = new Intent(FolderActivity.this, EmailActivity.class);
-                        i.putExtras(bundle);
-                        startActivity(i);
+                            Intent i = new Intent(FolderActivity.this, EmailActivity.class);
+                            i.putExtras(bundle);
+                            startActivity(i);
 
 
-                    }
-                });
+                        }
+                    });
+                }
+
             }
 
             @Override

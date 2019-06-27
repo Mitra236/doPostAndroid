@@ -53,7 +53,7 @@ public interface MessagesInterface {
 
 
     @GET("api/messages/filterList/{constraint}")
-    Call<ArrayList<Message>> filterMessages(@Path("constraint") CharSequence constraint);
+    Call<ArrayList<Message>> filterMessages(@Path("constraint") String constraint);
 
 
     @POST("api/messages/findFolderMessages/{id}")

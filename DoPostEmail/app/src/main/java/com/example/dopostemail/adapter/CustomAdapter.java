@@ -113,15 +113,13 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
             MessagesInterface messagesInterface = RetrofitClient.getClient().create(MessagesInterface.class);
 
             Toast.makeText(mContext, constraint, Toast.LENGTH_SHORT).show();
-            Call<ArrayList<Message>> call = messagesInterface.filterMessages(constraint);
+            Call<ArrayList<Message>> call = messagesInterface.filterMessages(constraint.toString());
 
             call.enqueue(new Callback<ArrayList<Message>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
                     filteredMessageList = response.body();
-                    for(Message m: filteredMessageList){
-                        Log.e(m.getSubject(), "SUUUUUUUUUUUUBJECT");
-                    }
+
                 }
 
                 @Override

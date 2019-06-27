@@ -25,9 +25,6 @@
             android:icon="@drawable/ic_folder"
             android:title="Tags"/>
 
-        <item android:id="@+id/nav_rules"
-            android:icon="@drawable/ic_folder"
-            android:title="Rules"/>
 
         <item
             android:id="@+id/nav_logout"

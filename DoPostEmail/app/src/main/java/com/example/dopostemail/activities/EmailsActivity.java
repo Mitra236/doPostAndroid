@@ -201,6 +201,10 @@ public class EmailsActivity extends AppCompatActivity implements NavigationView.
                 Intent l = new Intent(EmailsActivity.this, SettingsActivity.class);
                 startActivity(l);
                 break;
+            case R.id.nav_tags:
+                Intent r = new Intent(EmailsActivity.this, TagsActivity.class);
+                startActivity(r);
+                break;
             case R.id.nav_logout:
                 Intent m = new Intent(EmailsActivity.this, LoginActivity.class);
                 SharedPreferences settings = getApplicationContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);

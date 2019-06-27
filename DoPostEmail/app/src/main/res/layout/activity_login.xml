@@ -69,7 +69,7 @@
         android:gravity="center"
         android:textColor="@color/colorGray"
         android:background="@android:color/transparent"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="70dp"
         android:text="Don't have account? Register"/>
 
 

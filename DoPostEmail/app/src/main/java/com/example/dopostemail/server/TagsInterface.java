@@ -27,7 +27,12 @@ public interface TagsInterface {
     @PUT("api/tags/{id}")
     Call<Tag> updateTag(@Body Tag tag, @Path ("id") Long id);
 
+
+    @POST("api/tags/findTags")
+    Call<ArrayList<Tag>> findTags(@Body Message msg);
+
     @POST("api/tags")
     Call<Tag> saveTag(@Body Tag tag);
+
 
 }

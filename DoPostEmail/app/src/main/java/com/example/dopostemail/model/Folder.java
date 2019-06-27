@@ -11,10 +11,21 @@ public class Folder implements Serializable {
     private Long id;
     private String name;
     private Folder parentFolder;
+    private ArrayList<Folder> folders;
     private ArrayList<Message> messages;
     private ArrayList<Rule> rule;
     private Account account;
 
+
+    public Folder(Long id, String name, Folder parentFolder, ArrayList<Message> messages, ArrayList<Rule> rule, Account account, ArrayList<Folder> folders) {
+        this.id = id;
+        this.name = name;
+        this.parentFolder = parentFolder;
+        this.messages = messages;
+        this.rule = rule;
+        this.account = account;
+        this.folders = folders;
+    }
 
     public Folder(Long id, String name, Folder parentFolder, ArrayList<Message> messages, ArrayList<Rule> rule, Account account) {
         this.id = id;
@@ -95,5 +106,13 @@ public class Folder implements Serializable {
 
     public void setRule(ArrayList<Rule> rule) {
         this.rule = rule;
+    }
+
+    public ArrayList<Folder> getFolders() {
+        return folders;
+    }
+
+    public void setFolders(ArrayList<Folder> folders) {
+        this.folders = folders;
     }
 }

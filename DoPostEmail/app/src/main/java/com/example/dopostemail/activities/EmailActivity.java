@@ -18,10 +18,9 @@ import com.example.dopostemail.model.Attachment;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Tag;
-import com.example.dopostemail.model.User;
 import com.example.dopostemail.server.MessagesInterface;
 import com.example.dopostemail.server.RetrofitClient;
-import com.example.dopostemail.server.TagInterface;
+import com.example.dopostemail.server.TagsInterface;
 
 
 import java.text.DateFormat;
@@ -201,7 +200,7 @@ public class EmailActivity extends AppCompatActivity {
         Message m1 = (Message) bundle.getSerializable("messages");
 
 
-        TagInterface service = RetrofitClient.getClient().create(TagInterface.class);
+        TagsInterface service = RetrofitClient.getClient().create(TagsInterface.class);
         Call<ArrayList<Tag>> call = service.findTags(m1);
 
         call.enqueue(new Callback<ArrayList<Tag>>() {
@@ -268,8 +267,7 @@ public class EmailActivity extends AppCompatActivity {
                     if (m.getTag() != null) {
                         Log.e("Tags: ", String.valueOf(m.getTag().size()));
                         for (Tag me : m.getTag()) {
-
-                            tag.setText(builder.append(me.getName() + ", "));
+                            tag.setText(builder.append("#" + me.getName() + ", "));
                         }
                     }
 

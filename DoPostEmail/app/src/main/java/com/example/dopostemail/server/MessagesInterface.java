@@ -1,7 +1,9 @@
 package com.example.dopostemail.server;
 
 import com.example.dopostemail.model.Account;
+import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Message;
+import com.example.dopostemail.model.Tag;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ public interface MessagesInterface {
     Call<Void> deleteMessage(@Path("id") Long id);
 
     @PUT("api/messages/{id}")
-    Call<Message> updateMessage(@Path ("id") Long id, @Body Message message);
+    Call<Message> updateMessage(@Path("id") Long id, @Body Message message);
 
     @POST("api/messages")
     Call<Message> saveMessage(@Body Message params);
@@ -51,4 +53,7 @@ public interface MessagesInterface {
 
     @POST("api/messages/filterList")
     Call<ArrayList<Message>> filterMessages(@Body CharSequence constraint);
+
+    @POST("api/messages/findFolderMessages")
+    Call<ArrayList<Message>> findFolderMessages(@Body Folder folder);
 }

@@ -38,28 +38,37 @@ public class SettingsActivity extends PreferenceActivity {
         setTitle("Settings");
         addPreferencesFromResource(R.xml.preferences);
         Utils.darkenStatusBar(this, R.color.colorToolbar);
-        CheckBoxPreference check = (CheckBoxPreference)findPreference("sort_ascending");
-//        check.setChecked(false);
 
 
-        final CheckBoxPreference descending=(CheckBoxPreference) findPreference("sort_descending");
-        descending.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+        final CheckBoxPreference descendingDate =(CheckBoxPreference) findPreference("sort_descending_date");
+        final CheckBoxPreference ascDate =(CheckBoxPreference) findPreference("sort_ascending_date");
+        final CheckBoxPreference descendingSubject =(CheckBoxPreference) findPreference("sort_descending_subject");
+        final CheckBoxPreference ascSubject=(CheckBoxPreference) findPreference("sort_ascending_subject");
+
+        descendingSubject.setChecked(false);
+
+        descendingDate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                if(descending.isChecked()) {
+                if(descendingDate.isChecked()) {
                     MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-                Call<ArrayList<Message>> call = service.getAllMessagesDesc();
-                    CheckBoxPreference checkA = (CheckBoxPreference)findPreference("sort_ascending");
-                    checkA.setChecked(false);
+                Call<ArrayList<Message>> call = service.getSortByDateDesc();
+                    ascDate.setChecked(false);
+                    descendingSubject.setChecked(false);
+                    ascSubject.setChecked(false);
 
                 call.enqueue(new Callback<ArrayList<Message>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
                         messages = response.body();
-                        ListView lw = findViewById(R.id.list_view_emails);
-                        CustomAdapter mAdapter = new CustomAdapter(getApplicationContext(), messages);
-                        Intent folders = new Intent(SettingsActivity.this, EmailsActivity.class);
-                        startActivity(folders);
+
+                        Intent intent = new Intent(SettingsActivity.this, EmailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("messy", messages);
+                        intent.removeExtra("messy");
+                        intent.putExtras(bundle);
+                        startActivity(intent);
 
                         }
                     @Override
@@ -73,24 +82,27 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
-        final CheckBoxPreference asc=(CheckBoxPreference) findPreference("sort_ascending");
-        asc.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+        ascDate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                if(asc.isChecked()){
+                if(ascDate.isChecked()){
                     MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
-                Call<ArrayList<Message>> call = service.getAllMessagesAsc();
-                CheckBoxPreference checkD = (CheckBoxPreference)findPreference("sort_descending");
-                checkD.setChecked(false);
+                Call<ArrayList<Message>> call = service.getSortByDateAsc();
+                    descendingDate.setChecked(false);
+                    descendingSubject.setChecked(false);
+                    ascSubject.setChecked(false);
 
                 call.enqueue(new Callback<ArrayList<Message>>() {
                     @Override
                     public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
                         messages= response.body();
-                        ListView listView =(ListView)findViewById(R.id.list_view_emails);
-                        CustomAdapter mAdapter=new CustomAdapter(getApplicationContext(),messages);
-                        Intent folders = new Intent(SettingsActivity.this, EmailsActivity.class);
-                        startActivity(folders);
+                        Intent intent = new Intent(SettingsActivity.this, EmailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("messy", messages);
+                        intent.removeExtra("messy");
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                         }
 
                     @Override
@@ -100,6 +112,70 @@ public class SettingsActivity extends PreferenceActivity {
                     });
                 }
             return true;
+            }
+        });
+
+        descendingSubject.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                if(descendingSubject.isChecked()){
+                    MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                    Call<ArrayList<Message>> call = service.getSortBySubjectDesc();
+                    descendingDate.setChecked(false);
+                    ascDate.setChecked(false);
+                    ascSubject.setChecked(false);
+
+                    call.enqueue(new Callback<ArrayList<Message>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
+                            messages= response.body();
+                            Intent intent = new Intent(SettingsActivity.this, EmailsActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("messy", messages);
+                            intent.removeExtra("messy");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
+                            Toast.makeText(SettingsActivity.this, "Something went wrong...Please try again later!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                return true;
+            }
+        });
+
+        ascSubject.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                if(ascSubject.isChecked()){
+                    MessagesInterface service = RetrofitClient.getClient().create(MessagesInterface.class);
+                    Call<ArrayList<Message>> call = service.getSortBySubjectAsc();
+                    descendingDate.setChecked(false);
+                    descendingSubject.setChecked(false);
+                    ascDate.setChecked(false);
+
+                    call.enqueue(new Callback<ArrayList<Message>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
+                            messages= response.body();
+                            Intent intent = new Intent(SettingsActivity.this, EmailsActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("messy", messages);
+                            intent.removeExtra("messy");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
+                            Toast.makeText(SettingsActivity.this, "Something went wrong...Please try again later!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                return true;
             }
         });
     }

@@ -34,17 +34,34 @@
 
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="sort_descending"
-            android:title="Sort Descending"
-            android:id="@+id/checkBoxDesc"
+            android:key="sort_descending_date"
+            android:title="Sort by date Descending"
+            android:id="@+id/checkDateDesc"
             android:onClick="onCheckboxClickedDesc"
             />
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="sort_ascending"
-            android:title="Sort Ascending"
-            android:id="@+id/checkBoxAsc"
+            android:key="sort_ascending_date"
+            android:title="Sort by date Ascending"
+            android:id="@+id/CheckDateAsc"
+
+            android:onClick="onCheckboxClickedAsc"
+            />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="sort_descending_subject"
+            android:title="Sort by subject Descending"
+            android:id="@+id/checkSubDesc"
+            android:onClick="onCheckboxClickedDesc"
+            />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="sort_ascending_subject"
+            android:title="Sort by subject Ascending"
+            android:id="@+id/CheckSubAsc"
 
             android:onClick="onCheckboxClickedAsc"
             />

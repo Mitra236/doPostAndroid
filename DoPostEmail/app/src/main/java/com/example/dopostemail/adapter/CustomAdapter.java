@@ -2,18 +2,22 @@ package com.example.dopostemail.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.model.Attachment;
 import com.example.dopostemail.model.Contact;
 import com.example.dopostemail.model.Message;
 import com.example.dopostemail.model.Tag;
+import com.example.dopostemail.server.MessagesInterface;
+import com.example.dopostemail.server.RetrofitClient;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,6 +26,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CustomAdapter extends BaseAdapter implements Filterable {
 
@@ -90,6 +98,8 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
         return view;
     }
 
+
+    List<Message> filteredMessageList = new ArrayList<>();
     @Override
     public Filter getFilter() {
         return exampleFilter;
@@ -98,7 +108,26 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Message> filteredMessageList = new ArrayList<>();
+
+
+            MessagesInterface messagesInterface = RetrofitClient.getClient().create(MessagesInterface.class);
+
+            Call<ArrayList<Message>> call = messagesInterface.filterMessages(constraint);
+
+            call.enqueue(new Callback<ArrayList<Message>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Message>> call, Response<ArrayList<Message>> response) {
+                    filteredMessageList = response.body();
+//                    for(Message m: filteredMessageList){
+//                        Log.e(m.getSubject(), "SUUUUUUUUUUUUBJECT");
+//                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Message>> call, Throwable t) {
+
+                }
+            });
 
             if(constraint == null || constraint.length() == 0) {
                 filteredMessageList.addAll(messageFilteredList);
@@ -126,12 +155,7 @@ public class CustomAdapter extends BaseAdapter implements Filterable {
 
                             if (m.getSubject().toLowerCase().contains(filteredPattern)
                                     || m.getContent().toLowerCase().contains(filteredPattern)
-//                                    || m.getFrom().toLowerCase().contains(filteredPattern)
-//                                    || cc.toLowerCase().contains(filteredPattern)
-//                                    || bcc.toLowerCase().contains(filteredPattern)
-//                                    || to.toLowerCase().contains(filteredPattern)
-//                                    || tags.toLowerCase().contains(filteredPattern)
-//                                    || attachments.toLowerCase().contains(filteredPattern)
+
                                     ) {
 
                                 filteredMessageList.add(m);

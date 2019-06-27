@@ -37,7 +37,7 @@ public interface MessagesInterface {
     Call<Void> deleteMessage(@Path("id") Long id);
 
     @PUT("api/messages/{id}")
-    Call<Message> updateMessage(@Path ("id") Long id, @Body Message message);
+    Call<Message> updateMessage(@Path("id") Long id, @Body Message message);
 
     @POST("api/messages")
     Call<Message> saveMessage(@Body Message params);
@@ -51,9 +51,16 @@ public interface MessagesInterface {
     @POST("messages/draft")
     Call<Message> draftMessage(@Body Message params);
 
+
     @POST("api/messages/findFolderMessages/{id}")
     Call<ArrayList<Message>> findFolderMessages(@Body Folder folder, @Path("id") Long id);
 
     @POST("api/messages/setFolderMessage/{accId}/{folderId}")
     Call<Message> setFolderMessage(@Body Message msg, @Path("accId") Long id1, @Path("folderId") Long id2);
+
+    @POST("api/messages/filterList")
+    Call<ArrayList<Message>> filterMessages(@Body CharSequence constraint);
+
+
+
 }

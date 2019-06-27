@@ -73,8 +73,6 @@ public class TagsActivity extends AppCompatActivity {
         Gson gson = new Gson();
         final User loggedInUser = gson.fromJson(json, User.class);
 
-
-
         TagsInterface tagsInterface = RetrofitClient.getClient().create(TagsInterface.class);
 
         Call<ArrayList<Tag>> tags = tagsInterface.getTags();

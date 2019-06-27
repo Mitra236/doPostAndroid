@@ -5,21 +5,37 @@ import java.util.ArrayList;
 
 public class Tag implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String name;
-    private ArrayList<Message> messages;
+    private Message message;
+    private User user;
 
-    public Tag(Long id, String name, ArrayList<Message> messages) {
+
+    public Tag(Long id, String name, Message message, User user) {
+        super();
         this.id = id;
         this.name = name;
-        this.messages = messages;
+        this.message = message;
+        this.user = user;
     }
-    public Tag(Long id, String name) {
-        this.id = id;
-        this.name = name;
+
+
+
+
+    public Message getMessage() {
+        return message;
     }
+
+
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+
 
     public Tag() {
+        super();
     }
 
     public Long getId() {
@@ -38,11 +54,28 @@ public class Tag implements Serializable {
         this.name = name;
     }
 
-    public ArrayList<Message> getMessages() {
-        return messages;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setMessages(ArrayList<Message> messages) {
-        this.messages = messages;
+
+    public void setUser(User user) {
+        this.user = user;
     }
+
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+
+
+//    public ArrayList<MessageDTO> getMessages() {
+//        return messages;
+//    }
+//
+//    public void setMessages(ArrayList<MessageDTO> messages) {
+//        this.messages = messages;
+//    }
 }

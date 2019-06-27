@@ -8,9 +8,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.dopostemail.R;
 import com.example.dopostemail.adapter.FolderAdapter;
@@ -20,9 +22,16 @@ import com.example.dopostemail.model.Folder;
 import com.example.dopostemail.model.Rule;
 import com.example.dopostemail.model.Tag;
 import com.example.dopostemail.model.User;
+import com.example.dopostemail.server.RetrofitClient;
+import com.example.dopostemail.server.TagsInterface;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class TagsActivity extends AppCompatActivity {
 
@@ -31,7 +40,7 @@ public class TagsActivity extends AppCompatActivity {
 
     ListView mListView;
     TagAdapter adapter;
-    ArrayList<Tag> tags;
+    ArrayList<Tag> userTag = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -64,25 +73,55 @@ public class TagsActivity extends AppCompatActivity {
         Gson gson = new Gson();
         final User loggedInUser = gson.fromJson(json, User.class);
 
-        adapter = new TagAdapter(getApplicationContext(), loggedInUser.getTags());
-        mListView.setAdapter(adapter);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        TagsInterface tagsInterface = RetrofitClient.getClient().create(TagsInterface.class);
+
+        Call<ArrayList<Tag>> tags = tagsInterface.getTags();
+
+        tags.enqueue(new Callback<ArrayList<Tag>>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onResponse(Call<ArrayList<Tag>> call, Response<ArrayList<Tag>> response) {
+                ArrayList<Tag> userTags = response.body();
 
-                Tag tag = loggedInUser.getTags().get(position);
+                for(Tag t1: userTags){
+                    if(t1.getUser().getId() == loggedInUser.getId()){
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("tag", tag);
+                        userTag.add(t1);
 
-                Intent i = new Intent(TagsActivity.this, TagActivity.class);
-                i.putExtras(bundle);
-                startActivity(i);
+                        adapter = new TagAdapter(getApplicationContext(), userTag);
+                        mListView.setAdapter(adapter);
 
+                        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                Tag tag = userTag.get(position);
+
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("tag", tag);
+
+                                Intent i = new Intent(TagsActivity.this, TagActivity.class);
+                                i.putExtras(bundle);
+                                startActivity(i);
+
+
+                            }
+                        });
+
+
+                    }
+                }
 
             }
+
+            @Override
+            public void onFailure(Call<ArrayList<Tag>> call, Throwable t) {
+                Toast.makeText(TagsActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
         });
+
+
     }
 
     @Override
